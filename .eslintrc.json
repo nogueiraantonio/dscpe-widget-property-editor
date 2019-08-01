@@ -1,0 +1,93 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "amd": true
+    },
+    "extends": ["eslint:recommended", "plugin:vue/recommended", "prettier", "vuetify"],
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "ecmaFeatures": {
+            "jsx": true,
+            "arrowFunctions": true,
+            "blockBindings": true,
+            "defaultParams": true,
+            "destructuring": true,
+            "forOf": true,
+            "generators": true,
+            "objectLiteralComputedProperties": true,
+            "objectLiteralShorthandMethods": true,
+            "objectLiteralShorthandProperties": true,
+            "restParams": true,
+            "spread": false,
+            "templateStrings": false,
+            "modules": true,
+            "classes": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-const-assign": "error",
+        "no-this-before-super": "warn",
+        "no-undef": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn",
+        "no-console": [
+            "warn",
+            {
+                "allow": ["log", "warn", "error"]
+            }
+        ],
+        "eqeqeq": ["error", "always"],
+        "quotes": [2, "double"],
+        "semi": "off",
+        "space-before-function-paren": "off",
+        "no-var": "warn",
+        "spaced-comment": "warn",
+        "vue/html-indent": [
+            "warn",
+            4,
+            {
+                "attribute": 1,
+                "baseIndent": 1,
+                "closeBracket": 0,
+                "alignAttributesVertically": true,
+                "ignores": []
+            }
+        ],
+        "vue/max-attributes-per-line": [
+            "warn",
+            {
+                "singleline": 10,
+                "multiline": {
+                    "max": 1,
+                    "allowFirstLine": false
+                }
+            }
+        ],
+        "vue/html-self-closing": [
+            "warn",
+            {
+                "html": {
+                    "void": "always",
+                    "normal": "never",
+                    "component": "always"
+                },
+                "svg": "never",
+                "math": "never"
+            }
+        ],
+        "vue/singleline-html-element-content-newline": "off",
+        "vue/script-indent": "off",
+        "vue/require-default-prop": "off"
+    },
+    "globals": {
+        "widget": false,
+        "Highcharts": false
+    },
+    "plugins": ["vue", "json"]
+}

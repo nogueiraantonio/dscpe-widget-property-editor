@@ -11,5 +11,13 @@
         "url": "git@ itgit.dsone. 3ds.com:widget-lab/widget-template-vue.git"
     },
     "author": "widget-lab",
-    "license": "MIT"
+    "license": "MIT",
+    "devDependencies": {
+        "eslint": "5.16.0",
+        "eslint-config-prettier": "6.0.0",
+        "eslint-config-vuetify": "0.2.0",
+        "eslint-plugin-html": "6.0.0",
+        "eslint-plugin-vue": "5.2.3",
+        "eslint-plugin-json": "1.4.0"
+    }
 }
