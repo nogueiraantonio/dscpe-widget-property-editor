@@ -1,0 +1,1887 @@
+{
+    "app": {
+        "useViews": true,
+        "views": [
+            {
+                "component": "btops-view-oppy",
+                "name": "BT_Opportunities",
+                "title": "Opportunities Working List",
+                "help": "Opportunities >= 500k OR flagged VE between Q-1 and Q+5",
+                "icon": "format_list_numbered",
+                "feedName": "oppies_qclient",
+                "query": "class:oppy AND (oppy_opportunity_type:Value OR oppy_opportunity_type:Services OR (oppy_node_ve_candidate:YES AND oppy_opportunity_type:Extend) OR (oppy_node_ve_candidate:YES AND oppy_opportunity_type:VS)) AND (oppy_node_ve_candidate:YES OR oppy_node_obe:YES OR oppy_total_plc_oppy_revenue__eur_>499999 OR oppy_total_service_oppy_revenue__eur_>499999)",
+                "queryTimeframe": [-1, 6],
+                "uniqIdField": "oppyrowid",
+                "default": true,
+                "visible": true,
+                "table": {
+                    "title": "Opportunities BT",
+                    "columns": {
+                        "oppyrowid": {
+                            "text": "CRM ID",
+                            "sortable": true,
+                            "value": "oppyrowid",
+                            "source": "crm",
+                            "width": "135px",
+                            "column_visible": false,
+                            "link": {
+                                "url": "https://secure-ausomxdoa.crmondemand.com/OnDemand/user/OpportunityDetail?OMTGT=OpptyDetailForm&OMTHD=OpportunityDetailNav&ssoid=3DS&OpptyDetailForm.Id=${oppyrowid}"
+                            }
+                        },
+                        "quarter": {
+                            "text": "Q",
+                            "sortable": true,
+                            "value": "quarter_year",
+                            "source": "crm",
+                            "width": "95px",
+                            "column_visible": false,
+                            "tag": "ds6w:when/Quarter",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "geo": {
+                            "text": "Geo",
+                            "value": "geo",
+                            "source": "crm",
+                            "width": "100px",
+                            "column_visible": false,
+                            "tag": "ds6w:where/Geo",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "geogroup": {
+                            "text": "Geo Group",
+                            "value": "geogroup",
+                            "source": "crm",
+                            "width": "100px",
+                            "column_visible": false,
+                            "tag": "ds6w:where/Geo Group",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "sitename": {
+                            "text": "Customer",
+                            "sortable": true,
+                            "value": "sitename",
+                            "source": "crm",
+                            "column_visible": true,
+                            "tag": "ds6w:who/Customer",
+                            "width": "180px"
+                        },
+                        "industry": {
+                            "text": "Industry",
+                            "sortable": true,
+                            "value": "industry",
+                            "source": "crm",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Industry",
+                            "width": "180px"
+                        },
+                        "must_list": {
+                            "text": "Must List",
+                            "value": "ismust",
+                            "source": "crm",
+                            "column_visible": true,
+                            "tag": "ds6w:what/Is Must",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "width": "60px"
+                        },
+                        "opportunity_name": {
+                            "text": "Opportunity Title",
+                            "value": "opportunity_name",
+                            "source": "crm",
+                            "width": "270px",
+                            "column_visible": true
+                        },
+                        "last_update": {
+                            "text": "Last CRM Update",
+                            "sortable": true,
+                            "value": "oppylastupdated",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "100px",
+                            "type": "date",
+                            "tooltip": "true"
+                        },
+                        "created_date": {
+                            "text": "Creation Date",
+                            "sortable": true,
+                            "value": "created_date",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "95px",
+                            "type": "date"
+                        },
+                        "close_date": {
+                            "text": "Close Date",
+                            "sortable": true,
+                            "value": "close_date_notime",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "95px",
+                            "type": "date"
+                        },
+                        "sales_stage": {
+                            "text": "Sales Stage",
+                            "value": "sales_stage_converted",
+                            "source": "crm",
+                            "width": "70px",
+                            "column_visible": true,
+                            "tag": "ds6w:when/Sales Stage",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "csi": {
+                            "text": "C&SI",
+                            "value": "consulting_system_integrators",
+                            "source": "crm",
+                            "width": "140px",
+                            "column_visible": true,
+                            "tag": "ds6w:who/CSI",
+                            "tagMultiValues": {
+                                "separator": ","
+                            },
+                            "tooltip": {
+                                "rule": { "cat": [{ "var": "oppy.csi_comments" }] }
+                            }
+                        },
+                        "brand": {
+                            "text": "Brand(s)",
+                            "value": "brand_list",
+                            "source": "crm",
+                            "width": "140px",
+                            "column_visible": false,
+                            "tag": "ds6w:who/Brand",
+                            "tagMultiValues": {
+                                "separator": ","
+                            }
+                        },
+                        "plc_or_service": {
+                            "text": "Revenue Type",
+                            "value": "plc_or_service",
+                            "width": "65px",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Revenue Type",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "tooltip": {
+                                "rule": { "cat": [{ "var": "oppy.opportunity_type" }] }
+                            }
+                        },
+                        "plc": {
+                            "text": "PLC (k€)",
+                            "value": "total_plc_oppy_revenue__keur_",
+                            "source": "crm",
+                            "width": "65px",
+                            "type": "number",
+                            "column_visible": true,
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            }
+                        },
+                        "tse_exists": {
+                            "text": "Has TSE",
+                            "value": "has_tse",
+                            "source": "crm",
+                            "width": "65px",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Has TSE"
+                        },
+                        "service": {
+                            "text": "Service (k€)",
+                            "value": "total_service_oppy_revenue__keur_",
+                            "source": "crm",
+                            "width": "65px",
+                            "type": "number",
+                            "column_visible": true,
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            }
+                        },
+                        "opportunity_type": {
+                            "text": "Type",
+                            "value": "opportunity_type",
+                            "width": "65px",
+                            "column_visible": false
+                        },
+                        "must_type": {
+                            "text": "Must Type",
+                            "value": "must_type",
+                            "source": "crm",
+                            "column_visible": false,
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "width": "150px"
+                        },
+                        "tse_status": {
+                            "text": "TSE Status",
+                            "value": "tse_status_converted",
+                            "width": "80px",
+                            "column_visible": true,
+                            "tag": "ds6w:what/TSE Status",
+                            "icon": {
+                                "rule": {
+                                    "if": [
+                                        { "===": [{ "var": "oppy.tse_status_converted" }, "No TSE Status"] },
+                                        "radio_button_unchecked",
+                                        { "if": [{ "===": [{ "var": "oppy.tse_status_converted" }, "More than 1 active TSE"] }, "warning", "brightness_1"] }
+                                    ]
+                                }
+                            },
+                            "icon.text": "brightness_1",
+                            "tooltip": {
+                                "rule": { "cat": [{ "var": "oppy.tse_status_comment_converted" }] },
+                                "multiline": true
+                            },
+                            "visible": {
+                                "rule": { "!=": [{ "var": "oppy.has_tse" }, "NO"] }
+                            },
+                            "style": [
+                                {
+                                    "comment": "if the value green",
+                                    "rule": { "===": [{ "var": "oppy.tse_status_converted" }, "Green"] },
+                                    "css": "color: green;"
+                                },
+                                {
+                                    "comment": "if the value is not set",
+                                    "rule": { "===": [{ "var": "oppy.tse_status_converted" }, "Yellow"] },
+                                    "css": "color: #fdd835;"
+                                },
+                                {
+                                    "comment": "if the value is not set",
+                                    "rule": { "===": [{ "var": "oppy.tse_status_converted" }, "Red"] },
+                                    "css": "color: red;"
+                                },
+                                {
+                                    "comment": "more than 1 tse",
+                                    "rule": { "===": [{ "var": "oppy.tse_status_converted" }, "More than 1 active TSE"] },
+                                    "css": "color: orange;"
+                                }
+                            ]
+                        },
+                        "node_needs_review": {
+                            "text": "Needs Review",
+                            "value": "node_needs_review",
+                            "source": "",
+                            "width": "60px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "choices": ["YES", "NO"],
+                                "multiple": false
+                            },
+                            "tag": "ds6w:what/Needs Review",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "style": {
+                                "theme": "light",
+                                "color": "white"
+                            }
+                        },
+                        "node_obe": {
+                            "text": "Outcome Based Engagement",
+                            "value": "node_obe",
+                            "width": "75px",
+                            "column_visible": true,
+                            "sortable": true,
+                            "editable": {
+                                "choices": ["YES", "Refused", "NA"],
+                                "rule": {
+                                    "and": [
+                                        { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                        { "in": [{ "var": "user.login" }, { "var": "variables.geo_leaders" }] }
+                                    ]
+                                }
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                    "css.old": "",
+                                    "color": "white",
+                                    "theme": "light"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [
+                                            { "===": [{ "var": "oppy.node_obe" }, "NA"] },
+                                            { "===": [{ "var": "oppy.node_obe" }, "Refused"] },
+                                            { "===": [{ "var": "oppy.node_obe" }, "TBD"] },
+                                            { "!": { "var": "oppy.node_obe" } }
+                                        ]
+                                    },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "grey darken-1",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": {
+                                        "===": [{ "var": "oppy.node_obe" }, "YES"]
+                                    },
+                                    "css.old": "background-color: #FFEBEE;",
+                                    "color": "blue darken-4",
+                                    "theme": "dark"
+                                }
+                            ],
+                            "tag": "ds6w:what/Outcome Based Engagement",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "node_ve_candidate": {
+                            "text": "VE",
+                            "value": "node_ve_candidate",
+                            "source": "",
+                            "width": "75px",
+                            "column_visible": true,
+                            "sortable": true,
+                            "editable": {
+                                "choices": ["YES", "Refused", "NA", "TBD"],
+                                "rule": { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                "info": {
+                                    "rule": {
+                                        "and": [
+                                            { "===": [{ "var": "previous" }, "YES"] },
+                                            { "!": { "in": [{ "var": "user.login" }, { "var": "variables.geo_leaders" }] } }
+                                        ]
+                                    },
+                                    "header": "Action Blocked",
+                                    "message": "Please contact your WW Value Engagement call moderator to reset Value Engagement Status."
+                                },
+                                "onUpdateRule.old": {
+                                    "if": [{ "!==": [{ "var": "newValue" }, "YES"] }, { "affect": [{ "var": "oppy" }, "node_ve_phase", "NA"] }]
+                                }
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                    "css.old": "",
+                                    "color": "white",
+                                    "theme": "light"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [
+                                            { "===": [{ "var": "oppy.node_ve_candidate" }, "NA"] },
+                                            { "===": [{ "var": "oppy.node_ve_candidate" }, "Refused"] },
+                                            { "===": [{ "var": "oppy.node_ve_candidate" }, "TBD"] },
+                                            { "!": { "var": "oppy.node_ve_candidate" } }
+                                        ]
+                                    },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "grey darken-1",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": {
+                                        "===": [{ "var": "oppy.node_ve_candidate" }, "YES"]
+                                    },
+                                    "css.old": "background-color: #FFEBEE;",
+                                    "color": "blue darken-4",
+                                    "theme": "dark"
+                                }
+                            ],
+                            "tag": "ds6w:what/VE",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "node_status_ve": {
+                            "text": "VE Status",
+                            "value": "node_status_ve",
+                            "source": "",
+                            "width": "60px",
+                            "column_visible": true,
+                            "icon": "brightness_1",
+                            "tag": "ds6w:what/VE Status",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "sortable": true,
+                            "editable": {
+                                "rule": {
+                                    "and": [
+                                        { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                        { "in": [{ "var": "user.login" }, { "var": "variables.geo_leaders" }] }
+                                    ]
+                                },
+                                "choices": ["Green", "Yellow", "Red", "TBD"],
+                                "multiple": false
+                            },
+                            "visible": {
+                                "rule": {
+                                    "===": [{ "var": "oppy.node_ve_candidate" }, "YES"]
+                                }
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_status_ve" }, "Green"] },
+                                    "css": "color: green;"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_status_ve" }, "Yellow"] },
+                                    "css": "color: #fdd835;"
+                                },
+                                {
+                                    "comment": "if the value is not set",
+                                    "rule": { "===": [{ "var": "oppy.node_status_ve" }, "Red"] },
+                                    "css": "color: red;"
+                                }
+                            ]
+                        },
+                        "ve_phase": {
+                            "text": "VE Phase",
+                            "value": "node_ve_phase",
+                            "source": "",
+                            "width": "60px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "rule": { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                "choices": ["TBD", "VA", "VDef", "VC", "VDel"],
+                                "ve_quality_old": ["node_status_v_ass", "node_status_v_def", "node_status_v_del", "node_status_v_com"]
+                            },
+                            "visible": {
+                                "rule": {
+                                    "===": [{ "var": "oppy.node_ve_candidate" }, "YES"]
+                                }
+                            },
+                            "tag": "ds6w:what/VE Phase",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                    "css.old": "",
+                                    "color": "white",
+                                    "theme": "light"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [
+                                            { "===": [{ "var": "oppy.node_ve_phase" }, "TBD"] },
+                                            { "!": { "var": "oppy.node_ve_phase" } },
+                                            { "===": [{ "var": "oppy.node_ve_phase" }, "NA"] }
+                                        ]
+                                    },
+                                    "color": "grey darken-1",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VA"] },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "blue",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VDef"] },
+                                    "color": "blue darken-2",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VC"] },
+                                    "color": "blue darken-4",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VDel"] },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "indigo darken-4",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [{ "===": [{ "var": "oppy.node_ve_phase" }, "TBD"] }, { "!": { "var": "oppy.node_ve_phase" } }]
+                                    },
+                                    "css.old": "background-color: #FFEBEE;",
+                                    "color": "red",
+                                    "theme": "dark"
+                                }
+                            ]
+                        },
+                        "node_status_comment": {
+                            "text": "General Comment",
+                            "value": "node_status_comment",
+                            "source": "",
+                            "width": "300px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "onUpdateRule": { "affect": [{ "var": "oppy" }, "last_comment_edition", { "now": [] }] }
+                            },
+                            "type": "text",
+                            "tooltip": {
+                                "multiline": true
+                            }
+                        },
+                        "last_comment_edition": {
+                            "text": "General Comment Update",
+                            "sortable": true,
+                            "value": "last_comment_edition",
+                            "column_visible": true,
+                            "width": "100px",
+                            "type": "date",
+                            "tag": "ds6w:when/General Comment Update"
+                        },
+                        "node_ipe_comment": {
+                            "text": "Industry Process Experiences Comment",
+                            "value": "node_ipe_comment",
+                            "source": "",
+                            "width": "140px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": true,
+                            "type": "text",
+                            "tooltip": {
+                                "multiline": true
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "component": "btops-view-oppy",
+                "name": "Service Signing",
+                "title": "Service Signing Consistency",
+                "help": "Service Opportunities >= 500k OR flagged VE this year",
+                "icon": "edit",
+                "default": true,
+                "visible": true,
+                "feedName": "services_qclient",
+                "query": "class:oppy AND oppy_opportunity_type:Services AND (oppy_node_ve_candidate:YES OR oppy_value_engagement_services_offer:Value)",
+                "queryTimeframe": [-2, 2],
+                "uniqIdField": "oppyrowid",
+                "table": {
+                    "title": "Opportunities BT",
+                    "columns": {
+                        "oppyrowid": {
+                            "text": "CRM ID",
+                            "sortable": true,
+                            "value": "oppyrowid",
+                            "source": "crm",
+                            "width": "135px",
+                            "column_visible": false,
+                            "link": {
+                                "url": "https://secure-ausomxdoa.crmondemand.com/OnDemand/user/OpportunityDetail?OMTGT=OpptyDetailForm&OMTHD=OpportunityDetailNav&ssoid=3DS&OpptyDetailForm.Id=${oppyrowid}"
+                            }
+                        },
+                        "quarter": {
+                            "text": "Q",
+                            "sortable": true,
+                            "value": "quarter_year",
+                            "source": "crm",
+                            "width": "95px",
+                            "column_visible": false,
+                            "tag": "ds6w:when/Quarter",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "geo": {
+                            "text": "Geo",
+                            "value": "geo",
+                            "source": "crm",
+                            "width": "100px",
+                            "column_visible": false,
+                            "tag": "ds6w:where/Geo",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "geogroup": {
+                            "text": "Geo Group",
+                            "value": "geogroup",
+                            "source": "crm",
+                            "width": "100px",
+                            "column_visible": false,
+                            "tag": "ds6w:where/Geo Group",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "sitename": {
+                            "text": "Customer",
+                            "sortable": true,
+                            "value": "sitename",
+                            "source": "crm",
+                            "column_visible": true,
+                            "tag": "ds6w:who/Customer",
+                            "width": "180px"
+                        },
+                        "industry": {
+                            "text": "Industry",
+                            "sortable": true,
+                            "value": "industry",
+                            "source": "crm",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Industry",
+                            "width": "180px"
+                        },
+                        "must_list": {
+                            "text": "Must List",
+                            "value": "ismust",
+                            "source": "crm",
+                            "column_visible": true,
+                            "tag": "ds6w:what/Is Must",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "width": "60px"
+                        },
+                        "opportunity_name": {
+                            "text": "Opportunity Title",
+                            "value": "opportunity_name",
+                            "source": "crm",
+                            "width": "270px",
+                            "column_visible": true
+                        },
+                        "last_update": {
+                            "text": "Last CRM Update",
+                            "sortable": true,
+                            "value": "oppylastupdated",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "100px",
+                            "type": "date",
+                            "tooltip": "true"
+                        },
+                        "created_date": {
+                            "text": "Creation Date",
+                            "sortable": true,
+                            "value": "created_date",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "95px",
+                            "type": "date"
+                        },
+                        "close_date": {
+                            "text": "Close Date",
+                            "sortable": true,
+                            "value": "close_date_notime",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "95px",
+                            "type": "date"
+                        },
+                        "sales_stage": {
+                            "text": "Sales Stage",
+                            "value": "sales_stage_converted",
+                            "source": "crm",
+                            "width": "70px",
+                            "column_visible": true,
+                            "tag": "ds6w:when/Sales Stage",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "brand": {
+                            "text": "Brand(s)",
+                            "value": "brand_list",
+                            "source": "crm",
+                            "width": "140px",
+                            "column_visible": false,
+                            "tag": "ds6w:who/Brand",
+                            "tagMultiValues": {
+                                "separator": ","
+                            }
+                        },
+                        "csi": {
+                            "text": "C&SI",
+                            "value": "consulting_system_integrators",
+                            "source": "crm",
+                            "width": "140px",
+                            "column_visible": true,
+                            "tag": "ds6w:who/CSI",
+                            "tagMultiValues": {
+                                "separator": ","
+                            },
+                            "tooltip": {
+                                "rule": { "cat": [{ "var": "oppy.csi_comments" }] }
+                            }
+                        },
+                        "plc_or_service": {
+                            "text": "Revenue Type",
+                            "value": "plc_or_service",
+                            "width": "65px",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Revenue Type",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "tooltip": {
+                                "rule": { "cat": [{ "var": "oppy.opportunity_type" }] }
+                            }
+                        },
+                        "service": {
+                            "text": "Service (k€)",
+                            "value": "total_service_oppy_revenue__keur_",
+                            "source": "crm",
+                            "width": "65px",
+                            "type": "number",
+                            "column_visible": true,
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            }
+                        },
+                        "must_type": {
+                            "text": "Must Type",
+                            "value": "must_type",
+                            "source": "crm",
+                            "column_visible": false,
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "width": "150px"
+                        },
+                        "value_engagement_services_offer": {
+                            "text": "VE Service Offer",
+                            "value": "value_engagement_services_offer",
+                            "source": "",
+                            "width": "150px",
+                            "column_visible": true,
+                            "sortable": true,
+                            "editable": false,
+                            "tag": "ds6w:what/VE Service Offer",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "node_needs_review": {
+                            "text": "Needs Review",
+                            "value": "node_needs_review",
+                            "source": "",
+                            "width": "60px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "choices": ["YES", "NO"],
+                                "multiple": false
+                            },
+                            "tag": "ds6w:what/Needs Review",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "style": {
+                                "theme": "light",
+                                "color": "white"
+                            }
+                        },
+                        "node_ve_candidate": {
+                            "text": "VE",
+                            "value": "node_ve_candidate",
+                            "source": "",
+                            "width": "75px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "choices": ["YES", "Refused", "NA"],
+                                "rule": { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                "info": {
+                                    "rule": {
+                                        "and": [
+                                            { "===": [{ "var": "previous" }, "YES"] },
+                                            { "!": { "in": [{ "var": "user.login" }, { "var": "variables.geo_leaders" }] } }
+                                        ]
+                                    },
+                                    "header": "Action Blocked",
+                                    "message": "Please contact your WW Value Engagement call moderator to reset Value Engagement Status."
+                                },
+                                "onUpdateRule.old": {
+                                    "if": [{ "!==": [{ "var": "newValue" }, "YES"] }, { "affect": [{ "var": "oppy" }, "node_ve_phase", "NA"] }]
+                                }
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                    "css.old": "",
+                                    "color": "white",
+                                    "theme": "light"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [
+                                            { "===": [{ "var": "oppy.node_ve_candidate" }, "NA"] },
+                                            { "===": [{ "var": "oppy.node_ve_candidate" }, "Refused"] },
+                                            { "===": [{ "var": "oppy.node_ve_candidate" }, "TBD"] },
+                                            { "!": { "var": "oppy.node_ve_candidate" } }
+                                        ]
+                                    },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "grey darken-1",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": {
+                                        "===": [{ "var": "oppy.node_ve_candidate" }, "YES"]
+                                    },
+                                    "css.old": "background-color: #FFEBEE;",
+                                    "color": "blue darken-4",
+                                    "theme": "dark"
+                                }
+                            ],
+                            "tag": "ds6w:what/VE",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "node_status_ve": {
+                            "text": "VE Status",
+                            "value": "node_status_ve",
+                            "source": "",
+                            "width": "60px",
+                            "column_visible": true,
+                            "icon": "brightness_1",
+                            "tag": "ds6w:what/VE Status",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "sortable": true,
+                            "editable": {
+                                "rule": {
+                                    "and": [
+                                        { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                        { "in": [{ "var": "user.login" }, { "var": "variables.geo_leaders" }] }
+                                    ]
+                                },
+                                "choices": ["Green", "Yellow", "Red"],
+                                "multiple": false
+                            },
+                            "visible": {
+                                "rule": {
+                                    "===": [{ "var": "oppy.node_ve_candidate" }, "YES"]
+                                }
+                            },
+                            "style": [
+                                {
+                                    "comment": "if the value green",
+                                    "rule": { "===": [{ "var": "oppy.node_status_ve" }, "Green"] },
+                                    "css": "color: green;"
+                                },
+                                {
+                                    "comment": "if the value is not set",
+                                    "rule": { "===": [{ "var": "oppy.node_status_ve" }, "Yellow"] },
+                                    "css": "color: #fdd835;"
+                                },
+                                {
+                                    "comment": "if the value is not set",
+                                    "rule": { "===": [{ "var": "oppy.node_status_ve" }, "Red"] },
+                                    "css": "color: red;"
+                                }
+                            ]
+                        },
+                        "ve_phase": {
+                            "text": "VE Phase",
+                            "value": "node_ve_phase",
+                            "source": "",
+                            "width": "60px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "rule": { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                "choices": ["TBD", "VA", "VDef", "VC", "VDel"],
+                                "ve_quality_old": ["node_status_v_ass", "node_status_v_def", "node_status_v_del", "node_status_v_com"]
+                            },
+                            "visible": {
+                                "rule": {
+                                    "===": [{ "var": "oppy.node_ve_candidate" }, "YES"]
+                                }
+                            },
+                            "tag": "ds6w:what/VE Phase",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                    "css.old": "",
+                                    "color": "white",
+                                    "theme": "light"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [
+                                            { "===": [{ "var": "oppy.node_ve_phase" }, "TBD"] },
+                                            { "!": { "var": "oppy.node_ve_phase" } },
+                                            { "===": [{ "var": "oppy.node_ve_phase" }, "NA"] }
+                                        ]
+                                    },
+                                    "color": "grey darken-1",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VA"] },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "blue",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VDef"] },
+                                    "color": "blue darken-2",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VC"] },
+                                    "color": "blue darken-4",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": { "===": [{ "var": "oppy.node_ve_phase" }, "VDel"] },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "indigo darken-4",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [{ "===": [{ "var": "oppy.node_ve_phase" }, "TBD"] }, { "!": { "var": "oppy.node_ve_phase" } }]
+                                    },
+                                    "css.old": "background-color: #FFEBEE;",
+                                    "color": "red",
+                                    "theme": "dark"
+                                }
+                            ]
+                        },
+                        "node_sow_qualified": {
+                            "text": "SOW Qualified",
+                            "value": "node_sow_qualified",
+                            "width": "60px",
+                            "column_visible": true,
+                            "sortable": true,
+                            "editable": {
+                                "choices": ["YES", "NO", "TBD"],
+                                "rule": {
+                                    "and": [
+                                        { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                        { "in": [{ "var": "user.login" }, { "var": "variables.bid_committee" }] }
+                                    ]
+                                },
+                                "multiple": false,
+                                "onUpdateRule.old": {
+                                    "if": [
+                                        { "===": [{ "var": "newValue" }, "YES"] },
+                                        { "affect": [{ "var": "oppy" }, "node_consulting_amount", { "var": "oppy.total_service_oppy_revenue__eur_" }] },
+                                        { "affect": [{ "var": "oppy" }, "node_consulting_amount", 0] }
+                                    ]
+                                }
+                            },
+                            "visible": {
+                                "rule": {
+                                    "and": [{ "===": [{ "var": "oppy.node_ve_candidate" }, "YES"] }]
+                                }
+                            },
+                            "tag": "ds6w:what/SOW Qualified",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                    "css.old": "",
+                                    "color": "white",
+                                    "theme": "light"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [
+                                            { "===": [{ "var": "oppy.node_sow_qualified" }, "NO"] },
+                                            { "===": [{ "var": "oppy.node_sow_qualified" }, "TBD"] },
+                                            { "!": { "var": "oppy.node_sow_qualified" } }
+                                        ]
+                                    },
+                                    "color": "grey darken-1",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": {
+                                        "===": [{ "var": "oppy.node_sow_qualified" }, "YES"]
+                                    },
+                                    "color": "blue darken-4",
+                                    "theme": "dark"
+                                }
+                            ]
+                        },
+                        "node_consulting_amount": {
+                            "text": "Consulting Amount (€)",
+                            "value": "node_consulting_amount",
+                            "width": "80px",
+                            "column_visible": true,
+                            "sortable": true,
+                            "editable": {
+                                "rule": {
+                                    "and": [
+                                        { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                        { "in": [{ "var": "user.login" }, { "var": "variables.bid_committee" }] },
+                                        { "===": [{ "var": "oppy.node_sow_qualified" }, "YES"] }
+                                    ]
+                                }
+                            },
+                            "visible": {
+                                "rule": {
+                                    "and": [{ "===": [{ "var": "oppy.node_ve_candidate" }, "YES"] }]
+                                }
+                            },
+                            "type": "number",
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            },
+                            "style": {}
+                        },
+                        "node_status_comment": {
+                            "text": "General Comment",
+                            "value": "node_status_comment",
+                            "source": "",
+                            "width": "300px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "onUpdateRule": { "affect": [{ "var": "oppy" }, "last_comment_edition", { "now": [] }] }
+                            },
+                            "type": "text",
+                            "tooltip": {
+                                "multiline": true
+                            }
+                        },
+                        "last_comment_edition": {
+                            "text": "General Comment Update",
+                            "sortable": true,
+                            "value": "last_comment_edition",
+                            "column_visible": true,
+                            "width": "100px",
+                            "type": "date",
+                            "tag_nextrel": "ds6w:when/General Comment Update"
+                        },
+                        "node_ipe_comment": {
+                            "text": "Industry Process Experiences Comment",
+                            "value": "node_ipe_comment",
+                            "source": "",
+                            "width": "140px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": true,
+                            "type": "text",
+                            "tooltip": {
+                                "multiline": true
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "component": "btops-view-search",
+                "name": "Search in all Opportunities",
+                "title": "Search in all Opportunities",
+                "icon": "search",
+                "feedName": "search_all_qclient",
+                "searchfields": [
+                    { "name": "customer", "label": "Customer or CRM-ID", "field": "all" },
+                    { "name": "type", "label": "Type", "field": "oppy_opportunity_type" },
+                    { "name": "geo", "label": "Geo", "field": "oppy_geo" },
+                    { "name": "plc", "label": "PLC Deal Size (k€)", "field": "oppy_total_service_oppy_revenue__eur_" },
+                    { "name": "service", "label": "Service Deal Size (k€)", "field": "oppy_total_plc_oppy_revenue__eur_" }
+                ],
+                "query": "class:oppy",
+                "queryTimeframe": [-1, 6],
+                "uniqIdField": "oppyrowid",
+                "help": "Search in opportunities between Q-1 and Q+5 if you want to flag some of them as VE.",
+                "default": true,
+                "visible": true,
+                "table": {
+                    "title": "Opportunities BT",
+                    "columns": {
+                        "oppyrowid": {
+                            "text": "CRM ID",
+                            "sortable": true,
+                            "value": "oppyrowid",
+                            "source": "crm",
+                            "width": "135px",
+                            "column_visible": false,
+                            "link": {
+                                "url": "https://secure-ausomxdoa.crmondemand.com/OnDemand/user/OpportunityDetail?OMTGT=OpptyDetailForm&OMTHD=OpportunityDetailNav&ssoid=3DS&OpptyDetailForm.Id=${oppyrowid}"
+                            }
+                        },
+                        "quarter": {
+                            "text": "Q",
+                            "sortable": true,
+                            "value": "quarter_year",
+                            "source": "crm",
+                            "width": "95px",
+                            "column_visible": false,
+                            "tag": "ds6w:when/Quarter",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "geo": {
+                            "text": "Geo",
+                            "value": "geo",
+                            "source": "crm",
+                            "width": "100px",
+                            "column_visible": false,
+                            "tag": "ds6w:where/Geo",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "geogroup": {
+                            "text": "Geo Group",
+                            "value": "geogroup",
+                            "source": "crm",
+                            "width": "100px",
+                            "column_visible": false,
+                            "tag": "ds6w:where/Geo Group",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "sitename": {
+                            "text": "Customer",
+                            "sortable": true,
+                            "value": "sitename",
+                            "source": "crm",
+                            "column_visible": true,
+                            "tag": "ds6w:who/Customer",
+                            "width": "180px"
+                        },
+                        "industry": {
+                            "text": "Industry",
+                            "sortable": true,
+                            "value": "industry",
+                            "source": "crm",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Industry",
+                            "width": "180px"
+                        },
+                        "must_list": {
+                            "text": "Must List",
+                            "value": "ismust",
+                            "source": "crm",
+                            "column_visible": true,
+                            "tag": "ds6w:what/Is Must",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "width": "60px"
+                        },
+                        "opportunity_name": {
+                            "text": "Opportunity Title",
+                            "value": "opportunity_name",
+                            "source": "crm",
+                            "width": "270px",
+                            "column_visible": true
+                        },
+                        "last_update": {
+                            "text": "Last CRM Update",
+                            "sortable": true,
+                            "value": "oppylastupdated",
+                            "source": "crm",
+                            "column_visible": true,
+                            "width": "100px",
+                            "type": "date",
+                            "tooltip": "true"
+                        },
+                        "created_date": {
+                            "text": "Creation Date",
+                            "sortable": true,
+                            "value": "created_date",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "95px",
+                            "type": "date"
+                        },
+                        "close_date": {
+                            "text": "Close Date",
+                            "sortable": true,
+                            "value": "close_date_notime",
+                            "source": "crm",
+                            "column_visible": false,
+                            "width": "95px",
+                            "type": "date"
+                        },
+                        "sales_stage": {
+                            "text": "Sales Stage",
+                            "value": "sales_stage_converted",
+                            "source": "crm",
+                            "width": "70px",
+                            "column_visible": true,
+                            "tag": "ds6w:when/Sales Stage",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "csi": {
+                            "text": "C&SI",
+                            "value": "consulting_system_integrators",
+                            "source": "crm",
+                            "width": "140px",
+                            "column_visible": true,
+                            "tag": "ds6w:who/CSI",
+                            "tagMultiValues": {
+                                "separator": ","
+                            },
+                            "tooltip": {
+                                "rule": { "cat": [{ "var": "oppy.csi_comments" }] }
+                            }
+                        },
+                        "brand": {
+                            "text": "Brand(s)",
+                            "value": "brand_list",
+                            "source": "crm",
+                            "width": "140px",
+                            "column_visible": false,
+                            "tag": "ds6w:who/Brand",
+                            "tagMultiValues": {
+                                "separator": ","
+                            }
+                        },
+                        "plc_or_service": {
+                            "text": "Opportunity Type",
+                            "value": "opportunity_type",
+                            "width": "65px",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Revenue Type",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "tooltip": {
+                                "rule": { "cat": [{ "var": "oppy.opportunity_type" }] }
+                            }
+                        },
+                        "plc": {
+                            "text": "PLC (k€)",
+                            "value": "total_plc_oppy_revenue__keur_",
+                            "source": "crm",
+                            "width": "65px",
+                            "type": "number",
+                            "column_visible": true,
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            }
+                        },
+                        "service": {
+                            "text": "Service (k€)",
+                            "value": "total_service_oppy_revenue__keur_",
+                            "source": "crm",
+                            "width": "65px",
+                            "type": "number",
+                            "column_visible": true,
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            }
+                        },
+                        "must_type": {
+                            "text": "Must Type",
+                            "value": "must_type",
+                            "source": "crm",
+                            "column_visible": false,
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "width": "150px"
+                        },
+                        "node_obe": {
+                            "text": "Outcome Based Engagement",
+                            "value": "node_obe",
+                            "width": "75px",
+                            "column_visible": true,
+                            "sortable": true,
+                            "editable": {
+                                "choices": ["YES", "Refused", "NA"],
+                                "rule": {
+                                    "and": [
+                                        { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                        { "in": [{ "var": "user.login" }, { "var": "variables.geo_leaders" }] }
+                                    ]
+                                }
+                            },
+                            "style": [
+                                {
+                                    "rule": { "===": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                    "css.old": "",
+                                    "color": "white",
+                                    "theme": "light"
+                                },
+                                {
+                                    "rule": {
+                                        "or": [
+                                            { "===": [{ "var": "oppy.node_obe" }, "NA"] },
+                                            { "===": [{ "var": "oppy.node_obe" }, "Refused"] },
+                                            { "===": [{ "var": "oppy.node_obe" }, "TBD"] },
+                                            { "!": { "var": "oppy.node_obe" } }
+                                        ]
+                                    },
+                                    "css.old": "background-color: #E0F2F1;",
+                                    "color": "grey darken-1",
+                                    "theme": "dark"
+                                },
+                                {
+                                    "rule": {
+                                        "===": [{ "var": "oppy.node_obe" }, "YES"]
+                                    },
+                                    "css.old": "background-color: #FFEBEE;",
+                                    "color": "blue darken-4",
+                                    "theme": "dark"
+                                }
+                            ],
+                            "tag": "ds6w:what/Outcome Based Engagement",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "node_ve_candidate": {
+                            "text": "VE",
+                            "value": "node_ve_candidate",
+                            "source": "",
+                            "width": "75px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "choices": ["YES", "Refused", "NA"],
+                                "rule": { "!==": [{ "var": "oppy.sales_stage" }, "Closed/Lost"] },
+                                "info": {
+                                    "rule": {
+                                        "and": [
+                                            { "===": [{ "var": "previous" }, "YES"] },
+                                            { "!": { "in": [{ "var": "user.login" }, { "var": "variables.geo_leaders" }] } }
+                                        ]
+                                    },
+                                    "header": "Action Blocked",
+                                    "message": "Please contact your WW Value Engagement call moderator to reset Value Engagement Status."
+                                },
+                                "onUpdateRule.old": {
+                                    "if": [{ "!==": [{ "var": "newValue" }, "YES"] }, { "affect": [{ "var": "oppy" }, "node_ve_phase", "NA"] }]
+                                }
+                            },
+                            "tag": "ds6w:what/VE",
+                            "header_tooltip": {
+                                "categories": true
+                            },
+                            "style": {
+                                "color": "white"
+                            }
+                        },
+                        "node_status_comment": {
+                            "text": "General Comment",
+                            "value": "node_status_comment",
+                            "source": "",
+                            "width": "300px",
+                            "column_visible": true,
+                            "sortable": false,
+                            "editable": {
+                                "onUpdateRule": { "affect": [{ "var": "oppy" }, "last_comment_edition", { "now": [] }] }
+                            },
+                            "type": "text",
+                            "tooltip": {
+                                "multiline": true
+                            }
+                        },
+                        "last_comment_edition": {
+                            "text": "General Comment Update",
+                            "sortable": true,
+                            "value": "last_comment_edition",
+                            "column_visible": true,
+                            "width": "100px",
+                            "type": "date",
+                            "tag_nextrel": "ds6w:when/General Comment Update"
+                        }
+                    }
+                }
+            },
+            {
+                "component": "btops-view-search",
+                "name": "TSE",
+                "title": "Technical Sales Engagements",
+                "help": "Technical Sales Engagements (beta)",
+                "icon": "library_books",
+                "default": false,
+                "visible": true,
+                "feedName": "tse",
+                "uniqIdField": "tsename",
+                "searchfields": [
+                    { "name": "customer", "label": "Customer", "field": "all" },
+                    {
+                        "name": "state",
+                        "label": "State",
+                        "values": [
+                            { "header": "Open" },
+                            { "name": "Active", "value": "Active", "group": "Open", "default": true },
+                            { "name": "Create", "value": "Create", "group": "Open", "default": true },
+                            { "divider": true },
+                            { "header": "Finished" },
+                            { "name": "Closed", "value": "Closed", "group": "Finished" },
+                            { "name": "Complete", "value": "Complete", "group": "Finished" },
+                            { "name": "Lost", "value": "Lost", "group": "Finished" },
+                            { "name": "Terminated", "value": "Terminated", "group": "Finished" },
+                            { "divider": true },
+                            { "header": "Other" },
+                            { "name": "Cancel", "value": "Cancel", "group": "Other" },
+                            { "name": "Hold", "value": "Hold", "group": "Other" }
+                        ],
+                        "field": "tse_lifecyclestate"
+                    },
+                    {
+                        "name": "tseType",
+                        "label": "Type",
+                        "values": [
+                            { "header": "TSE Type" },
+                            { "name": "Leverage", "value": "LEVERAGE", "default": true },
+                            { "name": "Services", "value": "Services", "default": true },
+                            { "name": "Support", "value": "Support" },
+                            { "name": "DS Internal", "value": "DS+Internal" }
+                        ],
+                        "field": "type"
+                    },
+                    { "name": "geo", "label": "Geo", "field": "tse_geography" }
+                ],
+                "query": "class:tse",
+                "table": {
+                    "title": "Technical Sales Engagements",
+                    "columns": {
+                        "name": {
+                            "text": "Name",
+                            "sortable": true,
+                            "value": "tsename",
+                            "width": "70px",
+                            "column_visible": true,
+                            "link": { "url": "${link}" }
+                        },
+                        "geo": {
+                            "text": "Geo",
+                            "value": "geography",
+                            "width": "70px",
+                            "column_visible": false,
+                            "tag": "ds6w:where/Geo"
+                        },
+                        "customer": {
+                            "text": "Customer",
+                            "sortable": true,
+                            "value": "customer",
+                            "width": "100px",
+                            "column_visible": true
+                        },
+                        "title": {
+                            "text": "Title",
+                            "sortable": true,
+                            "value": "tsetitle",
+                            "width": "100px",
+                            "column_visible": true
+                        },
+                        "state": {
+                            "text": "State",
+                            "sortable": true,
+                            "value": "tselifecyclestate",
+                            "width": "40px",
+                            "column_visible": true,
+                            "tag": "ds6w:what/State"
+                        },
+                        "otl": {
+                            "text": "OTL",
+                            "value": "otlowner",
+                            "width": "80px",
+                            "column_visible": true,
+                            "tag": "ds6w:where/Geo"
+                        },
+                        "description": {
+                            "text": "Description",
+                            "value": "briefdescription",
+                            "type": "text",
+                            "width": "150px",
+                            "column_visible": false
+                        },
+                        "status": {
+                            "text": "Status",
+                            "value": "status",
+                            "width": "70px",
+                            "column_visible": true,
+                            "tag": "ds6w:what/Status"
+                        },
+                        "industry": {
+                            "text": "Industry",
+                            "value": "industry",
+                            "width": "60px",
+                            "column_visible": false
+                        },
+                        "type": {
+                            "text": "Type",
+                            "value": "type",
+                            "width": "65px",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Type",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "tse_has_deliverables": {
+                            "text": "Deliverables",
+                            "value": "deliverables_number",
+                            "width": "50px",
+                            "tag": "ds6w:what/Has Deliverables",
+                            "column_visible": true,
+                            "link": {
+                                "icon": "attach_file",
+                                "url": "https://3dxclientpgm.dsone.3ds.com/3dspace/common/emxIndentedTable.jsp?sortColumnName=Name&showPageHeader=false&editRelationship=relationship_Subtask&program=DSX_TechSalesEngagement%3AgetAllRelatedResolvedTo%2CDSX_TechSalesEngagement%3AgetOpenResolvedTo%2CDSX_TechSalesEngagement%3AgetClosedResolvedTo&portalMode=true&expandByDefault=true&toolbar=DSX_TSEDeliverablesToolBar&sortDirection=descending&showTabHeader=true&expandProgram=DSX_Activity%3AgetActivityDeliverablesForTSE&selection=multiple&relationName=relationship_dsxActivity&portalCmdName=DSX_ActivityDeliverablesInTSE&jsTreeID=null&header=emxProgramCentral.Dashboards.Deliverables&suiteKey=ProgramCentral&portal=DSX_TechSalesEngmntPropertiesPortal&table=DSX_ActivityDeliverablesInTSE&programLabel=emxProgramCentral.Common.All%2CemxProgramCentral.Common.Open%2CemxProgramCentral.Common.CompletedProjects&resequenceRelationship=relationship_Subtask&objectId=${objectid}"
+                            },
+                            "visible": {
+                                "rule": {
+                                    "if": [{ "!=": ["0", { "var": "oppy.deliverables_number" }] }, true, false]
+                                }
+                            }
+                        },
+                        "va": {
+                            "text": "Value Assessment",
+                            "value": "ve_assessment",
+                            "width": "110px",
+                            "column_visible": true,
+                            "type": "multiline"
+                        },
+                        "vd": {
+                            "text": "Value Definition",
+                            "value": "ve_definition",
+                            "width": "110px",
+                            "column_visible": true,
+                            "type": "multiline"
+                        },
+                        "vc": {
+                            "text": "Value Commitment",
+                            "value": "ve_commitment",
+                            "width": "110px",
+                            "column_visible": true,
+                            "type": "multiline"
+                        },
+                        "opportunity": {
+                            "text": "Opportunity",
+                            "value": "opportunityid",
+                            "width": "80px",
+                            "column_visible": true,
+                            "link": {
+                                "url": "https://secure-ausomxdoa.crmondemand.com/OnDemand/user/OpportunityDetail?OMTGT=OpptyDetailForm&OMTHD=OpportunityDetailNav&ssoid=3DS&OpptyDetailForm.Id=${opportunityid}"
+                            }
+                        },
+                        "sales_stage": {
+                            "text": "Sales Stage",
+                            "value": "sales_stage_converted",
+                            "source": "crm",
+                            "width": "70px",
+                            "column_visible": true,
+                            "tag": "ds6w:when/Sales Stage",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "plc": {
+                            "text": "PLC (k€)",
+                            "value": "total_plc_oppy_revenue__keur_",
+                            "source": "crm",
+                            "width": "65px",
+                            "type": "number",
+                            "column_visible": true,
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            }
+                        },
+                        "service": {
+                            "text": "Service (k€)",
+                            "value": "total_service_oppy_revenue__keur_",
+                            "source": "crm",
+                            "width": "65px",
+                            "type": "number",
+                            "column_visible": true,
+                            "header_tooltip": {
+                                "sum": true,
+                                "avg": true
+                            }
+                        },
+                        "opportunity_type": {
+                            "text": "Opportunity Type",
+                            "value": "opportunity_type",
+                            "width": "65px",
+                            "column_visible": false,
+                            "tag": "ds6w:what/Opportunity Type",
+                            "header_tooltip": {
+                                "categories": true
+                            }
+                        },
+                        "oppy_ve_candidate": {
+                            "text": "VE",
+                            "value": "oppy_ve_candidate",
+                            "width": "80px",
+                            "column_visible": true
+                        }
+                    }
+                }
+            },
+            { "name": "KPIs", "title": "KPIs", "icon": "pie_chart", "visible": false }
+        ],
+        "hidden_metas": ["node_ve_candidate_converted", "kind", "double_billable_amount"],
+        "variables": {
+            "swymURL": "https://dsext001-eu1-215dsi0708-3dswym.3dexperience.3ds.com/#community:katYj3ltS8KRtVlxnMu8_w",
+            "geo_leaders": ["lbd11", "jan10", "ii2", "fve", "c1l", "jpn", "jd6", "ryo", "pm7", "m3c", "odt1", "pg9", "pmr4", "vg7", "wdp", "spc", "hlv", "RG0"],
+            "administrators": ["RG0", "jan10", "ii2", "m3c", "odt1"],
+            "bid_committee": ["RG0", "ii2", "m3c", "odt1", "jpn", "kya", "irm"],
+            "geos": [
+                { "header": "AMERICAS" },
+                { "name": "Latin America", "value": "LATAM", "group": "AMERICAS" },
+                { "name": "North America", "value": "NAM", "group": "AMERICAS" },
+                { "divider": true },
+                { "header": "APAC" },
+                { "name": "AP South", "value": "APSOUTH", "group": "APAC" },
+                { "name": "China", "value": "CHINA", "group": "APAC" },
+                { "name": "India", "value": "INDIA", "group": "APAC" },
+                { "name": "Japan", "value": "JAPAN", "group": "APAC" },
+                { "name": "Korea", "value": "KOREA", "group": "APAC" },
+                { "divider": true },
+                { "header": "EMEAR" },
+                { "name": "EuroCentral", "value": "EUROCENTRAL", "group": "EMEAR" },
+                { "name": "EuroMed", "value": "EUROMED", "group": "EMEAR" },
+                { "name": "EuroNorth", "value": "EURONORTH", "group": "EMEAR" },
+                { "name": "EuroWest", "value": "EUROWEST", "group": "EMEAR" },
+                { "name": "Russia", "value": "RUSSIA", "group": "EMEAR" }
+            ]
+        },
+        "display_rules": {
+            "ismust": {
+                "if": [{ "==": [null, { "var": "oppy.ismust" }] }, "NO", "YES"]
+            },
+            "total_plc_oppy_revenue__keur_": { "/": [{ "var": "oppy.total_plc_oppy_revenue__eur_" }, 1000] },
+            "total_service_oppy_revenue__keur_": { "/": [{ "var": "oppy.total_service_oppy_revenue__eur_" }, 1000] },
+            "sales_stage_converted": {
+                "if": [
+                    { "in": ["Closed/", { "var": "oppy.sales_stage_converted" }] },
+                    { "substr": [{ "var": "oppy.sales_stage_converted" }, 7] },
+                    { "var": "oppy.sales_stage_converted" }
+                ]
+            },
+            "node_needs_review": {
+                "if": [{ "==": [null, { "var": "oppy.node_needs_review" }] }, "NO", { "var": "oppy.node_needs_review" }]
+            },
+            "plc_or_service": { "if": [{ "!=": [0, { "var": "oppy.total_plc_oppy_revenue__eur_" }] }, "PLC", "Service"] },
+            "close_date_notime": { "substr": [{ "var": "oppy.close_date" }, 0, -8] },
+            "tse_status_converted": {
+                "if": [
+                    { "or": [{ "===": [{ "var": "oppy.tse_status" }, "No Status"] }, { "==": [{ "var": "oppy.tse_status" }] }] },
+                    "No TSE Status",
+                    {
+                        "if": [{ "isArray": [{ "var": "oppy.tse_status" }] }, "More than 1 active TSE", { "var": "oppy.tse_status" }]
+                    }
+                ]
+            },
+            "tse_status_comment_converted": {
+                "if": [
+                    { "or": [{ "===": [{ "var": "oppy.tse_status_description" }, "No Status"] }, { "==": [{ "var": "oppy.tse_status_description" }] }] },
+                    "No TSE Status",
+                    {
+                        "if": [{ "isArray": [{ "var": "oppy.tse_status_description" }] }, "More than 1 active TSE", { "var": "oppy.tse_status_description" }]
+                    }
+                ]
+            },
+            "last_comment_edition": { "lookup": ["status_comment", { "var": "oppy.node_modif_key" }, { "var": "oppy.node_modif_ts" }] },
+            "ve_assessment": {
+                "map": [
+                    {
+                        "map": [
+                            {
+                                "filter": [
+                                    { "var": "oppy.activities" },
+                                    { "and": [{ "in": ["1.VALUE ASSESSMENT", { "var": "" }] }, { "!": { "in": ["Cancel", { "var": "" }] } }] }
+                                ]
+                            },
+                            { "split": [{ "var": "" }, "[?$<£>€!]"] }
+                        ]
+                    },
+                    { "cat": [{ "valueAt": [{ "var": "" }, 0] }, " - ", { "valueAt": [{ "var": "" }, 2] }] }
+                ]
+            },
+            "ve_definition": {
+                "map": [
+                    {
+                        "map": [
+                            {
+                                "filter": [
+                                    { "var": "oppy.activities" },
+                                    { "and": [{ "in": ["2.VALUE DEFINITION", { "var": "" }] }, { "!": { "in": ["Cancel", { "var": "" }] } }] }
+                                ]
+                            },
+                            { "split": [{ "var": "" }, "[?$<£>€!]"] }
+                        ]
+                    },
+                    { "cat": [{ "valueAt": [{ "var": "" }, 0] }, " - ", { "valueAt": [{ "var": "" }, 2] }] }
+                ]
+            },
+            "ve_commitment": {
+                "map": [
+                    {
+                        "map": [
+                            {
+                                "filter": [
+                                    { "var": "oppy.activities" },
+                                    { "and": [{ "in": ["3.VALUE COMMITMENT", { "var": "" }] }, { "!": { "in": ["Cancel", { "var": "" }] } }] }
+                                ]
+                            },
+                            { "split": [{ "var": "" }, "[?$<£>€!]"] }
+                        ]
+                    },
+                    { "cat": [{ "valueAt": [{ "var": "" }, 0] }, " - ", { "valueAt": [{ "var": "" }, 2] }] }
+                ]
+            }
+        },
+        "useFavTags": true,
+        "topicExternalFilter": "BT/Oppy/Filter"
+    },
+    "drawer": {
+        "allFields": {
+            "amount": { "text": "Amount", "type": "number" },
+            "consulting_system_integrators": { "text": "C&SI" },
+            "dsxcp_engagement_title": { "text": "DSxCP Engagement Title" },
+            "dsxcp_engagement_status": { "text": "DSxCP Engagement Status" },
+            "dsxcp_leverage_stage": { "text": "DSxCP Leverage Status" },
+            "dsxcp_linked_tse": { "text": "DSxCP TSE" },
+            "geo": { "text": "Geo" },
+            "industry": { "text": "Industry" },
+            "must_list": { "text": "Must List" },
+            "must_type": { "text": "Must Type" },
+            "node_billable": { "text": "Billable" },
+            "node_billable_amount": { "text": "Billable (k€)", "type": "number" },
+            "node_status_comment": { "text": "Comment" },
+            "node_status_v_ass": { "text": "VA. Status" },
+            "node_status_v_com": { "text": "VC. Status" },
+            "node_status_v_def": { "text": "VDef. Status" },
+            "node_status_v_del": { "text": "VDel.Status" },
+            "node_ve_candidate": { "text": "VE Candidate" },
+            "node_ve_phase": { "text": "VE Phase" },
+            "opportunity_name": { "text": "Title" },
+            "opportunity_type": { "text": "Type" },
+            "quarter": { "text": "Quarter" },
+            "sales_stage": { "text": "Sales Stage" },
+            "sitename": { "text": "Site Name" },
+            "total_plc_oppy_revenue__eur_": { "text": "PLC (€)", "type": "number", "notIn": ["TSE"] },
+            "total_service_oppy_revenue__eur_": { "text": "Service (€)", "type": "number", "notIn": ["TSE"] },
+            "tr_sum_of_brand_ma": { "text": "Sum of All Brands" },
+            "ve_phase": { "text": "VE Phase" },
+            "description": { "text": "Description" },
+            "otlowner": {
+                "text": "OTL",
+                "type": "widget_link",
+                "app_id": "MAP-IQPLHVVAF",
+                "app_id_dev": "MAP-FUGRMMXPL",
+                "data": {
+                    "people": "otlownertrigram"
+                }
+            },
+            "status": { "text": "Status", "notIn": ["TSE"] },
+            "assignees_converted": {
+                "text": "Assignees",
+                "type": "widget_link",
+                "app_id": "MAP-IQPLHVVAF",
+                "app_id_dev": "MAP-FUGRMMXPL",
+                "data": {
+                    "people": "assigneestrigram_converted"
+                }
+            },
+            "lifecyclestate": { "text": "State" },
+            "briefdescription": { "text": "Description" },
+            "statusdescription": { "text": "Status" },
+            "node_ipe_known": { "text": "Needs Review" },
+            "node_ipe_comment": { "text": "Industry Process Experiences Comment" },
+            "dsxcp_client_sales_link": { "text": "DSXCP Link", "notIn": ["TSE", "histo"] },
+            "deliverables": {
+                "text": "Deliverables",
+                "notIn": ["histo"],
+                "type": "link",
+                "url": "https://3dxclientpgm.dsone.3ds.com/3dspace/common/emxIndentedTable.jsp?sortColumnName=Name&showPageHeader=false&editRelationship=relationship_Subtask&program=DSX_TechSalesEngagement%3AgetAllRelatedResolvedTo%2CDSX_TechSalesEngagement%3AgetOpenResolvedTo%2CDSX_TechSalesEngagement%3AgetClosedResolvedTo&portalMode=true&expandByDefault=true&toolbar=DSX_TSEDeliverablesToolBar&sortDirection=descending&showTabHeader=true&expandProgram=DSX_Activity%3AgetActivityDeliverablesForTSE&selection=multiple&relationName=relationship_dsxActivity&portalCmdName=DSX_ActivityDeliverablesInTSE&jsTreeID=null&header=emxProgramCentral.Dashboards.Deliverables&suiteKey=ProgramCentral&portal=DSX_TechSalesEngmntPropertiesPortal&table=DSX_ActivityDeliverablesInTSE&programLabel=emxProgramCentral.Common.All%2CemxProgramCentral.Common.Open%2CemxProgramCentral.Common.CompletedProjects&resequenceRelationship=relationship_Subtask&objectId=${objectId}",
+                "field": "deliverables",
+                "displayField": "doctitle"
+            },
+            "tselifecyclestate": {
+                "text": "TSE Lifecycle",
+                "notIn": ["histo"]
+            },
+            "type": {
+                "text": "Type",
+                "notIn": ["histo"]
+            }
+        },
+        "infos": [
+            {
+                "text": "Where",
+                "icon": "location_on",
+                "subs": [
+                    { "text": "Opportunity Title", "value": "opportunity_name" },
+                    { "text": "Geo", "value": "geo" },
+                    { "text": "Industry", "value": "industry" }
+                ]
+            },
+            {
+                "text": "Value Engagement",
+                "icon": "show_chart",
+                "subs": [{ "text": "Is VE", "value": "node_ve_candidate" }, { "text": "VE Phase", "value": "node_ve_phase" }]
+            },
+            {
+                "text": "CRM",
+                "icon": "center_focus_weak",
+                "subs": [
+                    {
+                        "text": "CRM Id",
+                        "value": "oppyrowid",
+                        "link": {
+                            "url": "https://secure-ausomxdoa.crmondemand.com/OnDemand/user/OpportunityDetail?OMTGT=OpptyDetailForm&OMTHD=OpportunityDetailNav&ssoid=3DS&OpptyDetailForm.Id=${oppyrowid}"
+                        }
+                    }
+                ]
+            },
+            {
+                "text": "When",
+                "icon": "calendar_today",
+                "subs": [
+                    {
+                        "text": "Quarter",
+                        "value": ["quarter", "year"]
+                    },
+                    { "text": "Sales Stage", "value": "sales_stage" }
+                ]
+            },
+            {
+                "text": "Who",
+                "icon": "rowing",
+                "subs": [
+                    { "text": "C&SI", "value": "consulting_system_integrators" },
+                    { "text": "Sales Contact", "value": "sales_contact" },
+                    { "text": "Tech-Sales Contact", "value": "tech_sales_contact" }
+                ]
+            },
+            {
+                "text": "Deal",
+                "icon": "euro_symbol",
+                "subs": [
+                    { "text": "Sum of Brand", "value": "tr_sum_of_brand_ma", "type": "number" },
+                    { "text": "Amount (k)", "value": "amount", "type": "number" },
+                    { "text": "PLC (k€)", "value": "total_plc_oppy_revenue__keur_", "type": "number" },
+                    { "text": "Service (k€)", "value": "total_service_oppy_revenue__keur_", "type": "number" }
+                ]
+            },
+            {
+                "text": "Comment",
+                "icon": "comment",
+                "subs": [{ "text": "", "value": "node_status_comment" }]
+            },
+            {
+                "text": "Others",
+                "icon": "info",
+                "subs": [{ "text": "", "value": "node_others" }]
+            }
+        ]
+    }
+}
