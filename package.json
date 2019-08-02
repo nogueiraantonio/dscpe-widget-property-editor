@@ -4,7 +4,8 @@
     "description": "Widget Template using Vue.js",
     "main": "index.html",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --config ./build/webpack.config.js"
     },
     "repository": {
         "type": "git",
@@ -13,12 +14,20 @@
     "author": "widget-lab",
     "license": "MIT",
     "devDependencies": {
+        "@babel/core": "7.5.5",
+        "@babel/preset-env": "7.5.5",
+        "babel-loader": "8.0.6",
+        "copy-webpack-plugin": "5.0.4",
         "eslint": "5.16.0",
         "eslint-config-prettier": "6.0.0",
         "eslint-config-vuetify": "0.2.0",
         "eslint-plugin-html": "6.0.0",
+        "eslint-plugin-json": "1.4.0",
         "eslint-plugin-vue": "5.2.3",
-        "eslint-plugin-json": "1.4.0"
+        "vue-loader": "15.7.1",
+        "vue-template-compiler": "2.6.10",
+        "webpack": "4.39.0",
+        "webpack-cli": "3.3.6"
     },
     "dependencies": {
         "vue": "2.6.10"
