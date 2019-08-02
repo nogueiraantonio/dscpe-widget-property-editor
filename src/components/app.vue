@@ -2,9 +2,7 @@
     <v-app>
         <v-content>
             <v-container fluid fill-height ma-0 pa-0>
-                <v-layout align-center justify-center row fill-height>
-                    {{ hello }}
-                </v-layout>
+                <v-layout align-center justify-center row fill-height> {{ message }} - {{ hello }} </v-layout>
             </v-container>
         </v-content>
     </v-app>
@@ -16,10 +14,14 @@ export default {
     components: {},
     data: function() {
         return {
-            hello: "Hello 3DExperience Widget"
+            hello: "3DExperience Widget"
         };
     },
-    computed: {},
+    computed: {
+        message: function() {
+            return this.$store.state.message;
+        }
+    },
     watch: {},
     mounted: function() {},
     methods: {}
