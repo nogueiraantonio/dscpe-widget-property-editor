@@ -1,5 +1,6 @@
 const path = require("path");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 // const webpack = require("webpack");
 
@@ -14,10 +15,22 @@ module.exports = env => {
         // },
         output: {
             filename: "bundle.js",
-            path: path.resolve(__dirname, "dist")
+            path: path.resolve(__dirname, "../dist")
         },
         module: {
             rules: [
+                {
+                    test: /\.(svg|eot|woff|ttf|svg|woff2)$/,
+                    use: [
+                        {
+                            loader: "file-loader",
+                            options: {
+                                name: "[name].[ext]",
+                                outputPath: "static/fonts"
+                            }
+                        }
+                    ]
+                },
                 {
                     test: /.vue$/,
                     loader: "vue-loader"
@@ -29,13 +42,32 @@ module.exports = env => {
                     query: {
                         presets: ["@babel/env"]
                     }
+                },
+                {
+                    test: /.css$/,
+                    loader: ["style-loader", "css-loader"]
+                },
+                {
+                    test: /\.s(c|a)ss$/,
+                    use: [
+                        "vue-style-loader",
+                        "css-loader",
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                implementation: require("sass"),
+                                fiber: require("fibers"),
+                                indentedSyntax: true // optional
+                            }
+                        }
+                    ]
                 }
-                // {
-                //     test: /\.css$/,
-                //     loaders: ['style-loader', 'css-loader?minimize', 'postcss-loader']
-                // }
             ]
         },
-        plugins: [new CopyPlugin([{ from: "./src/index.html", to: "./index.html" }, { from: "./static/*", to: "./dist/static/" }]), new VueLoaderPlugin()]
+        plugins: [
+            new CopyPlugin([{ from: "./src/index.html", to: "./index.html" }, { from: "./static/*", to: "./dist/static/" }]),
+            new VueLoaderPlugin(),
+            new VuetifyLoaderPlugin()
+        ]
     };
 };
