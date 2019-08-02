@@ -19,5 +19,8 @@
         "eslint-plugin-html": "6.0.0",
         "eslint-plugin-vue": "5.2.3",
         "eslint-plugin-json": "1.4.0"
+    },
+    "dependencies": {
+        "vue": "2.6.10"
     }
 }
