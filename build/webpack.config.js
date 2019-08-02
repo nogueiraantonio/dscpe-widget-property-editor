@@ -2,6 +2,7 @@ const path = require("path");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const webpack = require("webpack");
 
 module.exports = env => {
@@ -13,6 +14,10 @@ module.exports = env => {
         //     port: 9001,
         //     watchContentBase: true
         // },
+        devtool: "inline-source-map",
+        devServer: {
+            contentBase: "./dist"
+        },
         output: {
             filename: "bundle.js",
             path: path.resolve(__dirname, "../dist")
@@ -65,6 +70,7 @@ module.exports = env => {
             ]
         },
         plugins: [
+            new CleanWebpackPlugin(),
             new CopyPlugin([{ from: "./src/index.html", to: "./index.html" }, { from: "./static/*", to: "./dist/static/" }]),
             new VueLoaderPlugin(),
             new VuetifyLoaderPlugin()
