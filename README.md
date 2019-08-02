@@ -2,4 +2,9 @@
 
 ## Why
 
-This repo proposes a reusable Template to build a Vue.js based widget.
+This is Template to build a Vue.js based widget.
+
+## How
+
+    npm install
+    npm run build
