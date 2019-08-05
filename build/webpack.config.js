@@ -3,24 +3,36 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-// const webpack = require("webpack");
+
+// set using
+// npm config set widget-template-vue:publicPath "https://3dexp.19xfd03.ds/WidgetLab/"
+let publicPath = process.env.npm_package_config_publicPath;
+let host = "0.0.0.0";
+if (publicPath === undefined || publicPath === null || publicPath.trim() === "") {
+    publicPath = "";
+    host = "localhost";
+}
 
 module.exports = env => {
     return {
         mode: "development",
         entry: ["./src/main.js"],
-        // devServer: {
-        //     contentBase: path.resolve(__dirname, 'standalone'),
-        //     port: 9001,
-        //     watchContentBase: true
-        // },
         devtool: "inline-source-map",
         devServer: {
-            contentBase: "./dist"
+            contentBase: "./dist",
+            hot: true,
+            compress: true,
+            // allow to be called from any host
+            disableHostCheck: true,
+            // host must be 0.0.0.0 if we want to be reachable from LAN
+            host,
+            // to prevent CORS issues
+            headers: { "Access-Control-Allow-Origin": "*" }
         },
         output: {
             filename: "bundle.js",
-            path: path.resolve(__dirname, "../dist")
+            path: path.resolve(__dirname, "../dist"),
+            publicPath
         },
         module: {
             rules: [
