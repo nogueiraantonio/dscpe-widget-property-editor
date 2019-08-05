@@ -1,10 +1,12 @@
 import Vue from "vue";
-import { loadWidget } from "./lib/widget";
+import { loadWidget, deactivateWidgetDefaultCss } from "./lib/widget";
 import App from "./components/app.vue";
 import vuetify from "./plugins/vuetify";
 import { store } from "./store";
 
 function start() {
+    deactivateWidgetDefaultCss(true);
+
     const mainComponent = new Vue({
         store,
         vuetify,
