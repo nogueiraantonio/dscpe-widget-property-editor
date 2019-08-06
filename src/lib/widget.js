@@ -130,8 +130,7 @@ export function deactivateWidgetDefaultCss(bDeactivate) {
     let styleSheets = document.styleSheets;
     for (let i = 0; i < styleSheets.length; i++) {
         const sheet = styleSheets.item(i);
-        for (let j = 0; j < widgetDefaultStyleSheets.length; j++) {
-            let partialUrlToTest = widgetDefaultStyleSheets[j];
+        for (const partialUrlToTest of widgetDefaultStyleSheets) {
             if (sheet.href && sheet.href.indexOf(partialUrlToTest) !== -1) {
                 sheet.disabled = disableOptions;
             }
