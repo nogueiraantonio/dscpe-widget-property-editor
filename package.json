@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "Widget Template using Vue.js",
     "main": "index.html",
+    "config": {
+        "publicPath": null
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack --config ./build/webpack.config.js",

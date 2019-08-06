@@ -7,11 +7,12 @@ const Widget = function() {
 
     this.addEvent = (event, callback) => {
         events[event] = callback;
-
         if (event === "onLoad") {
-            window.addEventListener("load", function() {
+            if (document.readyState === "loading") {
+                window.addEventListener("DOMContentLoaded", callback);
+            } else {
                 callback();
-            });
+            }
         }
     };
 
@@ -51,24 +52,44 @@ const waitFor = function(whatToWait, maxTry, then) {
         document.body.innerHTML = "Error while trying to load widget. See console for details";
         throw new Error(whatToWait + " didn't load");
     } else {
-        console.warn("Waiting for " + whatToWait);
-        setTimeout(waitFor, 100, whatToWait, --maxTry, then);
+        // console.warn("Waiting for " + whatToWait);
+        setTimeout(waitFor, 200, whatToWait, --maxTry, then);
     }
 };
 
-/* const initRequireModules = function() {
+const loadRequire = () => {
+    return new Promise((resolve, reject) => {
+        const oReq = new XMLHttpRequest();
+        oReq.addEventListener("load", resp => {
+            const script = document.createElement("script"); // Make a script DOM node
+            script.innerHTML = resp.target.response; // Set it's src to the provided URL
+            document.head.appendChild(script);
+            resolve();
+        });
+        try {
+            oReq.open("GET", "static/lib/require.js");
+            oReq.send();
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
+const initRequireModules = function() {
     define("DS/TagNavigatorProxy/TagNavigatorProxy", [], () => {
-        return new (function() {
+        console.log("initing");
+        const TagNavigatorProxy = function() {
             this.createProxy = () => {
                 return {
                     addEvent: (name, event) => {},
                     setSubjectsTags: subject => {}
                 };
             };
-        })();
+        };
+        return new TagNavigatorProxy();
     });
     define("DS/PlatformAPI/PlatformAPI", [], () => {
-        return new (function() {
+        const PlatformAPI = function() {
             this.getUser = () => {
                 return {
                     address: "An address for test purpose",
@@ -89,32 +110,36 @@ const waitFor = function(whatToWait, maxTry, then) {
             this.subscribe = (topic, callback) => {
                 return { topic: topic, callback: callback };
             };
-        })();
+        };
+        return new PlatformAPI();
     });
-}; */
+};
 
-export function loadWidget() {
-    return new Promise((resolve, reject) => {
-        if (!window.UWA) {
-            window.widget = new Widget();
-            window.UWA = new UWA();
-            return resolve(window.widget);
-        } else {
-            try {
-                // sometime (actually, often), dashboard takes time to inject widget object
-                waitFor(
-                    "widget",
-                    10,
-                    // finally, ...starts
-                    function() {
-                        resolve(window.widget);
-                    }
-                );
-            } catch (error) {
-                reject(error);
-            }
+export function init3DDashboardMocking(cbOk, cbError) {
+    if (!window.UWA) {
+        window.widget = new Widget();
+        window.UWA = new UWA();
+        loadRequire().then(() => {
+            initRequireModules();
+        });
+        waitFor("requirejs", 30, () => {
+            cbOk(window.widget);
+        });
+    } else {
+        try {
+            // sometime (actually, often), dashboard takes time to inject widget object
+            waitFor(
+                "widget",
+                10,
+                // finally, ...starts
+                () => {
+                    cbOk(window.widget);
+                }
+            );
+        } catch (error) {
+            cbError(error);
         }
-    });
+    }
 }
 
 // List of path of the css files to deactivate with the following function
