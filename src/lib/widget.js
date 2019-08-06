@@ -141,3 +141,24 @@ export function init3DDashboardMocking(cbOk, cbError) {
         }
     }
 }
+
+// List of path of the css files to deactivate with the following function
+const widgetDefaultStyleSheets = ["UWA/assets/css/iframe.css"];
+
+export function deactivateWidgetDefaultCss(bDeactivate) {
+    // Activate or deactivate widgets default css
+    // To re-activate the Default CSS files pass a false boolean, if no parameters are passed it's considered as true
+    let disableOptions = true;
+    if (typeof bDeactivate === "boolean" && bDeactivate === false) {
+        disableOptions = false;
+    }
+    let styleSheets = document.styleSheets;
+    for (let i = 0; i < styleSheets.length; i++) {
+        const sheet = styleSheets.item(i);
+        for (const partialUrlToTest of widgetDefaultStyleSheets) {
+            if (sheet.href && sheet.href.indexOf(partialUrlToTest) !== -1) {
+                sheet.disabled = disableOptions;
+            }
+        }
+    }
+}
