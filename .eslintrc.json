@@ -87,7 +87,8 @@
     },
     "globals": {
         "widget": false,
-        "Highcharts": false
+        "Highcharts": false,
+        "requirejs": false
     },
     "plugins": ["vue", "json"]
 }

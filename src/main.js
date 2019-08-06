@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { loadWidget } from "./lib/widget";
+import { init3DDashboardMocking } from "./lib/widget";
 import App from "./components/app.vue";
 import vuetify from "./plugins/vuetify";
 import { store } from "./store";
@@ -13,15 +13,25 @@ function start() {
 
     mainComponent.$mount("app");
 
-    store.commit("setMessage", "Welcome !");
+    requirejs(["DS/PlatformAPI/PlatformAPI"], PlatformAPI => {
+        store.commit("setMessage", "PlatformAPI ready");
+    });
 }
-
-loadWidget()
-    .then(widget => {
+/**
+ * Entry point for both standalone & 3DDashboard modes
+ */
+init3DDashboardMocking(
+    widget => {
         widget.addEvent("onLoad", () => {
             start();
         });
-    })
-    .catch(err => {
-        console.error(`Error : ${err}`);
-    });
+        widget.addEvent("onRefresh", () => {
+            // what do you want to do on refresh ?
+            // by default, lets reload the page
+            window.location.reload();
+        });
+    },
+    error => {
+        console.log(`Error occured while mocking 3DDashboard : ${error}`);
+    }
+);
