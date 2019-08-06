@@ -27,7 +27,8 @@ module.exports = env => {
             // host must be 0.0.0.0 if we want to be reachable from LAN
             host,
             // to prevent CORS issues
-            headers: { "Access-Control-Allow-Origin": "*" }
+            headers: { "Access-Control-Allow-Origin": "*" },
+            writeToDisk: true
         },
         output: {
             filename: "bundle.js",
@@ -55,7 +56,7 @@ module.exports = env => {
                 {
                     test: /.js$/,
                     loader: "babel-loader",
-                    exclude: /node_modules/,
+                    exclude: [/node_modules/, /src\/static/],
                     query: {
                         presets: ["@babel/env"]
                     }
@@ -83,7 +84,7 @@ module.exports = env => {
         },
         plugins: [
             new CleanWebpackPlugin(),
-            new CopyPlugin([{ from: "./src/index.html", to: "./index.html" }, { from: "./static/*", to: "./dist/static/" }]),
+            new CopyPlugin([{ from: "./src/index.html", to: "./index.html" }, { from: "./src/static", to: "static", ignore: ["*.md"] }]),
             new VueLoaderPlugin(),
             new VuetifyLoaderPlugin()
         ]
