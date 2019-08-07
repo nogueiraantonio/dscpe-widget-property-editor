@@ -6,7 +6,7 @@ const common = require("./webpack.config.common.js");
 let publicPath = process.env.npm_package_config_publicPath;
 let publicUrl = publicPath;
 let host = "0.0.0.0";
-if (publicPath === undefined || publicPath === null || publicPath.trim() === "") {
+if (publicPath === undefined || publicPath === null || publicPath === "null" || publicPath.trim() === "") {
     publicPath = "";
     host = "localhost";
     publicUrl = undefined;
