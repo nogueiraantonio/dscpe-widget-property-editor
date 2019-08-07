@@ -38,6 +38,12 @@ module.exports = env => {
         module: {
             rules: [
                 {
+                    enforce: "pre",
+                    test: /\.(js|vue)$/,
+                    exclude: [/node_modules/, /src\/static/],
+                    loader: "eslint-loader"
+                },
+                {
                     test: /\.(svg|eot|woff|ttf|svg|woff2)$/,
                     use: [
                         {

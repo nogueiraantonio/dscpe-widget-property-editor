@@ -4,6 +4,10 @@
 
 This is Template to build a Vue.js based widget.
 
+## Prereq
+
+Download and install node 10.16.2 LTS - https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi
+
 ## How
 
 Install dependencies
