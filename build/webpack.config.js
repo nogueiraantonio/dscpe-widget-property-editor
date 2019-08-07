@@ -27,8 +27,7 @@ module.exports = env => {
             // host must be 0.0.0.0 if we want to be reachable from LAN
             host,
             // to prevent CORS issues
-            headers: { "Access-Control-Allow-Origin": "*" },
-            writeToDisk: true
+            headers: { "Access-Control-Allow-Origin": "*" }
         },
         output: {
             filename: "bundle.js",

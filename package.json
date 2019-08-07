@@ -9,7 +9,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack --config ./build/webpack.config.js",
-        "start": "webpack-dev-server --config ./build/webpack.config.js --open"
+        "start": "webpack-dev-server --config ./build/webpack.config.js --open",
+        "devS3": "node --inspect node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./build/webpack.config.dev.s3.js"
     },
     "repository": {
         "type": "git",
@@ -45,6 +46,10 @@
         "vuex": "3.1.1",
         "webpack": "4.39.0",
         "webpack-cli": "3.3.6",
-        "webpack-dev-server": "3.7.2"
+        "webpack-dev-server": "3.7.2",
+        "webpack-s3-plugin": "1.0.3"
+    },
+    "dependencies": {
+        "s3": "4.4.0"
     }
 }
