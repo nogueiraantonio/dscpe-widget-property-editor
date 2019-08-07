@@ -31,7 +31,7 @@
     "rules": {
         "no-const-assign": "error",
         "no-this-before-super": "warn",
-        "no-undef": "warn",
+        "no-undef": "error",
         "no-unreachable": "warn",
         "no-unused-vars": "warn",
         "constructor-super": "warn",
@@ -39,7 +39,7 @@
         "no-console": [
             "warn",
             {
-                "allow": ["log", "warn", "error"]
+                "allow": ["debug", "warn", "error", "trace", "table"]
             }
         ],
         "eqeqeq": ["error", "always"],
