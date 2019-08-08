@@ -1,6 +1,6 @@
 const Widget = function() {
     let events = {};
-    let title = {};
+    let title = "";
 
     const prefs = (() => {
         let prefsLocal = localStorage.getItem("_prefs_4_Widget_");
@@ -40,6 +40,10 @@ const Widget = function() {
         pref.value = pref.defaultValue;
         prefs[pref.name] = pref;
         _savePrefsLocalStorage();
+    };
+
+    this.getPreference = prefName => {
+        return prefs[prefName];
     };
 
     this.getValue = prefName => {
@@ -138,8 +142,8 @@ const initRequireModules = function() {
 
 export function usingWidget(cbOk, cbError) {
     if (window.widget) cbOk(window.widget);
-    // outside of 3DDashboard
     else if (!window.UWA) {
+        // outside of 3DDashboard
         window.widget = new Widget();
         window.UWA = new UWA();
         loadRequire().then(() => {
@@ -148,9 +152,8 @@ export function usingWidget(cbOk, cbError) {
         waitFor("requirejs", 10, () => {
             cbOk(window.widget);
         });
-    }
-    // in 3DDashboard
-    else {
+    } else {
+        // in 3DDashboard
         try {
             // sometime (actually, often), dashboard takes time to inject widget object
             waitFor(
