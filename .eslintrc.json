@@ -46,6 +46,7 @@
         "quotes": [2, "double"],
         "semi": "off",
         "space-before-function-paren": "off",
+        "space-before-blocks": "warn",
         "no-var": "warn",
         "spaced-comment": "warn",
         "vue/html-indent": [
