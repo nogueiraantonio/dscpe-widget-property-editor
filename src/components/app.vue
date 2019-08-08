@@ -1,20 +1,31 @@
 <template>
     <v-app>
         <v-content>
-            <v-container fluid fill-height ma-0 pa-0>
-                <v-layout align-center justify-center row fill-height>{{ hello }} - {{ message }}</v-layout>
+            <v-container fill-height>
+                <how-to />
             </v-container>
         </v-content>
     </v-app>
 </template>
 
+<!-- no scope for app.vue, style defined here is global for the app -->
+<style>
+html,
+body {
+    overflow-y: auto !important;
+    height: 100%;
+}
+</style>
+
 <script>
+import HowTo from "./how-to.vue";
+
 export default {
     name: "App",
-    components: {},
+    components: { HowTo },
     data: function() {
         return {
-            hello: "3DExperience Widget :)"
+            hello: "3DExperience Widget ! :) "
         };
     },
     computed: {
