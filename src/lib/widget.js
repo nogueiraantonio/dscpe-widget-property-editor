@@ -41,6 +41,7 @@ const Widget = function() {
 
 const UWA = function() {
     this.log = args => {
+        /* eslint no-console:off */
         console.log(args);
     };
 };
@@ -52,7 +53,6 @@ const waitFor = function(whatToWait, maxTry, then) {
         document.body.innerHTML = "Error while trying to load widget. See console for details";
         throw new Error(whatToWait + " didn't load");
     } else {
-        // console.warn("Waiting for " + whatToWait);
         setTimeout(waitFor, 200, whatToWait, --maxTry, then);
     }
 };
@@ -115,17 +115,21 @@ const initRequireModules = function() {
     });
 };
 
-export function init3DDashboardMocking(cbOk, cbError) {
-    if (!window.UWA) {
+export function usingWidget(cbOk, cbError) {
+    if (window.widget) cbOk(window.widget);
+    // outside of 3DDashboard
+    else if (!window.UWA) {
         window.widget = new Widget();
         window.UWA = new UWA();
         loadRequire().then(() => {
             initRequireModules();
         });
-        waitFor("requirejs", 30, () => {
+        waitFor("requirejs", 10, () => {
             cbOk(window.widget);
         });
-    } else {
+    }
+    // in 3DDashboard
+    else {
         try {
             // sometime (actually, often), dashboard takes time to inject widget object
             waitFor(
@@ -137,6 +141,7 @@ export function init3DDashboardMocking(cbOk, cbError) {
                 }
             );
         } catch (error) {
+            console.error(error);
             cbError(error);
         }
     }

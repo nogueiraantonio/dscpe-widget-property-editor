@@ -19,13 +19,18 @@ body {
 
 <script>
 import HowTo from "./how-to.vue";
+import { usingWidget } from "../lib/widget.js";
+
+usingWidget(widget => {
+    // do something with this widget :)
+});
 
 export default {
     name: "App",
     components: { HowTo },
     data: function() {
         return {
-            hello: "3DExperience Widget ! :) "
+            hello: "3DExperience Widget :) "
         };
     },
     computed: {

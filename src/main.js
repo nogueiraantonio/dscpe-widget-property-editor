@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { init3DDashboardMocking, deactivateWidgetDefaultCss } from "./lib/widget";
+import { usingWidget, deactivateWidgetDefaultCss } from "./lib/widget";
 import App from "./components/app.vue";
 import vuetify from "./plugins/vuetify";
 import { store } from "./store";
@@ -16,15 +16,16 @@ function start() {
     mainComponent.$mount("app");
 
     requirejs(["DS/PlatformAPI/PlatformAPI"], PlatformAPI => {
-        store.commit("setMessage", "PlatformAPI ready");
+        store.commit("setMessage", "PlatformAPI ready.");
     });
 }
 /**
  * Entry point for both standalone & 3DDashboard modes
  */
-init3DDashboardMocking(
+usingWidget(
     widget => {
         widget.addEvent("onLoad", () => {
+            console.log("object");
             start();
         });
         widget.addEvent("onRefresh", () => {
@@ -34,6 +35,6 @@ init3DDashboardMocking(
         });
     },
     error => {
-        console.log(`Error occured while mocking 3DDashboard : ${error}`);
+        console.debug(`Error occured while mocking 3DDashboard : ${error}`);
     }
 );
