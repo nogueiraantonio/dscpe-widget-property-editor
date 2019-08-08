@@ -49,6 +49,7 @@
         "space-before-blocks": "warn",
         "no-var": "warn",
         "spaced-comment": "warn",
+        "camelcase": ["warn", { "allow": ["__webpack_public_path__"] }],
         "vue/html-indent": [
             "warn",
             4,
@@ -89,7 +90,8 @@
     "globals": {
         "widget": false,
         "Highcharts": false,
-        "requirejs": false
+        "requirejs": false,
+        "__webpack_public_path__": true
     },
     "plugins": ["vue", "json"]
 }

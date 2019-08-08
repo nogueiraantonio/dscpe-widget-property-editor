@@ -1,5 +1,7 @@
-import Vue from "vue";
+// Import widget.js first
 import { usingWidget, deactivateWidgetDefaultCss } from "./lib/widget";
+// Then __webpack_public_path__ is set if needed to be set, so we can import the other modules
+import Vue from "vue";
 import App from "./components/app.vue";
 import vuetify from "./plugins/vuetify";
 import { store } from "./store";

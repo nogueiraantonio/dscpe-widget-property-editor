@@ -1,3 +1,15 @@
+// Setup Webpack public path to avoid fonts loading issues
+const frameUrl = window.location.href;
+let startUwaUrl = frameUrl.indexOf("uwaUrl=");
+if (startUwaUrl !== -1) {
+    startUwaUrl += "uwaUrl=".length;
+    let extractUwaUrl = frameUrl.substring(startUwaUrl, frameUrl.indexOf("&", startUwaUrl));
+    extractUwaUrl = decodeURIComponent(extractUwaUrl);
+    extractUwaUrl = extractUwaUrl.substring(0, extractUwaUrl.lastIndexOf("/") + 1);
+    // Finally setup the public path
+    __webpack_public_path__ = extractUwaUrl;
+}
+
 const Widget = function() {
     let events = {};
     let title = "";
