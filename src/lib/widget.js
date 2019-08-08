@@ -1,6 +1,6 @@
 const Widget = function() {
     let events = {};
-    let title = {};
+    let title = "";
 
     const prefs = (() => {
         let prefsLocal = localStorage.getItem("_prefs_4_Widget_");
@@ -40,6 +40,10 @@ const Widget = function() {
         pref.value = pref.defaultValue;
         prefs[pref.name] = pref;
         _savePrefsLocalStorage();
+    };
+
+    this.getPreference = prefName => {
+        return prefs[prefName];
     };
 
     this.getValue = prefName => {
