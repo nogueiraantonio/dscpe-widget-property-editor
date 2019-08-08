@@ -44,7 +44,7 @@
         ],
         "eqeqeq": ["error", "always"],
         "quotes": [2, "double"],
-        "semi": "off",
+        "semi": ["error", "always"],
         "space-before-function-paren": "off",
         "space-before-blocks": "warn",
         "no-var": "warn",
