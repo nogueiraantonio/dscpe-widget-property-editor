@@ -1,7 +1,26 @@
 const Widget = function() {
     let events = {};
     let title = {};
-    let prefs = {};
+
+    const prefs = (() => {
+        let prefsLocal = localStorage.getItem("_prefs_4_Widget_");
+        if (prefsLocal) {
+            try {
+                prefsLocal = JSON.parse(prefsLocal);
+            } catch {
+                prefsLocal = {};
+                localStorage.setItem("_prefs_4_Widget_", JSON.stringify(prefsLocal));
+            }
+        } else {
+            prefsLocal = {};
+            localStorage.setItem("_prefs_4_Widget_", JSON.stringify(prefsLocal));
+        }
+        return prefsLocal;
+    })();
+
+    const _savePrefsLocalStorage = () => {
+        localStorage.setItem("_prefs_4_Widget_", JSON.stringify(prefs));
+    };
 
     this.uwaUrl = "./";
 
@@ -20,6 +39,7 @@ const Widget = function() {
         // console.log(`Preference added ${pref}`);
         pref.value = pref.defaultValue;
         prefs[pref.name] = pref;
+        _savePrefsLocalStorage();
     };
 
     this.getValue = prefName => {
@@ -28,6 +48,7 @@ const Widget = function() {
 
     this.setValue = (prefName, value) => {
         prefs[prefName].value = value;
+        _savePrefsLocalStorage();
     };
 
     this.setTitle = t => {
