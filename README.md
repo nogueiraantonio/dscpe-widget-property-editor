@@ -25,3 +25,7 @@ In case of developing within a 3DDashboard, you must configure the base URL of y
 For production, build the template
 
     npm run build
+
+## CI / CD
+
+This template is ready for Gitlab CI / CD, please refer to [CI/CD Setup Guide](/build/Gitlab-CI-Setup.md)
