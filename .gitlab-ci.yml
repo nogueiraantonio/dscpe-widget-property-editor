@@ -9,7 +9,7 @@ cache:
 
 stages:
     - install
-#    - build
+    - build
 
 npm_install:
   stage: install
