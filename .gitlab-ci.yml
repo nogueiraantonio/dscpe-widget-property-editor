@@ -1,24 +1,24 @@
 # node 10.16 is LTS @ September-2019
 image: node:10.16-stretch
 
-# to be persisted between stages
-artifacts:
-  paths:
-    - node_modules/
-    - package-lock.json
-
 stages:
-    - install
+    - prepare
     - build
 
+# install node_modules to prepare build
 npm_install:
-  stage: install
+  stage: prepare
   tags: 
     - widgetlab
+  artifacts:
+    paths:
+      - node_modules/
+      - package-lock.json
   script:
     - ls node_modules
     - npm install
 
+# build widget
 npm_build:
   stage: build
   tags: 
