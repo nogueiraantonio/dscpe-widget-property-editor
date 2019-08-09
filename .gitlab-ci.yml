@@ -1,8 +1,8 @@
 # node 10.16 is LTS @ September-2019
 image: node:10.16-stretch
 
-# To be cached between jobs
-cache:
+# to be persisted between stages
+artifacts:
   paths:
     - node_modules/
     - package-lock.json
@@ -15,8 +15,6 @@ npm_install:
   stage: install
   tags: 
     - widgetlab
-  cache:
-    policy: push
   script:
     - ls node_modules
     - npm install
