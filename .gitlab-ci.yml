@@ -20,6 +20,7 @@ npm_install:
 
 npm_build:
   stage: build
-  tags: widgetlab
+  tags: 
+    - widgetlab
   script:
     - npm run build
