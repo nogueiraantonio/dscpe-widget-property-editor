@@ -51,7 +51,7 @@
     "webpack-dev-server": "3.7.2"
   },
   "dependencies": {
-    "s3": "4.4.0",
+    "s3": "^4.4.0",
     "webpack-merge": "4.2.1"
   }
 }

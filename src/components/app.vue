@@ -7,7 +7,7 @@
         </v-content>
     </v-app>
 </template>
-
+ 
 <!-- no scope for app.vue, style defined here is global for the app -->
 <style>
 html,
@@ -30,7 +30,7 @@ export default {
     components: { HowTo },
     data: function() {
         return {
-            hello: "3DExperience Widget :) "
+            hello: "3DExperience Widget :)"
         };
     },
     computed: {
