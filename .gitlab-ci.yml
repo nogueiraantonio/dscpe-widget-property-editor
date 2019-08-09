@@ -1,3 +1,7 @@
+# GitLab CI/CD configuration
+# P13@3DS.com
+# please read Gitlab-CI-Setup.md to enable CI/CD on the repository
+
 # node 10.16 is LTS @ September-2019
 image: node:10.16-stretch
 
