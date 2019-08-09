@@ -1,0 +1,21 @@
+# node 10.16 is LTS @ September-2019
+image: node:10.16-stretch
+
+# To be cached between jobs
+cache:
+  paths:
+    - node_modules/
+
+stages:
+    - install
+    - build
+
+npm_install:
+  stage: install
+  script:
+    - npm install
+
+npm_build:
+  stage: build
+  script:
+    - npm run build
