@@ -2,9 +2,10 @@
 image: node:10.16-stretch
 
 # To be cached between jobs
-#cache:
-#  paths:
-#    - node_modules/
+cache:
+  paths:
+    - node_modules/
+    - package-lock.json
 
 stages:
     - install
@@ -17,8 +18,8 @@ npm_install:
   script:
     - npm install
 
-#npm_build:
-#  stage: build
-#  tags: widgetlab
-#  script:
-#    - npm run build
+npm_build:
+  stage: build
+  tags: widgetlab
+  script:
+    - npm run build
