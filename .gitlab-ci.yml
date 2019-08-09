@@ -12,10 +12,12 @@ stages:
 
 npm_install:
   stage: install
+  tags: widgetlab
   script:
     - npm install
 
 npm_build:
   stage: build
+  tags: widgetlab
   script:
     - npm run build
