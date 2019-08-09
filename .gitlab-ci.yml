@@ -16,6 +16,7 @@ npm_install:
   tags: 
     - widgetlab
   script:
+    - ls node_modules
     - npm install
 
 npm_build:
