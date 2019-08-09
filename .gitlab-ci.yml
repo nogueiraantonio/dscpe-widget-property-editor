@@ -6,19 +6,20 @@ stages:
     - build
 
 # install node_modules to prepare build
+
 npm_install:
   stage: prepare
   tags: 
     - widgetlab
   artifacts:
     paths:
-      - node_modules/
       - package-lock.json
   script:
     - ls node_modules
     - npm install
 
 # build widget
+
 npm_build:
   stage: build
   tags: 
