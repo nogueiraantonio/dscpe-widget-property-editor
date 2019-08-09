@@ -1,9 +1,6 @@
 # node 10.16 is LTS @ September-2019
 image: node:10.16-stretch
 
-tags: 
-    - widgetlab
-
 # To be cached between jobs
 #cache:
 #  paths:
@@ -15,7 +12,8 @@ stages:
 
 npm_install:
   stage: install
-  tags: widgetlab
+  tags: 
+    - widgetlab
   script:
     - npm install
 
