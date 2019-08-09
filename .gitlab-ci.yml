@@ -1,0 +1,32 @@
+# GitLab CI/CD configuration
+# P13@3DS.com
+# please read Gitlab-CI-Setup.md to enable CI/CD on the repository
+
+# node 10.16 is LTS @ September-2019
+image: node:10.16-stretch
+
+stages:
+    - prepare
+    - build
+
+# install node_modules to prepare build
+
+npm_install:
+  stage: prepare
+  tags: 
+    - widgetlab
+  artifacts:
+    paths:
+      - node_modules/
+      - package-lock.json
+  script:
+    - npm install
+
+# build widget
+
+npm_build:
+  stage: build
+  tags: 
+    - widgetlab
+  script:
+    - npm run build

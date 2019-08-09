@@ -1,7 +1,41 @@
+// Setup Webpack public path to avoid loading issues with static assets
+const setupPublicPathForDashboard = () => {
+    const frameUrl = window.location.href;
+    let startUwaUrl = frameUrl.indexOf("uwaUrl=");
+    if (startUwaUrl !== -1) {
+        startUwaUrl += "uwaUrl=".length;
+        let extractUwaUrl = frameUrl.substring(startUwaUrl, frameUrl.indexOf("&", startUwaUrl));
+        extractUwaUrl = decodeURIComponent(extractUwaUrl);
+        extractUwaUrl = extractUwaUrl.substring(0, extractUwaUrl.lastIndexOf("/") + 1);
+        // Finally setup the public path
+        __webpack_public_path__ = extractUwaUrl;
+    }
+};
+setupPublicPathForDashboard();
+
 const Widget = function() {
     let events = {};
-    let title = {};
-    let prefs = {};
+    let title = "";
+
+    const prefs = (() => {
+        let prefsLocal = localStorage.getItem("_prefs_4_Widget_");
+        if (prefsLocal) {
+            try {
+                prefsLocal = JSON.parse(prefsLocal);
+            } catch {
+                prefsLocal = {};
+                localStorage.setItem("_prefs_4_Widget_", JSON.stringify(prefsLocal));
+            }
+        } else {
+            prefsLocal = {};
+            localStorage.setItem("_prefs_4_Widget_", JSON.stringify(prefsLocal));
+        }
+        return prefsLocal;
+    })();
+
+    const _savePrefsLocalStorage = () => {
+        localStorage.setItem("_prefs_4_Widget_", JSON.stringify(prefs));
+    };
 
     this.uwaUrl = "./";
 
@@ -20,6 +54,11 @@ const Widget = function() {
         // console.log(`Preference added ${pref}`);
         pref.value = pref.defaultValue;
         prefs[pref.name] = pref;
+        _savePrefsLocalStorage();
+    };
+
+    this.getPreference = prefName => {
+        return prefs[prefName];
     };
 
     this.getValue = prefName => {
@@ -28,6 +67,7 @@ const Widget = function() {
 
     this.setValue = (prefName, value) => {
         prefs[prefName].value = value;
+        _savePrefsLocalStorage();
     };
 
     this.setTitle = t => {
@@ -117,8 +157,8 @@ const initRequireModules = function() {
 
 export function usingWidget(cbOk, cbError) {
     if (window.widget) cbOk(window.widget);
-    // outside of 3DDashboard
     else if (!window.UWA) {
+        // outside of 3DDashboard
         window.widget = new Widget();
         window.UWA = new UWA();
         loadRequire().then(() => {
@@ -127,9 +167,8 @@ export function usingWidget(cbOk, cbError) {
         waitFor("requirejs", 10, () => {
             cbOk(window.widget);
         });
-    }
-    // in 3DDashboard
-    else {
+    } else {
+        // in 3DDashboard
         try {
             // sometime (actually, often), dashboard takes time to inject widget object
             waitFor(
