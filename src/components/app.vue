@@ -7,7 +7,7 @@
         </v-content>
     </v-app>
 </template>
- 
+
 <!-- no scope for app.vue, style defined here is global for the app -->
 <style>
 html,
