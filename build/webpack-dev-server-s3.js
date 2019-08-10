@@ -2,38 +2,36 @@ const s3 = require("s3");
 const path = require("path");
 const mkdirp = require("mkdirp");
 const fs = require("fs");
-const http = require("http");
-const https = require("https");
 
-const S3_DIST_PATH = "II2/WidgetLab/WidgetTemplate";
 const pluginName = "DevServerUploadToS3Plugin";
 
-const client = s3.createClient({
-    s3Options: {
-        // uses your default profile
-        // else
-        /* accessKeyId: "xxx",
-        secretAccessKey: "xxx" */
-    }
-});
-
-let webpackDevServerHook = { fn: () => {} };
-
 class DevServerUploadToS3Plugin {
-    constructor(options) {
-        http.globalAgent.maxSockets = https.globalAgent.maxSockets = 20;
-        console.debug(options);
+    constructor({ options = {}, params = {} }) {
+        this.params = params;
+        this.distPath = params.Key;
+        delete this.params.Key;
+        this.webpackDevServerHook = { fn: () => {} };
+        this.client = s3.createClient(options);
     }
 
     /**
      * Plugin entry point
      */
     apply(compiler) {
+        /**
+         * webpack-dev-server hook is plugged on done
+         * we remove this hook before done is processed
+         */
         compiler.hooks.afterEmit.tap(pluginName, params => {
             this.removeWebpackDevServerHook(compiler);
         });
         compiler.hooks.done.tap(pluginName, stats => {
-            this.writeToDiskAndUpload(stats, compiler);
+            const { targetPathArr, targetFileArr } = this.toDisk(stats, compiler);
+
+            this.uploadToS3(targetPathArr, targetFileArr, () => {
+                this.webpackDevServerHook.fn(stats);
+                console.debug("sendind message for reloading...");
+            });
         });
     }
 
@@ -42,19 +40,16 @@ class DevServerUploadToS3Plugin {
         for (let i = 0; i < sourcePathArr.length; i++) {
             promises.push(
                 new Promise((resolve, reject) => {
-                    let s3FilePath = S3_DIST_PATH + "/" + targetFileArr[i];
-                    console.error(s3FilePath);
+                    const Key = `${this.distPath}/${targetFileArr[i]}`;
                     const params = {
                         localFile: sourcePathArr[i],
                         s3Params: {
-                            Bucket: "btcc",
-                            Key: s3FilePath,
-                            ACL: "public-read"
-                            // other options supported by putObject, except Body and ContentLength.
-                            // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                            Key,
+                            ...this.params
                         }
                     };
-                    const uploader = client.uploadFile(params);
+                    console.debug(params);
+                    const uploader = this.client.uploadFile(params);
                     uploader.on("error", err => {
                         console.error("unable to upload:", err.stack);
                         reject(err);
@@ -63,7 +58,7 @@ class DevServerUploadToS3Plugin {
                         // console.debug("progress", uploader.progressMd5Amount, uploader.progressAmount, uploader.progressTotal);
                     });
                     uploader.on("end", () => {
-                        console.debug(`${targetFileArr[i]} uploaded`);
+                        console.debug(`${Key} uploaded`);
                         resolve();
                     });
                 })
@@ -77,18 +72,20 @@ class DevServerUploadToS3Plugin {
     removeWebpackDevServerHook(compiler) {
         const hookIndex = compiler.hooks.done.taps.findIndex(hook => hook.name === "webpack-dev-server");
         if (hookIndex > -1) {
-            webpackDevServerHook.fn = compiler.hooks.done.taps[hookIndex].fn;
+            this.webpackDevServerHook.fn = compiler.hooks.done.taps[hookIndex].fn;
             // remove webpack-dev-server hook (the one sending the message to the browser for reload)
             compiler.hooks.done.taps.splice(hookIndex, 1);
         }
     }
-
-    writeToDiskAndUpload(stats, compiler) {
+    /**
+     * Very inspired from webpack-dev-middleware/lib/fs.js
+     */
+    toDisk(stats, compiler) {
         const { compilation } = stats;
         const { assets } = compilation;
+        let { outputPath } = compiler;
         const targetPathArr = [];
         const targetFileArr = [];
-        let { outputPath } = compiler;
         if (outputPath === "/") {
             outputPath = compiler.context;
         }
@@ -120,10 +117,8 @@ class DevServerUploadToS3Plugin {
                 }
             }
         }
-        this.uploadToS3(targetPathArr, targetFileArr, () => {
-            webpackDevServerHook.fn(stats);
-            console.debug("sendind message for reloading...");
-        });
+
+        return { targetPathArr, targetFileArr };
     }
 }
 
