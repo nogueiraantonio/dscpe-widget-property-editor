@@ -1,9 +1,11 @@
 const DevServerUploadToS3Plugin = require("./webpack-dev-server-s3");
+const fs = require("fs");
 
 const merge = require("webpack-merge");
 const commonDev = require("./webpack.config.dev.js");
 
 module.exports = merge(commonDev, {
+    devServer: {},
     plugins: [
         new DevServerUploadToS3Plugin({
             // uses s3. see https://www.npmjs.com/package/s3

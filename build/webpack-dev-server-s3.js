@@ -48,7 +48,6 @@ class DevServerUploadToS3Plugin {
                             ...this.params
                         }
                     };
-                    console.debug(params);
                     const uploader = this.client.uploadFile(params);
                     uploader.on("error", err => {
                         console.error("unable to upload:", err.stack);
