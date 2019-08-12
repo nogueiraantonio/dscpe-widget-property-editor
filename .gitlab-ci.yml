@@ -8,7 +8,7 @@ image: node:10.16-stretch
 stages:
     - prepare
     - build
-#    - zip
+    - zip
 
 # install node_modules to prepare build
 
