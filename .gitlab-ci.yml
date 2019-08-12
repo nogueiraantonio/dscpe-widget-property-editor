@@ -8,7 +8,6 @@ image: node:10.16-stretch
 stages:
     - prepare
     - build
-    - zip
 
 # install node_modules to prepare build
 
@@ -34,16 +33,4 @@ npm_build:
       - dist/
   script:
     - npm run build
-
-zip_dist:
-  stage: zip
-  tags: 
-    - widgetlab
-  only:
-    - master
-  artifacts:
-    paths:
-      - widget.zip
-  script:
-    - cd dist
-    - zip ../widget.zip * 
+    
