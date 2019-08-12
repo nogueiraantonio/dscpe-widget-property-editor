@@ -30,7 +30,7 @@ export default {
     components: { HowTo },
     data: function() {
         return {
-            hello: "3DExperience Widget :) "
+            hello: "3DExperience Widget :)"
         };
     },
     computed: {

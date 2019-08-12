@@ -27,7 +27,6 @@ function start() {
 usingWidget(
     widget => {
         widget.addEvent("onLoad", () => {
-            console.log("object");
             start();
         });
         widget.addEvent("onRefresh", () => {
