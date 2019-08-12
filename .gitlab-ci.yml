@@ -29,6 +29,9 @@ npm_build:
   stage: build
   tags: 
     - widgetlab
+  artifacts:
+    paths:
+      - dist/
   script:
     - npm run build
 
