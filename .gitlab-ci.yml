@@ -57,12 +57,8 @@ zip_widget:
       - widget.zip
   script:
     - cd dist
-    # this is NODE.js way 
-    - npm install -g bestzip
-    - bestzip ../widget.zip * 
-    # This was old Debian way (for node:stretch image)
-    #- apt-get update && apt-get install -y --no-install-recommends zip
-    #- zip ../widget.zip * 
+    - apt-get update && apt-get install -y --no-install-recommends zip
+    - zip ../widget.zip * 
     
 ##########################
 # push_widget (master only) 
