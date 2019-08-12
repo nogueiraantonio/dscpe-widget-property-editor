@@ -51,7 +51,7 @@ widget_zip:
   tags: 
     - widgetlab
   only:
-    - branches
+    - master
   artifacts:
     expire_in: 10yrs
     paths:
@@ -70,7 +70,7 @@ push_widget:
   tags: 
     - widgetlab
   only:
-    - branches
+    - master
   allow_failure: true
   script:
     - echo "$GITLAB_USER_NAME push $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to S3"
