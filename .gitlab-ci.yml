@@ -37,7 +37,7 @@ zip_dist:
   tags: 
     - widgetlab
   only:
-    - marter
+    - master
   artifacts:
     paths:
       - widget.zip
