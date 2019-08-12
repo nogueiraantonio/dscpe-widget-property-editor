@@ -42,11 +42,11 @@ npm_build:
     - npm run build
 
 ##########################
-# zip_widget (master only) 
+# widget_zip (master only) 
 # stage: deploy
-# Zip widget (dist/ content) and push it in artifacts
+# keep dist/ available for download as Zip (in artifacts)
 
-zip_widget:
+widget_zip:
   stage: deploy
   tags: 
     - widgetlab
@@ -54,12 +54,11 @@ zip_widget:
     - branches
   artifacts:
     paths:
-      - widget.zip
+      - dist/
   script:
     - cd dist
-    - apt-get update && apt-get install -y --no-install-recommends zip
-    - zip ../widget.zip * 
-    
+    # nothing to do : 
+
 ##########################
 # push_widget (master only) 
 # stage: deploy
