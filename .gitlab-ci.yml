@@ -2,7 +2,7 @@
 # P13@3DS.com
 # please read Gitlab-CI-Setup.md to enable CI/CD on the repository
 
-# node 10.16 is LTS @ September-2019
+# default image : node 10.16 is LTS @ September-2019
 image: node:10.16-stretch
 
 stages:
@@ -67,15 +67,16 @@ widget_zip:
 
 push_widget:
   stage: deploy
+  image: python:3.7.4-stretch
   tags: 
     - widgetlab
   only:
     - master
   allow_failure: true
   script:
-    - echo "$GITLAB_USER_NAME push $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to S3"
-    - cd dist
-    - env
-    - please_fail_now
-#(TODO)
+    - pip install awscli
+    - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
+    - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
+    - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"
+
 

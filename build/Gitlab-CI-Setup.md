@@ -52,6 +52,18 @@ docker exec -ti gitlab-runner gitlab-runner register
 - Expand block **Runners**
 - The new named runner should apear now
 
+## setup AWS Credentials
+
+- Go to [**Settings > CI/CD**](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue/-/settings/ci_cd)
+- Expand block **Variables**
+- Set variables (get key/secret from AWS) :
+
+| variable | value |
+| ------ | ------ |
+| AWS_ACCESS_KEY_ID | ??????? |
+| AWS_SECRET_ACCESS_KEY | ???????/?????? |
+| AWS_DEFAULT_REGION | eu-west-1 | 
+
 ## expected result
 
 As soon as there are new commits or merges to any branch (if the .gitlab-ci.yml file is present at the repo's root), a new Pipline is executed.
