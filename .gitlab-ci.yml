@@ -8,7 +8,7 @@ image: node:10.16-stretch
 stages:
     - prepare
     - build
-    - zip
+#    - zip
 
 # install node_modules to prepare build
 
@@ -17,9 +17,8 @@ npm_install:
   tags: 
     - widgetlab
   artifacts:
-    paths:
-      - node_modules/
-      - package-lock.json
+    expire_in: 30min
+    untracked: true
   script:
     - npm install
 
@@ -30,10 +29,13 @@ npm_build:
   tags: 
     - widgetlab
   artifacts:
+    expire_in: 30min
     paths:
       - dist/
   script:
     - npm run build
+
+# zip widget (dist/ content)
 
 zip_dist:
   stage: zip
