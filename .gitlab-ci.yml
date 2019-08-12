@@ -53,6 +53,7 @@ widget_zip:
   only:
     - branches
   artifacts:
+    expire_in: 10yrs
     paths:
       - dist/
   script:
