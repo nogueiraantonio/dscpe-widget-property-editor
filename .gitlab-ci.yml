@@ -51,7 +51,7 @@ zip_widget:
   tags: 
     - widgetlab
   only:
-    - master
+    - branches
   artifacts:
     paths:
       - widget.zip
@@ -69,7 +69,7 @@ push_widget:
   tags: 
     - widgetlab
   only:
-    - master
+    - branches
   script:
     - cd dist
     - please_fail
