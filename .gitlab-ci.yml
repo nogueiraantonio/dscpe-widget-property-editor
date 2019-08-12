@@ -8,7 +8,11 @@ image: node:10.16-stretch
 stages:
     - prepare
     - build
+    - deploy
 
+##########################
+# npm install
+# stage: prepare 
 # install node_modules to prepare build
 
 npm_install:
@@ -16,21 +20,62 @@ npm_install:
   tags: 
     - widgetlab
   artifacts:
-    paths:
-      - node_modules/
-      - package-lock.json
+    expire_in: 10min
+    untracked: true
   script:
     - npm install
 
-# build widget
+##########################
+# npm build
+# stage: build
+# build widget (npm run build)
 
 npm_build:
   stage: build
   tags: 
     - widgetlab
   artifacts:
+    expire_in: 10min
     paths:
       - dist/
   script:
     - npm run build
-    
+
+##########################
+# widget_zip (master only) 
+# stage: deploy
+# keep dist/ available for download as Zip (in artifacts)
+
+widget_zip:
+  stage: deploy
+  tags: 
+    - widgetlab
+  only:
+    - branches
+  artifacts:
+    expire_in: 10yrs
+    paths:
+      - dist/
+  script:
+    - cd dist
+    # nothing to do : 
+
+##########################
+# push_widget (master only) 
+# stage: deploy
+# Push widget to AWS S3 
+
+push_widget:
+  stage: deploy
+  tags: 
+    - widgetlab
+  only:
+    - branches
+  allow_failure: true
+  script:
+    - echo "$GITLAB_USER_NAME push $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to S3"
+    - cd dist
+    - env
+    - please_fail_now
+#(TODO)
+
