@@ -57,6 +57,7 @@ zip_widget:
       - widget.zip
   script:
     - cd dist
+    - apt-get install zip
     - zip ../widget.zip * 
     
 ##########################
