@@ -72,7 +72,7 @@ push_widget:
   only:
     - branches
   script:
-    - "echo \"$GITLAB_USER_NAME asserts that the commit $CI_COMMIT_SHA has been deployed in the Frontend / widgetfactory PPD ENVIRONMENT\""
+    - echo "$GITLAB_USER_NAME push $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to S3"
     - cd dist
     - env
 #(TODO)
