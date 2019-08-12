@@ -4,6 +4,8 @@
 
 > This template is meant to ease the development of 3DDashboard Widgets.
 
+// TODO : what does the provided environment does for you (hot reload, standalone capability, etc.)
+
 ## Before starting
 
 3DDashboard Widgets are HTML5 based applications (with some specificities). Therefore, you absolutely need to have a good knowledge of the following
@@ -31,7 +33,7 @@ Now that we're good with front-end libraries, let's have a look to the tooling w
 - [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it.
 - [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install
   manually. We encountered issues with the last version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)**
-  version please.
+  version.
 - [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for
   3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our
   framework stack, you won't need to change & understand the configuration. If you do, the configuration files are in the `build/` directory.
@@ -75,26 +77,88 @@ Push this to your favorite HTTP server and try it right away using the _Run your
 When developing Widgets, most of the time you will want to test in a 3DDashboard context. And sometimes you may not need to rely on 3DDashboard APIs that much
 so developing outside of the 3DDashboard may be more convenient. We identified 3 use cases which leads to different development environments setup:
 
-1. Standalone Widget (developed outside 3DDashboard, but that runs inside) - consider trying this option first before going further,
-2. Widget running on the same network (such as a 3DExperience VM, private cloud, etc.)
-3. Widget running on a different network (such as public cloud),
+1. Standalone Widget (developed outside 3DDashboard, but that is executed inside)
 
-> _same network_ must be understood as: the server hosting the 3DDashboard can reach your development environment through https. If it is not the case please
-> consider option 1 or 3.
+   Consider trying this option before going further. There is no special setup.
+
+2. Widget executed on a 3DDashboard located on the same network (such as a 3DExperience VM, private cloud, etc.)
+
+   This settup is the most convenient when it is possible (limitations are detailled bellow) but it is the one that requires the most configuration.
+
+3. Widget executed a 3DDashboard located anywhere (such as public cloud)
+
+   This settup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).
+
+> _same network_ must be understood as: the server hosting the 3DDashboard can reach your development environment through HTTPS AND you can configure this
+> server. If it is not the case please consider option 1 or 3.
 
 Assuming you have [downloaded the sources](#1-get-the-sources) and [installed the development dependencies](#2-install-the-development-dependencies), now open
 the source code directory in VS Code.
 
 ### 1. Standalone Widget
 
+This setup will serve the Widget in a local HTTP server.
+
 ```bash
 npm start
 ```
 
-This will compile the Widget, start an http server (express) and open a web browser loading the Widget entry point. Hot reload is enabled so if you modify and
-save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
+The command will compile the Widget, start an HTTP server ([express](https://expressjs.com/)) and open a web browser loading the Widget entry point. Hot reload
+is enabled so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
 ### 2. Widget running on the same network
+
+As in [Standalone Widget](#1-standalone-widget), the Widget will be served from a local HTTP server, but will be executed within a 3DDashboard. Therefore, due
+to the 3DDashboard infrastructure, your local HTTP server must be reachable by the server running the 3DDashboard.
+
+Moreover due to [mixed content policy](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content) and the fact that your 3DExperience Platform must
+run using HTTPS, your local server must serve HTTP**S** (and not simple HTTP).
+
+Also, the 3DDashboard won't let you run a non trusted Widget. That imply that the 3DExperience server trusts your local server.
+
+That brings some more configration steps, but nothing impossible.
+
+You need a few things:
+
+- Configure the local server to serve HTTPS,
+- Configure your browser(s) and your machine to trust your server (Setupping HTTPS).
+
+#### Setupping HTTPS
+
+We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing bellow but more detailed.
+
+The tool will assist you in creating the necessary files, store & keys, configure your OS and your browsers. Download the
+[binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS, then
+
+```bash
+mkcert -install
+mkcert localhost mywidget.dev 127.0.0.1 ::1
+```
+
+#### Configure Webpack-dev-server
+
+[Webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible
+for creating the HTTPS server.
+
+Edit the configuration file `build/webpack.config.dev.js`, look for _https_ in the definition of the _devServer_ object. Replace the following entries with the
+files you've created with mkcert:
+
+```javascript
+devServer: {
+    ...
+    https: {
+        key: fs.readFileSync("PATH_TO_YOUR_KEY/localhost+3-key.pem"),
+        cert: fs.readFileSync("PATH_TO_YOUR_CRT/localhost+3.pem"),
+        ca: fs.readFileSync("PATH_TO_YOUR_ROOT_STORE/rootCA.pem")
+    }
+}
+```
+
+#### Start the server
+
+```bash
+npm start
+```
 
 ### 3. Widget running on a different network
 
