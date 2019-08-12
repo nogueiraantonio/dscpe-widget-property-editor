@@ -76,5 +76,6 @@ push_widget:
     - echo "$GITLAB_USER_NAME push $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to S3"
     - cd dist
     - env
+    - please_fail_now
 #(TODO)
 
