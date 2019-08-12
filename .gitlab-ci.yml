@@ -8,8 +8,11 @@ image: node:10.16-stretch
 stages:
     - prepare
     - build
-    - zip
+    - deploy
 
+##########################
+# npm install
+# stage: prepare 
 # install node_modules to prepare build
 
 npm_install:
@@ -17,28 +20,34 @@ npm_install:
   tags: 
     - widgetlab
   artifacts:
-    expire_in: 30min
+    expire_in: 10min
     untracked: true
   script:
     - npm install
 
-# build widget
+##########################
+# npm build
+# stage: build
+# build widget (npm run build)
 
 npm_build:
   stage: build
   tags: 
     - widgetlab
   artifacts:
-    expire_in: 30min
+    expire_in: 10min
     paths:
       - dist/
   script:
     - npm run build
 
-# zip widget (dist/ content)
+##########################
+# zip_widget (master only) 
+# stage: deploy
+# Zip widget (dist/ content) and push it in artifacts
 
-zip_dist:
-  stage: zip
+zip_widget:
+  stage: deploy
   tags: 
     - widgetlab
   only:
@@ -49,3 +58,20 @@ zip_dist:
   script:
     - cd dist
     - zip ../widget.zip * 
+    
+##########################
+# push_widget (master only) 
+# stage: deploy
+# Push widget to AWS S3 
+
+push_widget:
+  stage: deploy
+  tags: 
+    - widgetlab
+  only:
+    - master
+  script:
+    - cd dist
+    - please_fail
+#(TODO)
+
