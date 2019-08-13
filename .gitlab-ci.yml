@@ -2,13 +2,17 @@
 # P13@3DS.com
 # please read Gitlab-CI-Setup.md to enable CI/CD on the repository
 
-# node 10.16 is LTS @ September-2019
+# default image : node 10.16 is LTS @ September-2019
 image: node:10.16-stretch
 
 stages:
     - prepare
     - build
+    - deploy
 
+##########################
+# npm install
+# stage: prepare 
 # install node_modules to prepare build
 
 npm_install:
@@ -16,21 +20,84 @@ npm_install:
   tags: 
     - widgetlab
   artifacts:
-    paths:
-      - node_modules/
-      - package-lock.json
+    expire_in: 10min
+    untracked: true
   script:
     - npm install
 
-# build widget
+##########################
+# npm build
+# stage: build
+# build widget (npm run build)
 
 npm_build:
   stage: build
   tags: 
     - widgetlab
   artifacts:
+    expire_in: 10min
     paths:
       - dist/
   script:
     - npm run build
-    
+
+##########################
+# readme_html (master only) 
+# stage: build
+# Convert README.md to dist/README.html
+
+md2html:
+  stage: build
+  tags: 
+    - widgetlab
+  only:
+    - master
+  artifacts:
+    expire_in: 10min
+    paths:
+      - dist/
+  allow_failure: true
+  script:
+    - npm install markdown-to-html -g
+    - mkdir -p dist
+    - markdown README.md > dist/README.html
+
+##########################
+# widget_zip (master only) 
+# stage: deploy
+# keep dist/ available for download as Zip (in artifacts)
+
+widget_zip:
+  stage: deploy
+  tags: 
+    - widgetlab
+  only:
+    - master
+  artifacts:
+    expire_in: 10yrs
+    paths:
+      - dist/
+  script:
+    - cd dist
+    # nothing to do : 
+
+##########################
+# push_widget (master only) 
+# stage: deploy
+# Push widget to AWS S3 
+
+push_widget:
+  stage: deploy
+  image: python:3.7.4-stretch
+  tags: 
+    - widgetlab
+  only:
+    - master
+  allow_failure: true
+  script:
+    - pip install awscli
+    - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
+    - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
+    - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"
+
+
