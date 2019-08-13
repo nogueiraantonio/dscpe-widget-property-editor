@@ -14,6 +14,7 @@ technologies :
 - **HTML**
 - **Javascript**
 - **CSS**
+- HTTP, SSL and a good networking general knowledge
 
 Also, as we are lazy developers, we like to ease our lives using some good frameworks, & technologies. This template includes many of these and you won't get a
 chance to play around if you don't know :
@@ -77,7 +78,7 @@ Push this to your favorite HTTP server and try it right away using the _Run your
 When developing Widgets, most of the time you will want to test in a 3DDashboard context. And sometimes you may not need to rely on 3DDashboard APIs that much
 so developing outside of the 3DDashboard may be more convenient. We identified 3 use cases which leads to different development environments setup:
 
-1. Standalone Widget (developed outside 3DDashboard, but that is executed inside)
+1. Standalone Widget (developed outside 3DDashboard, but that can be executed inside)
 
    Consider trying this option before going further. There is no special setup.
 
@@ -108,11 +109,15 @@ is enabled so if you modify and save a file (try with `components/how-to.vue`), 
 
 ### 2. Widget running on the same network
 
+#### Prerequisites and limitations
+
+#### Some context
+
 As in [Standalone Widget](#1-standalone-widget), the Widget will be served from a local HTTP server, but will be executed within a 3DDashboard. Therefore, due
 to the 3DDashboard infrastructure, your local HTTP server must be reachable by the server running the 3DDashboard.
 
 Moreover due to [mixed content policy](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content) and the fact that your 3DExperience Platform must
-run using HTTPS, your local server must serve HTTP**S** (and not simple HTTP).
+run using HTTPS, your local server must serve HTTPS (and not simple HTTP).
 
 Also, the 3DDashboard won't let you run a non trusted Widget. That imply that the 3DExperience server trusts your local server.
 
@@ -120,19 +125,32 @@ That brings some more configration steps, but nothing impossible.
 
 You need a few things:
 
-- Configure the local server to serve HTTPS,
-- Configure your browser(s) and your machine to trust your server (Setupping HTTPS).
+- [Configure the local](#configure-webpack-dev-server) server to serve HTTPS,
+- Configure your browser(s) and your machine to [trust your server](#setupping-https) (Setupping HTTPS),
+- [Configure the 3DDashboard Server](#configure-your-3DDashboard) to trust your local server.
 
 #### Setupping HTTPS
 
 We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing bellow but more detailed.
 
 The tool will assist you in creating the necessary files, store & keys, configure your OS and your browsers. Download the
-[binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS, then
+[binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS.
+
+Retrieve the hostname of your machine, open a terminal where in the directory where you have downloaded mkcert and :
 
 ```bash
+hostname
+```
+
+Ensure your 3DDashboard is able to reach your host (ping \$hostname from 3DDashboard server).
+
+Then, execute the two commands bellow (replace _\$hostname_ with the result of the previous command)
+
+```bash
+# create a new Certificate Authority and update OS, Java & Firefox stores
 mkcert -install
-mkcert localhost mywidget.dev 127.0.0.1 ::1
+# create a new certificate
+mkcert localhost $hostname 127.0.0.1 ::1
 ```
 
 #### Configure Webpack-dev-server
@@ -149,16 +167,33 @@ devServer: {
     https: {
         key: fs.readFileSync("PATH_TO_YOUR_KEY/localhost+3-key.pem"),
         cert: fs.readFileSync("PATH_TO_YOUR_CRT/localhost+3.pem"),
-        ca: fs.readFileSync("PATH_TO_YOUR_ROOT_STORE/rootCA.pem")
+        ca: fs.readFileSync("PATH_TO_YOUR_CA/rootCA.pem")
     }
 }
 ```
 
-#### Start the server
+#### Configure your 3DDashboard
+
+Last required step is to be trusted by our server. We have to add the previously created Certificate Authority to the java trusted store (as 3DDashboard HTTPS
+is served by tomee, using java store mechanisum).
+
+Copy the `rootCA.pem` on the machine running the 3DDashboard. Stop the 3DDashboard. Open a terminal where the `rootCA.pem` file is located and run the following
+command (as administrator):
 
 ```bash
+keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -alias Root -import -file rootCA.pem
+```
+
+#### Start the server
+
+We're almost done ! In VS Code terminal update the configuration & start the development server:
+
+```bash
+npm config set widget-template-vue:publicPath "https://$hostname:8081/"
 npm start
 ```
+
+You will notice the same behavior than in [Standalone mode](#1-standalone-widget).
 
 ### 3. Widget running on a different network
 
