@@ -1,8 +1,11 @@
+<!-- markdownlint-disable MD001 MD024 -->
+<!-- https://github.com/DavidAnson/markdownlint/blob/master/README.md#configuration -->
+
 # Widget Template Vue
 
 ## Introduction
 
-> This template is meant to ease the development of 3DDashboard Widgets.
+This template is meant to ease the development of 3DDashboard Widgets.
 
 // TODO : what does the provided environment does for you (hot reload, standalone capability, etc.)
 
@@ -78,15 +81,15 @@ Push this to your favorite HTTP server and try it right away using the _Run your
 When developing Widgets, most of the time you will want to test in a 3DDashboard context. And sometimes you may not need to rely on 3DDashboard APIs that much
 so developing outside of the 3DDashboard may be more convenient. We identified 3 use cases which leads to different development environments setup:
 
-1. Standalone Widget (developed outside 3DDashboard, but that can be executed inside)
+1. Standalone Widget (developed outside 3DDashboard, but that can be build to be executed inside)
 
    Consider trying this option before going further. There is no special setup.
 
-2. Widget executed on a 3DDashboard located on the same network (such as a 3DExperience VM, private cloud, etc.)
+2. Widget executed in a 3DDashboard located on the same network (such as a 3DExperience VM, private cloud, etc.)
 
    This settup is the most convenient when it is possible (limitations are detailled bellow) but it is the one that requires the most configuration.
 
-3. Widget executed a 3DDashboard located anywhere (such as public cloud)
+3. Widget executed in a 3DDashboard located anywhere (such as public cloud)
 
    This settup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).
 
@@ -104,12 +107,14 @@ This setup will serve the Widget in a local HTTP server.
 npm start
 ```
 
-The command will compile the Widget, start an HTTP server ([express](https://expressjs.com/)) and open a web browser loading the Widget entry point. Hot reload
+The command will compile the Widget, start a HTTP server ([express](https://expressjs.com/)) and open a web browser loading the Widget entry point. Hot reload
 is enabled so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
 ### 2. Widget running on the same network
 
-#### Prerequisites and limitations
+#### Prerequisites
+
+You do need to have administrator privileges on the server running the 3DDashboard.
 
 #### Some context
 
@@ -129,6 +134,9 @@ You need a few things:
 - Configure your browser(s) and your machine to [trust your server](#setupping-https) (Setupping HTTPS),
 - [Configure the 3DDashboard Server](#configure-your-3DDashboard) to trust your local server.
 
+> The following description relies on SSL configuration for your local server. Another approach is to use the 3DExperience reverse proxy to redirect to your
+> local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage you can try, it works!
+
 #### Setupping HTTPS
 
 We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing bellow but more detailed.
@@ -136,7 +144,7 @@ We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read tha
 The tool will assist you in creating the necessary files, store & keys, configure your OS and your browsers. Download the
 [binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS.
 
-Retrieve the hostname of your machine, open a terminal where in the directory where you have downloaded mkcert and :
+Retrieve the hostname of your machine, open a terminal where in the directory where you have downloaded mkcert and:
 
 ```bash
 hostname
@@ -174,8 +182,8 @@ devServer: {
 
 #### Configure your 3DDashboard
 
-Last required step is to be trusted by our server. We have to add the previously created Certificate Authority to the java trusted store (as 3DDashboard HTTPS
-is served by tomee, using java store mechanisum).
+Last required step is to be trusted by your 3DDashboard server. We have to add the previously created Certificate Authority to the java trusted store (as
+3DDashboard HTTPS is served by tomee, using java store mechanisum).
 
 Copy the `rootCA.pem` on the machine running the 3DDashboard. Stop the 3DDashboard. Open a terminal where the `rootCA.pem` file is located and run the following
 command (as administrator):
@@ -184,7 +192,9 @@ command (as administrator):
 keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -alias Root -import -file rootCA.pem
 ```
 
-#### Start the server
+You can restart the 3DDashboard.
+
+#### Start debugging
 
 We're almost done ! In VS Code terminal update the configuration & start the development server:
 
@@ -203,10 +213,55 @@ npm config set widget-template-vue:publicPath ""
 
 ### 3. Widget running on a different network
 
+#### Prerequisites
+
+You need a HTTPS server on the same network than your 3DDashboard. If public cloud, then Internet is that network.
+
+#### Some context
+
+By design, the 3DDashboard must be able to access the widget source code. Therefore in a context where our local machine can't be reached by the server, we'll
+assume the 3DDashboard can access to Internet. Which is the case for 3DExperience public cloud.
+
+That being said we need a HTTPS server available on Internet to do the job.
+
+We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose and we do encourage it's usage.
+
+> If you have any other repository, you'll have to adapt the webpack plugin we wrote (see bellow).
+
+Last but not least, for hot reload webpack-dev-server will create a Web Socket connection between the running widget & the process watching file changes on your
+local file system. Therefore you still need to have a HTTPS server running locally.
+
+#### Setup HTTPS
+
+As for [the previous section](#3-widget-running-on-a-different-network), setup [HTTPS locally](#setupping-https).
+
+#### Configure your S3 settings
+
+Open the file `build/webpack.config.dev.s3.js` and edit the parameters of the `DevServerUploadToS3Plugin` webpack plugin.
+
+```javascript
+{
+    options: {
+        region: "eu-west-1" // region of your bucket
+    },
+    params: {
+        Bucket: "your_bucket_name", // bucket name
+        ACL: "public-read", // don't change if you don't know
+        Key: "dist" // remote folder in your bucket
+    }
+}
+```
+
+#### Start debugging
+
+```bash
+# it's very important to reset this variable if you setted it in the previous section
+npm config set widget-template-vue:publicPath ""
+npm start
+```
+
+You are ready to debug your widget executed on the cloud, with hot reload !
+
 ## Start sharing
 
-You've enhanced our template? please open a pull request and we'll evaluate the opportunity to include your code in our template.
-
-## CI / CD
-
-This template is ready for Gitlab CI / CD, please refer to [CI/CD Setup Guide](/build/Gitlab-CI-Setup.md)
+You've enhanced our template? please open a merge request and we'll evaluate the opportunity to include your code in our template.
