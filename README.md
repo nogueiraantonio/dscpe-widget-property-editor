@@ -195,13 +195,13 @@ npm start
 
 You will notice the same behavior than in [Standalone mode](#1-standalone-widget).
 
-### 3. Widget running on a different network
-
-In case of developing within a 3DDashboard, you must configure the base URL of your widget before starting the local server
+If you want to revert the configuration, simply reset the `publicPath` variable:
 
 ```bash
-npm config set widget-template-vue:publicPath "https://3dexp.19xfd03.ds/WidgetLab/"
+npm config set widget-template-vue:publicPath ""
 ```
+
+### 3. Widget running on a different network
 
 ## Start sharing
 
