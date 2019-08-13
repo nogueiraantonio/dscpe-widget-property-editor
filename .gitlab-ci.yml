@@ -42,6 +42,27 @@ npm_build:
     - npm run build
 
 ##########################
+# readme_html (master only) 
+# stage: build
+# Convert README.md to dist/README.html
+
+md2html:
+  stage: build
+  tags: 
+    - widgetlab
+  only:
+    - master
+  artifacts:
+    expire_in: 10min
+    paths:
+      - dist/
+  allow_failure: true
+  script:
+    - npm install markdown-to-html -g
+    - mkdir -p dist
+    - markdown README.md > dist/README.html
+
+##########################
 # widget_zip (master only) 
 # stage: deploy
 # keep dist/ available for download as Zip (in artifacts)
