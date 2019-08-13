@@ -1,18 +1,6 @@
-// Setup Webpack public path to avoid loading issues with static assets
-const setupPublicPathForDashboard = () => {
-    const frameUrl = window.location.href;
-    let startUwaUrl = frameUrl.indexOf("uwaUrl=");
-    if (startUwaUrl !== -1) {
-        startUwaUrl += "uwaUrl=".length;
-        let extractUwaUrl = frameUrl.substring(startUwaUrl, frameUrl.indexOf("&", startUwaUrl));
-        extractUwaUrl = decodeURIComponent(extractUwaUrl);
-        extractUwaUrl = extractUwaUrl.substring(0, extractUwaUrl.lastIndexOf("/") + 1);
-        // Finally setup the public path
-        __webpack_public_path__ = extractUwaUrl;
-    }
-};
-setupPublicPathForDashboard();
-
+/**
+ * Mock the Widget Object normaly provided by 3DDashboard
+ */
 const Widget = function() {
     let events = {};
     let title = "";
@@ -79,6 +67,9 @@ const Widget = function() {
     };
 };
 
+/**
+ * Mock the UWA Object normaly provided by 3DDashboard
+ */
 const UWA = function() {
     this.log = args => {
         /* eslint no-console:off */
@@ -86,35 +77,9 @@ const UWA = function() {
     };
 };
 
-const waitFor = function(whatToWait, maxTry, then) {
-    if (typeof window[whatToWait] !== "undefined") {
-        then();
-    } else if (maxTry === 0) {
-        document.body.innerHTML = "Error while trying to load widget. See console for details";
-        throw new Error(whatToWait + " didn't load");
-    } else {
-        setTimeout(waitFor, 200, whatToWait, --maxTry, then);
-    }
-};
-
-const loadRequire = () => {
-    return new Promise((resolve, reject) => {
-        const oReq = new XMLHttpRequest();
-        oReq.addEventListener("load", resp => {
-            const script = document.createElement("script"); // Make a script DOM node
-            script.innerHTML = resp.target.response; // Set it's src to the provided URL
-            document.head.appendChild(script);
-            resolve();
-        });
-        try {
-            oReq.open("GET", "static/lib/require.js");
-            oReq.send();
-        } catch (err) {
-            reject(err);
-        }
-    });
-};
-
+/**
+ * Mock the libraries provided by 3DDashboard
+ */
 const initRequireModules = function() {
     define("DS/TagNavigatorProxy/TagNavigatorProxy", [], () => {
         console.log("initing");
@@ -155,9 +120,49 @@ const initRequireModules = function() {
     });
 };
 
-export function usingWidget(cbOk, cbError) {
-    if (window.widget) cbOk(window.widget);
-    else if (!window.UWA) {
+/**
+ * Initialize the widget object
+ * In Standalone mode :
+ *      - Create the widget object with some (to be completed) API
+ *      - Create the UWA object with some (to be completed) API
+ *      - Load the requirejs library
+ *      - Mock some 3DDashboard API (to be completed)
+ * In case of 3DDashboard :
+ *      - wait for the widget object to be inserted by the 3DDashboard
+ */
+export function initWidget(cbOk, cbError) {
+    const waitFor = function(whatToWait, maxTry, then) {
+        if (typeof window[whatToWait] !== "undefined") {
+            then();
+        } else if (maxTry === 0) {
+            document.body.innerHTML = "Error while trying to load widget. See console for details";
+            throw new Error(whatToWait + " didn't load");
+        } else {
+            setTimeout(waitFor, 200, whatToWait, --maxTry, then);
+        }
+    };
+    const loadRequire = () => {
+        return new Promise((resolve, reject) => {
+            const oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", resp => {
+                const script = document.createElement("script"); // Make a script DOM node
+                script.innerHTML = resp.target.response; // Set it's src to the provided URL
+                document.head.appendChild(script);
+                resolve();
+            });
+            try {
+                oReq.open("GET", "static/lib/require.js");
+                oReq.send();
+            } catch (err) {
+                reject(err);
+            }
+        });
+    };
+
+    if (window.widget) {
+        __webpack_public_path__ = widget.uwaUrl.substring(0, widget.uwaUrl.lastIndexOf("/") + 1);
+        cbOk(widget);
+    } else if (!window.UWA) {
         // outside of 3DDashboard
         window.widget = new Widget();
         window.UWA = new UWA();
@@ -176,7 +181,8 @@ export function usingWidget(cbOk, cbError) {
                 10,
                 // finally, ...starts
                 () => {
-                    cbOk(window.widget);
+                    __webpack_public_path__ = widget.uwaUrl.substring(0, widget.uwaUrl.lastIndexOf("/") + 1);
+                    cbOk(widget);
                 }
             );
         } catch (error) {
@@ -186,23 +192,29 @@ export function usingWidget(cbOk, cbError) {
     }
 }
 
-// List of path of the css files to deactivate with the following function
-const widgetDefaultStyleSheets = ["UWA/assets/css/iframe.css"];
-
-export function deactivateWidgetDefaultCss(bDeactivate) {
-    // Activate or deactivate widgets default css
-    // To re-activate the Default CSS files pass a false boolean, if no parameters are passed it's considered as true
-    let disableOptions = true;
-    if (typeof bDeactivate === "boolean" && bDeactivate === false) {
-        disableOptions = false;
-    }
-    let styleSheets = document.styleSheets;
-    for (let i = 0; i < styleSheets.length; i++) {
-        const sheet = styleSheets.item(i);
-        for (const partialUrlToTest of widgetDefaultStyleSheets) {
-            if (sheet.href && sheet.href.indexOf(partialUrlToTest) !== -1) {
-                sheet.disabled = disableOptions;
+/**
+ * Toolbox for 3DDashboard
+ */
+function Utils() {
+    // List of path of the css files to deactivate with the following function
+    const widgetDefaultStyleSheets = ["UWA/assets/css/iframe.css"];
+    this.disableCSS = bDeactivate => {
+        // Activate or deactivate widgets default css
+        // To re-activate the Default CSS files pass a false boolean, if no parameters are passed it's considered as true
+        let disableOptions = true;
+        if (typeof bDeactivate === "boolean" && bDeactivate === false) {
+            disableOptions = false;
+        }
+        let styleSheets = document.styleSheets;
+        for (let i = 0; i < styleSheets.length; i++) {
+            const sheet = styleSheets.item(i);
+            for (const partialUrlToTest of widgetDefaultStyleSheets) {
+                if (sheet.href && sheet.href.indexOf(partialUrlToTest) !== -1) {
+                    sheet.disabled = disableOptions;
+                }
             }
         }
-    }
+    };
 }
+
+export const x3DDashboardUtils = new Utils();

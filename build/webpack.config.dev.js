@@ -1,5 +1,6 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.config.common.js");
+const fs = require("fs");
 
 // set using
 // npm config set widget-template-vue:publicPath "https://3dexp.19xfd03.ds/WidgetLab/"
@@ -28,7 +29,13 @@ module.exports = merge(common, {
         public: publicUrl,
         // to prevent CORS issues
         headers: { "Access-Control-Allow-Origin": "*" },
-        writeToDisk: false
+        writeToDisk: false,
+        // TODO : find a way to parametrize this
+        https: {
+            key: fs.readFileSync("C:/Users/ii2/certs/localhost+3-key.pem"),
+            cert: fs.readFileSync("C:/Users/ii2/certs/localhost+3.pem"),
+            ca: fs.readFileSync("C:/Users/ii2/AppData/Local/mkcert/rootCA.pem")
+        }
     },
     output: {
         publicPath
