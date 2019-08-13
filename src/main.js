@@ -1,13 +1,11 @@
-// Import widget.js first
-import { usingWidget, deactivateWidgetDefaultCss } from "./lib/widget";
-// Then __webpack_public_path__ is set if needed to be set, so we can import the other modules
+import { x3DDashboardUtils } from "./lib/widget";
 import Vue from "vue";
 import App from "./components/app.vue";
 import vuetify from "./plugins/vuetify";
 import { store } from "./store";
 
 function start() {
-    deactivateWidgetDefaultCss(true);
+    x3DDashboardUtils.disableCSS(true);
 
     const mainComponent = new Vue({
         store,
@@ -23,19 +21,15 @@ function start() {
 }
 /**
  * Entry point for both standalone & 3DDashboard modes
+ * Assuming widget object has been loaded through widget-starter module
  */
-usingWidget(
-    widget => {
-        widget.addEvent("onLoad", () => {
-            start();
-        });
-        widget.addEvent("onRefresh", () => {
-            // what do you want to do on refresh ?
-            // by default, lets reload the page
-            window.location.reload();
-        });
-    },
-    error => {
-        console.debug(`Error occured while mocking 3DDashboard : ${error}`);
-    }
-);
+export default function() {
+    widget.addEvent("onLoad", () => {
+        start();
+    });
+    widget.addEvent("onRefresh", () => {
+        // what do you want to do on refresh ?
+        // by default, lets reload the page
+        window.location.reload();
+    });
+}

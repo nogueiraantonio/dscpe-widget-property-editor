@@ -19,11 +19,9 @@ body {
 
 <script>
 import HowTo from "./how-to.vue";
-import { usingWidget } from "../lib/widget.js";
 
-usingWidget(widget => {
-    // do something with this widget :)
-});
+// widget object is available everywhere !
+console.debug(widget);
 
 export default {
     name: "App",
