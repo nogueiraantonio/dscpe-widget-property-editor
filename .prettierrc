@@ -25,6 +25,12 @@
         {
             "files": "*.js",
             "options": { "parser": "babel" }
+        },
+        {
+            "files": "*.md",
+            "options": {
+                "tabWidth": 1
+            }
         }
     ]
 }
