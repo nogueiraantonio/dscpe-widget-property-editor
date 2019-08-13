@@ -1,6 +1,8 @@
 <!-- markdownlint-disable MD001 MD024 -->
 <!-- https://github.com/DavidAnson/markdownlint/blob/master/README.md#configuration -->
 
+<!-- omit in toc -->
+
 # Widget Template Vue
 
 ## Introduction
@@ -12,27 +14,27 @@ This template is meant to ease the development of 3DDashboard Widgets.
 ## Before starting
 
 3DDashboard Widgets are HTML5 based applications (with some specificities). Therefore, you absolutely need to have a good knowledge of the following
-technologies :
+technologies:
 
 - **HTML**
-- **Javascript**
+- **JavaScript**
 - **CSS**
 - HTTP, SSL and a good networking general knowledge
 
 Also, as we are lazy developers, we like to ease our lives using some good frameworks, & technologies. This template includes many of these and you won't get a
-chance to play around if you don't know :
+chance to play around if you don't know:
 
 - [Vue.js](https://vuejs.org/) - Consider spending 1 hour on [this training](https://scrimba.com/g/glearnvue) on Scrimba.
 - [Vuetify](https://vuetifyjs.com) - This UI Framework will drastically saves you time. Nevertheless, it's optional so feel free to remove the dependency and
   use your favorite.
 - [Vuex](https://vuex.vuejs.org/) - This is the "store" object you will find in the template. If you are new to Vue.js, don't touch this for now. Only when you
   feel that props & emits are bothering you may come back here and learn about vuex.
-- [ES6](http://es6-features.org/) - You thought javascript is crap ? me too. But that was before ES6...
+- [ES6](http://es6-features.org/) - You thought JavaScript is crap ? me too. But that was before ES6...
 - [RequireJS](https://requirejs.org/) - That's the way you get access to 3DDashboard APIs. Whether you like or not.
 - _Widget and 3DDashboard_ - Well, either you've been trained (lucky you), either you have a good documentation, either... In any case, you need to know the
   basics.
 
-Now that we're good with front-end libraries, let's have a look to the tooling we use :
+Now that we're good with front-end libraries, let's have a look to the tooling we use:
 
 - [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it.
 - [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install
@@ -44,7 +46,7 @@ Now that we're good with front-end libraries, let's have a look to the tooling w
 
 ## Build by yourself
 
-Now that you've carefuly read the [Before starting](#before-starting) section, [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
+Now that you've carefully read the [Before starting](#before-starting) section, [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
 
 ### 1. Get the sources
 
@@ -87,11 +89,11 @@ so developing outside of the 3DDashboard may be more convenient. We identified 3
 
 2. Widget executed in a 3DDashboard located on the same network (such as a 3DExperience VM, private cloud, etc.)
 
-   This settup is the most convenient when it is possible (limitations are detailled bellow) but it is the one that requires the most configuration.
+   This setup is the most convenient when it is possible (limitations are detailed bellow) but it is the one that requires the most configuration.
 
 3. Widget executed in a 3DDashboard located anywhere (such as public cloud)
 
-   This settup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).
+   This setup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).
 
 > _same network_ must be understood as: the server hosting the 3DDashboard can reach your development environment through HTTPS AND you can configure this
 > server. If it is not the case please consider option 1 or 3.
@@ -131,13 +133,13 @@ That brings some more configration steps, but nothing impossible.
 You need a few things:
 
 - [Configure the local](#configure-webpack-dev-server) server to serve HTTPS,
-- Configure your browser(s) and your machine to [trust your server](#setupping-https) (Setupping HTTPS),
+- Configure your browser(s) and your machine to [trust your server](#setup-https) (Setup HTTPS),
 - [Configure the 3DDashboard Server](#configure-your-3DDashboard) to trust your local server.
 
 > The following description relies on SSL configuration for your local server. Another approach is to use the 3DExperience reverse proxy to redirect to your
 > local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage you can try, it works!
 
-#### Setupping HTTPS
+#### Setup HTTPS
 
 We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing bellow but more detailed.
 
@@ -183,7 +185,7 @@ devServer: {
 #### Configure your 3DDashboard
 
 Last required step is to be trusted by your 3DDashboard server. We have to add the previously created Certificate Authority to the java trusted store (as
-3DDashboard HTTPS is served by tomee, using java store mechanisum).
+3DDashboard HTTPS is served by Tomee, using java store mechanism).
 
 Copy the `rootCA.pem` on the machine running the 3DDashboard. Stop the 3DDashboard. Open a terminal where the `rootCA.pem` file is located and run the following
 command (as administrator):
@@ -233,7 +235,7 @@ local file system. Therefore you still need to have a HTTPS server running local
 
 #### Setup HTTPS
 
-As for [the previous section](#3-widget-running-on-a-different-network), setup [HTTPS locally](#setupping-https).
+As for [the previous section](#3-widget-running-on-a-different-network), setup [HTTPS locally](#setup-https).
 
 #### Configure your S3 settings
 
@@ -255,7 +257,7 @@ Open the file `build/webpack.config.dev.s3.js` and edit the parameters of the `D
 #### Start debugging
 
 ```bash
-# it's very important to reset this variable if you setted it in the previous section
+# it's very important to reset this variable if you set it in the previous section
 npm config set widget-template-vue:publicPath ""
 npm start
 ```

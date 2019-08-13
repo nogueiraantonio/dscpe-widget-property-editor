@@ -30,7 +30,7 @@ class DevServerUploadToS3Plugin {
 
             this.uploadToS3(targetPathArr, targetFileArr, () => {
                 this.webpackDevServerHook.fn(stats);
-                console.debug("sendind message for reloading...");
+                console.debug("sending message for reloading...");
             });
         });
     }
