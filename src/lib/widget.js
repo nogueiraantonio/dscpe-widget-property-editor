@@ -1,5 +1,5 @@
 /**
- * Mock the Widget Object normaly provided by 3DDashboard
+ * Mock the Widget Object normally provided by 3DDashboard
  */
 const Widget = function() {
     let events = {};
@@ -82,7 +82,6 @@ const UWA = function() {
  */
 const initRequireModules = function() {
     define("DS/TagNavigatorProxy/TagNavigatorProxy", [], () => {
-        console.log("initing");
         const TagNavigatorProxy = function() {
             this.createProxy = () => {
                 return {
