@@ -1,7 +1,7 @@
 <template>
     <v-layout align-center class="mx-12 my-6">
-        <v-item-group v-model="window" class="shrink mr-6" mandatory tag="v-flex">
-            <v-item v-for="n in length" :key="n" v-slot:default="{ active, toggle }">
+        <v-item-group v-model="currentSection" class="shrink mr-6" mandatory tag="v-flex">
+            <v-item v-for="i in sections.length" :key="i" v-slot:default="{ active, toggle }">
                 <div>
                     <v-btn :input-value="active" icon small @click="toggle">
                         <v-icon>mdi-record</v-icon>
@@ -11,37 +11,20 @@
         </v-item-group>
 
         <v-flex>
-            <v-window v-model="window" class="elevation-1" vertical>
-                <v-window-item v-for="n in length" :key="n">
+            <v-window v-model="currentSection" class="elevation-1" vertical>
+                <v-window-item v-for="(section, i) in sections" :key="i">
                     <v-card flat>
                         <v-card-text>
+                            <!-- <markdown-it-vue class="md-body" :content="content" :options="options" />-->
                             <v-layout align-center mb-4>
                                 <v-avatar color="grey" class="mr-4" />
-                                <strong class="title">Please start writting an how to {{ n }}</strong>
+                                <strong class="title">{{ section.innerHTML }}</strong>
                                 <v-spacer />
                                 <v-btn icon>
                                     <v-icon>mdi-account</v-icon>
                                 </v-btn>
                             </v-layout>
-
-                            <p>
-                                starting with what are the basics skills to develop, what should be known and url to official trainings for vue, vuex, webpack
-                                and vuetify, continuing with what are the purpose of the files devivered in the template.
-                            </p>
-
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p>
-
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p>
+                            <div v-html="section.innerHTML"></div>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
@@ -55,10 +38,33 @@
 </style>
 
 <script>
+// import MarkdownItVue from "markdown-it-vue";
+import MarkdownItText from "../../README.md";
+import "markdown-it-vue/dist/markdown-it-vue.css";
+import Showdown from "showdown/dist/showdown";
+import { Remarkable } from "remarkable";
+/* const md = new Remarkable("full", {
+    html: true,
+    typographer: true
+}); */
+
+const converter = new Showdown.Converter();
+const html = converter.makeHtml(MarkdownItText);
+const parser = new DOMParser();
+const doc = parser.parseFromString(html, "text/html");
+const sections = Array.from(doc.querySelectorAll("h2"));
+
+console.log(doc);
+console.log(sections);
+
 export default {
     data: () => ({
-        length: 3,
-        window: 0
-    })
+        currentSection: 0,
+        content: html,
+        sections: sections
+    }),
+    mounted: function() {
+        console.log(this.sections);
+    }
 };
 </script>
