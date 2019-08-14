@@ -18,13 +18,13 @@
                             <!-- <markdown-it-vue class="md-body" :content="content" :options="options" />-->
                             <v-layout align-center mb-4>
                                 <v-avatar color="grey" class="mr-4" />
-                                <strong class="title">{{ section.innerHTML }}</strong>
+                                <strong class="title" v-html="section.title"></strong>
                                 <v-spacer />
                                 <v-btn icon>
                                     <v-icon>mdi-account</v-icon>
                                 </v-btn>
                             </v-layout>
-                            <div v-html="section.innerHTML"></div>
+                            <div v-html="section.content"></div>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
@@ -38,33 +38,38 @@
 </style>
 
 <script>
-// import MarkdownItVue from "markdown-it-vue";
-import MarkdownItText from "../../README.md";
-import "markdown-it-vue/dist/markdown-it-vue.css";
+import MDText from "../../README.md";
 import Showdown from "showdown/dist/showdown";
-import { Remarkable } from "remarkable";
-/* const md = new Remarkable("full", {
-    html: true,
-    typographer: true
-}); */
+const ShowdownHighlight = require("showdown-highlight");
 
-const converter = new Showdown.Converter();
-const html = converter.makeHtml(MarkdownItText);
-const parser = new DOMParser();
-const doc = parser.parseFromString(html, "text/html");
-const sections = Array.from(doc.querySelectorAll("h2"));
+Showdown.setFlavor("github");
+const converter = new Showdown.Converter({
+    extensions: [ShowdownHighlight]
+});
 
-console.log(doc);
-console.log(sections);
+const sections = [];
+const regexH2 = new RegExp(/^(#{1,2}\s.*)$\s{3}/gm);
+let match = regexH2.exec(MDText);
+let previousSectionStartIndex = null;
+let previousSectionTitle = null;
+while (match && match.index !== -1) {
+    if (previousSectionStartIndex !== null) {
+        sections.push({ title: previousSectionTitle, content: MDText.substring(previousSectionStartIndex, match.index) });
+    }
+    previousSectionStartIndex = match.index + match[0].length;
+    previousSectionTitle = match[1];
+    match = regexH2.exec(MDText);
+}
+sections.push({ title: previousSectionTitle, content: MDText.substring(previousSectionStartIndex, MDText.length) });
+const htmlSections = [];
+for (const section of sections) {
+    htmlSections.push({ title: converter.makeHtml(section.title), content: converter.makeHtml(section.content) });
+}
 
 export default {
     data: () => ({
         currentSection: 0,
-        content: html,
-        sections: sections
-    }),
-    mounted: function() {
-        console.log(this.sections);
-    }
+        sections: htmlSections
+    })
 };
 </script>

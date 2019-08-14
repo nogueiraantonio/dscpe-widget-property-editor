@@ -5,9 +5,7 @@
 
 # Widget Template Vue
 
-## Introduction
-
-This template is meant to ease the development of 3DDashboard Widgets.
+This template is meant to ease the development of 3DDashboard Widgets. :+1:
 
 // TODO : what does the provided environment does for you (hot reload, standalone capability, etc.)
 
