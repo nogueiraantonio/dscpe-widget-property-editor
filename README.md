@@ -5,7 +5,7 @@
 
 # Widget Template Vue
 
-This template is meant to ease the development of 3DDashboard Widgets. :+1:
+This template is meant to ease the development of 3DDashboard Widgets.
 
 // TODO : what does the provided environment does for you (hot reload, standalone capability, etc.)
 
@@ -42,7 +42,7 @@ Now that we're good with front-end libraries, let's have a look to the tooling w
   3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our
   framework stack, you won't need to change & understand the configuration. If you do, the configuration files are in the `build/` directory.
 
-## Build by yourself
+## Build by yourself :woman_factory_worker:
 
 Now that you've carefully read the [Before starting](#before-starting) section, [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
 

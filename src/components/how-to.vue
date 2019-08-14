@@ -19,10 +19,6 @@
                             <v-layout align-center mb-4>
                                 <v-avatar color="grey" class="mr-4" />
                                 <strong class="title" v-html="section.title"></strong>
-                                <v-spacer />
-                                <v-btn icon>
-                                    <v-icon>mdi-account</v-icon>
-                                </v-btn>
                             </v-layout>
                             <div v-html="section.content"></div>
                         </v-card-text>
@@ -40,7 +36,13 @@
 <script>
 import MDText from "../../README.md";
 import Showdown from "showdown/dist/showdown";
-const ShowdownHighlight = require("showdown-highlight");
+import hljs from "highlight.js/lib/highlight";
+import javascript from "highlight.js/lib/languages/javascript";
+import bash from "highlight.js/lib/languages/bash";
+import ShowdownHighlight from "showdown-highlight";
+import "highlight.js/styles/vs2015.css";
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("bash", bash);
 
 Showdown.setFlavor("github");
 const converter = new Showdown.Converter({
