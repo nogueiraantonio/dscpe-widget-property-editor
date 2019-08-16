@@ -20,7 +20,7 @@
                                 <v-avatar color="grey" class="mr-4" />
                                 <strong class="title" v-html="section.title"></strong>
                             </v-layout>
-                            <div v-html="section.content"></div>
+                            <div :style="{ maxHeight: maxHeight + 'px' }" class="readme" v-html="section.content"></div>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
@@ -29,8 +29,19 @@
     </v-layout>
 </template>
 
-<!-- no scope for app.vue, style defined here is global for the app -->
 <style>
+div.readme {
+    line-height: 1.5rem !important;
+    /* max-height: 600px; */
+    overflow: auto;
+}
+
+div.readme > pre > code {
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    display: block;
+    margin-bottom: 1em;
+}
 </style>
 
 <script>
@@ -46,11 +57,13 @@ hljs.registerLanguage("bash", bash);
 
 Showdown.setFlavor("github");
 const converter = new Showdown.Converter({
-    extensions: [ShowdownHighlight]
+    extensions: [ShowdownHighlight],
+    omitExtraWLInCodeBlocks: true,
+    smartIndentationFix: true
 });
 
 const sections = [];
-const regexH2 = new RegExp(/^(#{1,2}\s.*)$\s{3}/gm);
+const regexH2 = new RegExp(/^(#\s.*)$\s{3}/gm);
 let match = regexH2.exec(MDText);
 let previousSectionStartIndex = null;
 let previousSectionTitle = null;
@@ -69,9 +82,18 @@ for (const section of sections) {
 }
 
 export default {
-    data: () => ({
-        currentSection: 0,
-        sections: htmlSections
-    })
+    data: function() {
+        return {
+            currentSection: 0,
+            sections: htmlSections,
+            windowHeight: window.innerHeight
+        };
+    },
+
+    computed: {
+        maxHeight: function() {
+            return this.$store.state.windowHeight * 0.7;
+        }
+    }
 };
 </script>

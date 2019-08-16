@@ -5,11 +5,11 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        message: ""
+        windowHeight: window.innerHeight
     },
     mutations: {
-        setMessage: (state, message = "") => {
-            state.message = message;
+        setHeight: (state, height = window.innerHeight) => {
+            state.windowHeight = height;
         }
     },
     getters: {}

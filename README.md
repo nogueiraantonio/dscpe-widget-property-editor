@@ -9,7 +9,7 @@ This template is meant to ease the development of 3DDashboard Widgets.
 
 // TODO : what does the provided environment does for you (hot reload, standalone capability, etc.)
 
-## Before starting
+# Before starting
 
 3DDashboard Widgets are HTML5 based applications (with some specificities). Therefore, you absolutely need to have a good knowledge of the following
 technologies:
@@ -42,11 +42,11 @@ Now that we're good with front-end libraries, let's have a look to the tooling w
   3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our
   framework stack, you won't need to change & understand the configuration. If you do, the configuration files are in the `build/` directory.
 
-## Build by yourself :woman_factory_worker:
+# Build by yourself :woman_factory_worker:
 
 Now that you've carefully read the [Before starting](#before-starting) section, [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
 
-### 1. Get the sources
+## 1. Get the sources
 
 If you are familiar with GIT, clone our repo
 
@@ -59,15 +59,17 @@ OR
 You can simply download the [source code](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue/-/archive/master/widget-template-vue-master.zip) and unzip
 it wherever you prefer.
 
-### 2. Install the development dependencies
+## 2. Install the development dependencies
 
-In a terminal :
+In a terminal:
 
 ```bash
 npm install
 ```
 
-### 3. Build the Widget
+## 3. Build the Widget
+
+In a terminal:
 
 ```bash
 npm run build
@@ -76,7 +78,7 @@ npm run build
 When the build is finished, a new directory `dist/` is created. You'll find there the necessary files to run your widget. The entry point being `index.html`.
 Push this to your favorite HTTP server and try it right away using the _Run your App_ Widget.
 
-## Start developing
+# Start developing
 
 When developing Widgets, most of the time you will want to test in a 3DDashboard context. And sometimes you may not need to rely on 3DDashboard APIs that much
 so developing outside of the 3DDashboard may be more convenient. We identified 3 use cases which leads to different development environments setup:
@@ -99,7 +101,7 @@ so developing outside of the 3DDashboard may be more convenient. We identified 3
 Assuming you have [downloaded the sources](#1-get-the-sources) and [installed the development dependencies](#2-install-the-development-dependencies), now open
 the source code directory in VS Code.
 
-### 1. Standalone Widget
+## 1. Standalone Widget
 
 This setup will serve the Widget in a local HTTP server.
 
@@ -110,13 +112,13 @@ npm start
 The command will compile the Widget, start a HTTP server ([express](https://expressjs.com/)) and open a web browser loading the Widget entry point. Hot reload
 is enabled so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
-### 2. Widget running on the same network
+## 2. Widget running on the same network
 
-#### Prerequisites
+### Prerequisites
 
 You do need to have administrator privileges on the server running the 3DDashboard.
 
-#### Some context
+### Some context
 
 As in [Standalone Widget](#1-standalone-widget), the Widget will be served from a local HTTP server, but will be executed within a 3DDashboard. Therefore, due
 to the 3DDashboard infrastructure, your local HTTP server must be reachable by the server running the 3DDashboard.
@@ -126,7 +128,7 @@ run using HTTPS, your local server must serve HTTPS (and not simple HTTP).
 
 Also, the 3DDashboard won't let you run a non trusted Widget. That imply that the 3DExperience server trusts your local server.
 
-That brings some more configration steps, but nothing impossible.
+That brings some more configuration steps, but nothing impossible.
 
 You need a few things:
 
@@ -137,7 +139,7 @@ You need a few things:
 > The following description relies on SSL configuration for your local server. Another approach is to use the 3DExperience reverse proxy to redirect to your
 > local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage you can try, it works!
 
-#### Setup HTTPS
+### Setup HTTPS
 
 We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing bellow but more detailed.
 
@@ -150,9 +152,9 @@ Retrieve the hostname of your machine, open a terminal where in the directory wh
 hostname
 ```
 
-Ensure your 3DDashboard is able to reach your host (ping \$hostname from 3DDashboard server).
+Ensure your 3DDashboard is able to reach your host (ping `$hostname` from 3DDashboard server).
 
-Then, execute the two commands bellow (replace _\$hostname_ with the result of the previous command)
+Then, execute the two commands bellow (replace `$hostname` with the result of the previous command)
 
 ```bash
 # create a new Certificate Authority and update OS, Java & Firefox stores
@@ -161,7 +163,7 @@ mkcert -install
 mkcert localhost $hostname 127.0.0.1 ::1
 ```
 
-#### Configure Webpack-dev-server
+### Configure Webpack-dev-server
 
 [Webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible
 for creating the HTTPS server.
@@ -180,10 +182,10 @@ devServer: {
 }
 ```
 
-#### Configure your 3DDashboard
+### Configure your 3DDashboard
 
 Last required step is to be trusted by your 3DDashboard server. We have to add the previously created Certificate Authority to the java trusted store (as
-3DDashboard HTTPS is served by Tomee, using java store mechanism).
+3DDashboard HTTPS is served by TomEE, using java store mechanism).
 
 Copy the `rootCA.pem` on the machine running the 3DDashboard. Stop the 3DDashboard. Open a terminal where the `rootCA.pem` file is located and run the following
 command (as administrator):
@@ -194,7 +196,7 @@ keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -sto
 
 You can restart the 3DDashboard.
 
-#### Start debugging
+### Start debugging
 
 We're almost done ! In VS Code terminal update the configuration & start the development server:
 
@@ -211,13 +213,13 @@ If you want to revert the configuration, simply reset the `publicPath` variable:
 npm config set widget-template-vue:publicPath ""
 ```
 
-### 3. Widget running on a different network
+## 3. Widget running on a different network
 
-#### Prerequisites
+### Prerequisites
 
 You need a HTTPS server on the same network than your 3DDashboard. If public cloud, then Internet is that network.
 
-#### Some context
+### Some context
 
 By design, the 3DDashboard must be able to access the widget source code. Therefore in a context where our local machine can't be reached by the server, we'll
 assume the 3DDashboard can access to Internet. Which is the case for 3DExperience public cloud.
@@ -231,11 +233,11 @@ We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose
 Last but not least, for hot reload webpack-dev-server will create a Web Socket connection between the running widget & the process watching file changes on your
 local file system. Therefore you still need to have a HTTPS server running locally.
 
-#### Setup HTTPS
+### Setup HTTPS
 
 As for [the previous section](#3-widget-running-on-a-different-network), setup [HTTPS locally](#setup-https).
 
-#### Configure your S3 settings
+### Configure your S3 settings
 
 Open the file `build/webpack.config.dev.s3.js` and edit the parameters of the `DevServerUploadToS3Plugin` webpack plugin.
 
@@ -252,7 +254,9 @@ Open the file `build/webpack.config.dev.s3.js` and edit the parameters of the `D
 }
 ```
 
-#### Start debugging
+### Start debugging
+
+In a terminal:
 
 ```bash
 # it's very important to reset this variable if you set it in the previous section
@@ -262,6 +266,6 @@ npm start
 
 You are ready to debug your widget executed on the cloud, with hot reload !
 
-## Start sharing
+# Start sharing
 
 You've enhanced our template? please open a merge request and we'll evaluate the opportunity to include your code in our template.
