@@ -1,4 +1,4 @@
-const s3 = require("s3");
+const s3 = require("@auth0/s3");
 const path = require("path");
 const mkdirp = require("mkdirp");
 const fs = require("fs");
@@ -11,7 +11,7 @@ class DevServerUploadToS3Plugin {
         this.distPath = params.Key;
         delete this.params.Key;
         this.webpackDevServerHook = { fn: () => {} };
-        this.client = s3.createClient(options);
+        this.client = s3.createClient({ s3Options: options });
     }
 
     /**

@@ -32,9 +32,9 @@ module.exports = merge(common, {
         writeToDisk: false,
         // TODO : find a way to parametrize this
         https: {
-            key: fs.readFileSync("C:/Users/ii2/certs/localhost+3-key.pem"),
-            cert: fs.readFileSync("C:/Users/ii2/certs/localhost+3.pem"),
-            ca: fs.readFileSync("C:/Users/ii2/AppData/Local/mkcert/rootCA.pem")
+            key: "" /*fs.readFileSync("PATH_TO_KEY/localhost+3-key.pem")*/,
+            cert: "" /* fs.readFileSync("PATH_TO_CERT/localhost+3.pem") */,
+            ca: "" /* fs.readFileSync("PATH_TO_CA/rootCA.pem")*/
         }
     },
     output: {
