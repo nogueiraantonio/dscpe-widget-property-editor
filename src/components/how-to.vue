@@ -32,60 +32,37 @@
 <style>
 div.readme {
     line-height: 1.5rem !important;
-    /* max-height: 600px; */
     overflow: auto;
 }
-
 div.readme > pre > code {
     background-color: #1e1e1e;
     color: #dcdcdc;
     display: block;
     margin-bottom: 1em;
+    margin-right: 0.5em;
+    padding: 0.6em;
+}
+div.readme > pre > code::before {
+    content: unset;
+}
+div.readme > pre > code::after {
+    content: unset;
+}
+div.readme blockquote {
+    margin-top: 16px;
+    border-left: 4px solid #ccc;
+    padding-left: 8px;
 }
 </style>
 
 <script>
-import MDText from "../../README.md";
-import Showdown from "showdown/dist/showdown";
-import hljs from "highlight.js/lib/highlight";
-import javascript from "highlight.js/lib/languages/javascript";
-import bash from "highlight.js/lib/languages/bash";
-import ShowdownHighlight from "showdown-highlight";
-import "highlight.js/styles/vs2015.css";
-hljs.registerLanguage("javascript", javascript);
-hljs.registerLanguage("bash", bash);
-
-Showdown.setFlavor("github");
-const converter = new Showdown.Converter({
-    extensions: [ShowdownHighlight],
-    omitExtraWLInCodeBlocks: true,
-    smartIndentationFix: true
-});
-
-const sections = [];
-const regexH2 = new RegExp(/^(#\s.*)$\s{3}/gm);
-let match = regexH2.exec(MDText);
-let previousSectionStartIndex = null;
-let previousSectionTitle = null;
-while (match && match.index !== -1) {
-    if (previousSectionStartIndex !== null) {
-        sections.push({ title: previousSectionTitle, content: MDText.substring(previousSectionStartIndex, match.index) });
-    }
-    previousSectionStartIndex = match.index + match[0].length;
-    previousSectionTitle = match[1];
-    match = regexH2.exec(MDText);
-}
-sections.push({ title: previousSectionTitle, content: MDText.substring(previousSectionStartIndex, MDText.length) });
-const htmlSections = [];
-for (const section of sections) {
-    htmlSections.push({ title: converter.makeHtml(section.title), content: converter.makeHtml(section.content) });
-}
+import sections from "../js/readme-parser";
 
 export default {
     data: function() {
         return {
             currentSection: 0,
-            sections: htmlSections,
+            sections: sections,
             windowHeight: window.innerHeight
         };
     },

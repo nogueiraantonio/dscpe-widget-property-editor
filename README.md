@@ -7,7 +7,14 @@
 
 This template is meant to ease the development of 3DDashboard Widgets.
 
-// TODO : what does the provided environment does for you (hot reload, standalone capability, etc.)
+With this template we focused on having the best development experience possible compatible with the 3DDashboard infrastructure. Hence we provide not only a code sample but a full development environment. Using this environment has many advantages :
+
+- Ability do develop _outside_ the 3DDashboard
+- Hot & Live Reload: as soon as you modify a file, the change is applied in your web browser without a single action (even if your 3DExperience Platform is on the cloud)
+- Compliancy with latest front-end technologies (it's time to forget jQuery!)
+- Ability to use browsers debugger even in "modules"
+
+But that comes with a small price: some setup is required...
 
 # Before starting
 
@@ -27,13 +34,13 @@ Also, as we are lazy developers, we like to ease our lives using some good frame
 - [RequireJS](https://requirejs.org/) - That's the way you get access to 3DDashboard APIs. Whether you like it or not.
 - _Widget and 3DDashboard_ - Well, either you've been trained (lucky you), either you have a good documentation, either... In any case, you need to know the basics.
 
-> Now that we're good with front-end libraries, let's have a look to the tooling we use:
+Now that we're good with front-end libraries, let's have a look to the tooling we use:
 
 - [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it.
 - [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install manually. We encountered issues with the last version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)** version.
 - [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. If you do, the configuration files are in the `build/` directory.
 
-# Build by yourself :woman_factory_worker:
+# Build by yourself
 
 Now that you've carefully read the [Before starting](#before-starting) section, [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
 
