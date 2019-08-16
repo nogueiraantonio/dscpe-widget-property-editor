@@ -23,7 +23,7 @@ Also, as we are lazy developers, we like to ease our lives using some good frame
 - [Vue.js](https://vuejs.org/) - Consider spending 1 hour on [this training](https://scrimba.com/g/glearnvue) on Scrimba.
 - [Vuetify](https://vuetifyjs.com) - This UI Framework will drastically saves you time. Nevertheless, it's optional so feel free to remove the dependency and use your favorite.
 - [Vuex](https://vuex.vuejs.org/) - This is the "store" object you will find in the template. If you are new to Vue.js, don't touch this for now. Only when you feel that props & emits are bothering you may come back here and learn about vuex.
-- [ES6](http://es6-features.org/) - You thought JavaScript is crap ? me too. But that was before ES6...
+- [ES6](http://es6-features.org/) - You thought JavaScript was crap ? me too. But that was before ES6...
 - [RequireJS](https://requirejs.org/) - That's the way you get access to 3DDashboard APIs. Whether you like it or not.
 - _Widget and 3DDashboard_ - Well, either you've been trained (lucky you), either you have a good documentation, either... In any case, you need to know the basics.
 
@@ -117,8 +117,8 @@ That brings some more configuration steps, but nothing impossible.
 
 You need a few things:
 
+- Configure your browser(s) and your machine to [trust your server](#setup-https),
 - [Configure the local](#configure-webpack-dev-server) server to serve HTTPS,
-- Configure your browser(s) and your machine to [trust your server](#setup-https) (Setup HTTPS),
 - [Configure the 3DDashboard Server](#configure-your-3DDashboard) to trust your local server.
 
 > The following description relies on SSL configuration for your local server. Another approach is to use the 3DExperience reverse proxy to redirect to your local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage you can try, it works!
@@ -140,11 +140,13 @@ Ensure your 3DDashboard is able to reach your host (ping `$hostname` from 3DDash
 Then, execute the two commands bellow (replace `$hostname` with the result of the previous command)
 
 ```bash
-# create a new Certificate Authority and update OS, Java & Firefox stores
+# create a new CA (Certificate Authority) and update OS, Java & Firefox stores
 mkcert -install
 # create a new certificate
 mkcert localhost $hostname 127.0.0.1 ::1
 ```
+
+> Be careful, by default mkcert will generate the CA file (`mkcert -install`) in your user directory (C:\Users\$USER\AppData\Local\mkcert\rootCA.pem on Windows) while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the current directory (where you ran mkcert from).
 
 ### Configure Webpack-dev-server
 
@@ -169,6 +171,8 @@ Last required step is to be trusted by your 3DDashboard server. We have to add t
 
 Copy the `rootCA.pem` on the machine running the 3DDashboard. Stop the 3DDashboard. Open a terminal where the `rootCA.pem` file is located and run the following command (as administrator):
 
+> Make sure the JAVA_HOME is properly set! Else you will face an error like `keytool error: java.io.FileNotFoundException: /jre/lib/security/cacerts (No such file or directory)`
+
 ```bash
 keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -alias Root -import -file rootCA.pem
 ```
@@ -186,7 +190,7 @@ npm start
 
 You will notice the same behavior than in [Standalone mode](#1-standalone-widget).
 
-If you want to revert the configuration, simply reset the `publicPath` variable:
+**If you want** to revert the configuration, simply reset the `publicPath` variable:
 
 ```bash
 npm config set widget-template-vue:publicPath ""
@@ -207,6 +211,8 @@ That being said we need a HTTPS server available on Internet to do the job.
 We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose and we do encourage it's usage.
 
 > If you have any other repository, you'll have to adapt the webpack plugin we wrote (see bellow).
+
+[`aws-cli`](https://aws.amazon.com/fr/cli/) needs to be installed and [configured](https://docs.aws.amazon.com/fr_fr/cli/latest/userguide/cli-chap-configure.html) before continuing.
 
 Last but not least, for hot reload webpack-dev-server will create a Web Socket connection between the running widget & the process watching file changes on your local file system. Therefore you still need to have a HTTPS server running locally.
 
@@ -238,7 +244,7 @@ In a terminal:
 ```bash
 # it's very important to reset this variable if you set it in the previous section
 npm config set widget-template-vue:publicPath ""
-npm start
+npm run devS3
 ```
 
 You are ready to debug your widget executed on the cloud, with hot reload !
