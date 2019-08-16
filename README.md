@@ -24,7 +24,7 @@ Also, as we are lazy developers, we like to ease our lives using some good frame
 - [Vuetify](https://vuetifyjs.com) - This UI Framework will drastically saves you time. Nevertheless, it's optional so feel free to remove the dependency and use your favorite.
 - [Vuex](https://vuex.vuejs.org/) - This is the "store" object you will find in the template. If you are new to Vue.js, don't touch this for now. Only when you feel that props & emits are bothering you may come back here and learn about vuex.
 - [ES6](http://es6-features.org/) - You thought JavaScript is crap ? me too. But that was before ES6...
-- [RequireJS](https://requirejs.org/) - That's the way you get access to 3DDashboard APIs. Whether you like or not.
+- [RequireJS](https://requirejs.org/) - That's the way you get access to 3DDashboard APIs. Whether you like it or not.
 - _Widget and 3DDashboard_ - Well, either you've been trained (lucky you), either you have a good documentation, either... In any case, you need to know the basics.
 
 > Now that we're good with front-end libraries, let's have a look to the tooling we use:
@@ -51,15 +51,17 @@ You can simply download the [source code](https://itgit.dsone.3ds.com/widget-lab
 
 ## 2. Install the development dependencies
 
-In a terminal:
+Open a terminal in the location you've put the downloaded / cloned sources, then:
 
 ```bash
 npm install
 ```
 
+Wait until it finishes.
+
 ## 3. Build the Widget
 
-In a terminal:
+In the same terminal:
 
 ```bash
 npm run build
