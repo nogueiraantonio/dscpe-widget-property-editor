@@ -6,24 +6,15 @@
 image: node:10.16-stretch
 
 stages:
-    - prepare
     - build
+    - test
     - deploy
-
-##########################
-# npm install
-# stage: prepare 
-# install node_modules to prepare build
-
-npm_install:
-  stage: prepare
-  tags: 
-    - widgetlab
-  artifacts:
-    expire_in: 10min
-    untracked: true
-  script:
-    - npm install
+    
+cache:
+  # setup a cache for each projet:branch (since it is the same runner for all widget-lab projects)
+  key: ${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
 
 ##########################
 # npm build
@@ -39,6 +30,7 @@ npm_build:
     paths:
       - dist/
   script:
+    - npm install
     - npm run build
 
 ##########################
@@ -99,5 +91,3 @@ push_widget:
     - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
     - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
     - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"
-
-

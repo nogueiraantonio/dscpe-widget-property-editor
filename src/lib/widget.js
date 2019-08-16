@@ -63,12 +63,12 @@ const Widget = function() {
         document.title = title;
     };
     this.dispatchEvent = (...args) => {
-        // console.debug(`Event recieved ${args}`);
+        // console.debug(`Event received ${args}`);
     };
 };
 
 /**
- * Mock the UWA Object normaly provided by 3DDashboard
+ * Mock the UWA Object normally provided by 3DDashboard
  */
 const UWA = function() {
     this.log = args => {
@@ -157,9 +157,12 @@ export function initWidget(cbOk, cbError) {
             }
         });
     };
+    const updatePublicPath = () => {
+        __webpack_public_path__ = widget.uwaUrl.substring(0, widget.uwaUrl.lastIndexOf("/") + 1);
+    };
 
     if (window.widget) {
-        __webpack_public_path__ = widget.uwaUrl.substring(0, widget.uwaUrl.lastIndexOf("/") + 1);
+        updatePublicPath();
         cbOk(widget);
     } else if (!window.UWA) {
         // outside of 3DDashboard
@@ -180,7 +183,7 @@ export function initWidget(cbOk, cbError) {
                 10,
                 // finally, ...starts
                 () => {
-                    __webpack_public_path__ = widget.uwaUrl.substring(0, widget.uwaUrl.lastIndexOf("/") + 1);
+                    updatePublicPath();
                     cbOk(widget);
                 }
             );
