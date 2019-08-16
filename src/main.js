@@ -16,7 +16,7 @@ function start() {
     mainComponent.$mount("app");
 
     requirejs(["DS/PlatformAPI/PlatformAPI"], PlatformAPI => {
-        store.commit("setMessage", "PlatformAPI ready.");
+        // use 3DDashboard APIs
     });
 }
 /**
@@ -31,5 +31,8 @@ export default function() {
         // what do you want to do on refresh ?
         // by default, lets reload the page
         window.location.reload();
+    });
+    window.addEventListener("resize", e => {
+        store.commit("setHeight");
     });
 }

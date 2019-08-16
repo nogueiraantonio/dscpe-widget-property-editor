@@ -25,11 +25,11 @@ module.exports = {
                 ]
             },
             {
-                test: /.vue$/,
+                test: /\.vue$/,
                 loader: "vue-loader"
             },
             {
-                test: /.js$/,
+                test: /\.js$/,
                 loader: "babel-loader",
                 exclude: [/node_modules/, /src\/static/],
                 query: {
@@ -37,7 +37,7 @@ module.exports = {
                 }
             },
             {
-                test: /.css$/,
+                test: /\.css$/,
                 loader: ["style-loader", "css-loader"]
             },
             {
@@ -54,6 +54,10 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.md$/i,
+                use: "raw-loader"
             }
         ]
     },
