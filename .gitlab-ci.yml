@@ -9,12 +9,12 @@ stages:
     - build
     - test
     - deploy
-    
+
 cache:
-  # setup a cache for each projet:branch (since it is the same runner for all widget-lab projects)
-  key: ${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
+    # setup a cache for each projet:branch (since it is the same runner for all widget-lab projects)
+    key: ${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
 
 ##########################
 # npm build
@@ -22,72 +22,87 @@ cache:
 # build widget (npm run build)
 
 npm_build:
-  stage: build
-  tags: 
-    - widgetlab
-  artifacts:
-    expire_in: 10min
-    paths:
-      - dist/
-  script:
-    - npm install
-    - npm run build
+    stage: build
+    tags:
+        - widgetlab
+    artifacts:
+        expire_in: 10min
+        paths:
+            - dist/
+    script:
+        - npm install
+        - npm run build
 
 ##########################
-# readme_html (master only) 
+# readme_html (master only)
 # stage: build
 # Convert README.md to dist/README.html
 
 md2html:
-  stage: build
-  tags: 
-    - widgetlab
-  only:
-    - master
-  artifacts:
-    expire_in: 10min
-    paths:
-      - dist/
-  allow_failure: true
-  script:
-    - npm install markdown-to-html -g
-    - mkdir -p dist
-    - markdown README.md > dist/README.html
+    stage: build
+    tags:
+        - widgetlab
+    only:
+        - master
+    artifacts:
+        expire_in: 10min
+        paths:
+            - dist/
+    allow_failure: true
+    script:
+        - npm install markdown-to-html -g
+        - mkdir -p dist
+        - markdown README.md > dist/README.html
 
 ##########################
-# widget_zip (master only) 
+# npm test
+# stage: test
+# run Mocha tests
+
+npm_test:
+    stage: test
+    tags:
+        - widgetlab
+    # FIXME : chromium not working in CI yet... 
+    allow_failure: true
+    script:
+        - npm install
+        - npm test
+
+##########################
+# widget_zip (master only)
 # stage: deploy
 # keep dist/ available for download as Zip (in artifacts)
 
 widget_zip:
-  stage: deploy
-  tags: 
-    - widgetlab
-  only:
-    - master
-  artifacts:
-    expire_in: 10yrs
-    paths:
-      - dist/
-  script:
-    - cd dist
-    # nothing to do : 
+    stage: deploy
+    tags:
+        - widgetlab
+    only:
+        - master
+    artifacts:
+        expire_in: 10yrs
+        paths:
+            - dist/
+    script:
+        - cd dist
+        # nothing to do :
 
 ##########################
-# push_widget (master only) 
+# push_widget (master only)
 # stage: deploy
-# Push widget to AWS S3 
+# Push widget to AWS S3
 
 push_widget:
-  stage: deploy
-  image: python:3.7.4-stretch
-  tags: 
-    - widgetlab
-  only:
-    - master
-  allow_failure: true
-  script:
-    - pip install awscli
-    - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
-    - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
-    - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"
+    stage: deploy
+    image: python:3.7.4-stretch
+    tags:
+        - widgetlab
+    only:
+        - master
+    allow_failure: true
+    script:
+        - pip install awscli
+        - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
+        - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
+        - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"
