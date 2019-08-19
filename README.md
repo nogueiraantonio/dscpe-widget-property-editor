@@ -1,20 +1,18 @@
 <!-- markdownlint-disable MD001 MD024 -->
 <!-- https://github.com/DavidAnson/markdownlint/blob/master/README.md#configuration -->
 
-<!-- omit in toc -->
-
 # Widget Template Vue
 
 This template is meant to ease the development of 3DDashboard Widgets.
 
 With this template we focused on having the best development experience possible compatible with the 3DDashboard infrastructure. Hence we provide not only a code sample but a full development environment based on widgets & web development best practices. Using this environment has many advantages :
 
-- Ability do develop _outside_ the 3DDashboard;
-- Hot & Live Reload: as soon as you modify a file, the change is applied in your web browser without a single action (even if your 3DExperience Platform is on the cloud);
-- Compliance with the latest front-end technologies (it's time to forget jQuery!);
-- Ability to use browsers debugger even in "modules".
+- Ability do develop _outside_ the 3DDashboard
+- Hot & Live Reload: as soon as you modify a file, the change is applied in your web browser without a single action (even if your 3DExperience Platform is on the cloud)
+- Compliance with the latest front-end technologies (it's time to forget jQuery!)
+- Ability to use browsers debugger even in "modules"
 
-  Basically, you will be able to develop a widget like any other web application!
+Basically, you will be able to develop a widget like any other web application!
 
 But that comes with a small price: some setup is required...
 
@@ -253,7 +251,7 @@ In a terminal:
 ```bash
 # it's very important to reset this variable if you set it in the previous section
 npm config set widget-template-vue:publicPath ""
-npm run devS3
+npm run startS3
 ```
 
 You are ready to debug your widget executed on the cloud, with hot reload !
