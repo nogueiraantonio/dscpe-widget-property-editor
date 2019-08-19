@@ -1,8 +1,6 @@
 <!-- markdownlint-disable MD001 MD024 -->
 <!-- https://github.com/DavidAnson/markdownlint/blob/master/README.md#configuration -->
 
-<!-- omit in toc -->
-
 # Widget Template Vue
 
 This template is meant to ease the development of 3DDashboard Widgets.
@@ -11,32 +9,32 @@ With this template we focused on having the best development experience possible
 
 - Ability do develop _outside_ the 3DDashboard
 - Hot & Live Reload: as soon as you modify a file, the change is applied in your web browser without a single action (even if your 3DExperience Platform is on the cloud)
-- Compliancy with latest front-end technologies (it's time to forget jQuery!)
+- Compliance with the latest front-end technologies (it's time to forget jQuery!)
 - Ability to use browsers debugger even in "modules"
 
-  Basically, you will be able to develop a widget like any other web application!
+Basically, you will be able to develop a widget like any other web application!
 
 But that comes with a small price: some setup is required...
 
 # Before starting
 
-3DDashboard Widgets are HTML5 based applications (with some specificities). Therefore, you absolutely need to have a good knowledge of the following technologies:
+3DDashboard Widgets are HTML5 based applications (with some particularities). Therefore, you absolutely need to have a good knowledge of the following technologies:
 
 - **HTML**
 - **JavaScript**
 - **CSS**
 - HTTP, SSL and a good networking general knowledge
 
-Also, as we are lazy developers, we like to ease our lives using some good frameworks, & technologies. This template includes many of these and you won't get a chance to play around if you don't know:
+Also, as we are lazy developers, we like to ease our lives using some good frameworks & technologies. This template includes many of these and you won't get a chance to play around if you don't know:
 
 - [Vue.js](https://vuejs.org/) - Consider spending 1 hour on [this training](https://scrimba.com/g/glearnvue) on Scrimba.
-- [Vuetify](https://vuetifyjs.com) - This UI Framework will drastically saves you time. Nevertheless, it's optional so feel free to remove the dependency and use your favorite.
-- [Vuex](https://vuex.vuejs.org/) - This is the "store" object you will find in the template. If you are new to Vue.js, don't touch this for now. Only when you feel that props & emits are bothering you may come back here and learn about vuex.
+- [Vuetify](https://vuetifyjs.com) - This UI Framework will drastically save your time. Nevertheless, it's optional so feel free to remove the dependency and use your favorite.
+- [Vuex](https://vuex.vuejs.org/) - This is the "store" object you will find in the template. If you are new to Vue.js, don't touch this for now. Only when you feel that props & emits are bothering, you may come back here and learn about Vuex.
 - [ES6](http://es6-features.org/) - You thought JavaScript was crap ? me too. But that was before ES6...
 - [RequireJS](https://requirejs.org/) - That's the way you get access to 3DDashboard APIs. Whether you like it or not.
 - _Widget and 3DDashboard_ - Well, either you've been trained (lucky you), either you have a good documentation, either... In any case, you need to know the basics.
 
-Now that we're good with front-end libraries, let's have a look to the tooling we use:
+Now that we're good with front-end libraries, let's have a look at the tooling we use:
 
 - [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it.
 - [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install manually. We encountered issues with the last version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)** version.
@@ -80,15 +78,15 @@ When the build is finished, a new directory `dist/` is created. You'll find ther
 
 # Start developing
 
-When developing Widgets, most of the time you will want to test in a 3DDashboard context. And sometimes you may not need to rely on 3DDashboard APIs that much so developing outside of the 3DDashboard may be more convenient. We identified 3 use cases which leads to different development environments setup:
+When developing Widgets, most of the time you will want to test in a 3DDashboard context. And sometimes you may not need to rely on 3DDashboard APIs that much, so developing outside of the 3DDashboard may be more convenient. We identified 3 use cases which lead to different development environments setup:
 
-1. Standalone Widget (developed outside 3DDashboard, but that can be build to be executed inside)
+1. Standalone Widget (developed outside 3DDashboard, but that can be built to be executed inside)
 
    Consider trying this option before going further. There is no special setup.
 
 2. Widget executed in a 3DDashboard located on the same network (such as a 3DExperience VM, private cloud, etc.)
 
-   This setup is the most convenient when it is possible (limitations are detailed bellow) but it is the one that requires the most configuration.
+   This setup is the most convenient when it is possible (limitations are detailed below) but it is the one that requires the most configuration.
 
 3. Widget executed in a 3DDashboard located anywhere (such as public cloud)
 
@@ -122,7 +120,7 @@ Moreover due to [mixed content policy](https://developer.mozilla.org/en-US/docs/
 
 Also, the 3DDashboard won't let you run a non trusted Widget. That imply that the 3DExperience server trusts your local server.
 
-That brings some more configuration steps, but nothing impossible.
+That brings some more configuration steps, but nothing is impossible.
 
 You need a few things:
 
@@ -130,7 +128,7 @@ You need a few things:
 - [Configure the local](#configure-webpack-dev-server) server to serve HTTPS,
 - [Configure the 3DDashboard Server](#configure-your-3DDashboard) to trust your local server.
 
-> The following description relies on SSL configuration for your local server. Another approach is to use the 3DExperience reverse proxy to redirect to your local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage you can try, it works!
+> The following description relies on SSL configuration for your local server. Another approach is to use the 3DExperience reverse proxy to redirect to your local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage, you can try, it works!
 
 ### Setup HTTPS
 
@@ -138,7 +136,7 @@ We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read tha
 
 The tool will assist you in creating the necessary files, store & keys, configure your OS and your browsers. Download the [binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS.
 
-Retrieve the hostname of your machine, open a terminal where in the directory where you have downloaded mkcert and:
+Retrieve the hostname of your machine, open a terminal in the directory where you have downloaded mkcert and:
 
 ```bash
 hostname
@@ -155,7 +153,7 @@ mkcert -install
 mkcert localhost $hostname 127.0.0.1 ::1
 ```
 
-> Be careful, by default mkcert will generate the CA file (`mkcert -install`) in your user directory (C:\Users\$USER\AppData\Local\mkcert\rootCA.pem on Windows) while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the current directory (where you ran mkcert from).
+> Be careful, by default mkcert will generate the CA file (`mkcert -install`) in your user directory (C:\Users\$USER\AppData\Local\mkcert\rootCA.pem on Windows) while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the current directory (from where you ran mkcert).
 
 ### Configure Webpack-dev-server
 
@@ -209,7 +207,7 @@ npm config set widget-template-vue:publicPath ""
 
 ### Prerequisites
 
-You need a HTTPS server on the same network than your 3DDashboard. If public cloud, then Internet is that network.
+You need a HTTPS server on the same network as your 3DDashboard. If public cloud, then Internet is that network.
 
 ### Some context
 
@@ -217,9 +215,9 @@ By design, the 3DDashboard must be able to access the widget source code. Theref
 
 That being said we need a HTTPS server available on Internet to do the job.
 
-We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose and we do encourage it's usage.
+We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose and we do encourage its usage.
 
-> If you have any other repository, you'll have to adapt the webpack plugin we wrote (see bellow).
+> If you have any other repository, you'll have to adapt the webpack plugin we wrote (see below).
 
 [`aws-cli`](https://aws.amazon.com/fr/cli/) needs to be installed and [configured](https://docs.aws.amazon.com/fr_fr/cli/latest/userguide/cli-chap-configure.html) before continuing.
 
@@ -253,11 +251,11 @@ In a terminal:
 ```bash
 # it's very important to reset this variable if you set it in the previous section
 npm config set widget-template-vue:publicPath ""
-npm run devS3
+npm run startS3
 ```
 
 You are ready to debug your widget executed on the cloud, with hot reload !
 
 # Start sharing
 
-You've enhanced our template? please open a merge request and we'll evaluate the opportunity to include your code in our template.
+You've enhanced our template? Please open a merge request and we'll evaluate the opportunity to include your code in our template.
