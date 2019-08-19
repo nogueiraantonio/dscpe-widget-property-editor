@@ -3,7 +3,7 @@
         <v-item-group v-model="currentSection" class="shrink mr-6" mandatory tag="v-flex">
             <v-item v-for="i in sections.length" :key="i" v-slot:default="{ active, toggle }">
                 <div>
-                    <v-btn :input-value="active" icon small @click="toggle">
+                    <v-btn :input-value="active" icon @click="toggle">
                         <v-icon>mdi-record</v-icon>
                     </v-btn>
                 </div>
