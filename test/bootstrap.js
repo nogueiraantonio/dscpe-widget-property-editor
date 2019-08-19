@@ -1,4 +1,5 @@
 const express = require("express");
+const fs = require("fs");
 
 // testing scope object
 let testing = {
@@ -21,9 +22,23 @@ function runServer(port, dir) {
     });
 }
 
+function initReportFolder(path) {
+    return new Promise(resolve => {
+        if (fs.existsSync(path)) {
+            fs.readdirSync(path).forEach(function(file, index) {
+                fs.unlinkSync(path + "/" + file);
+            });
+        } else {
+            fs.mkdirSync(path);
+        }
+        resolve(path);
+    });
+}
+
 // open browser
 before(async function() {
     testing.server = await runServer(8666, "dist");
+    testing.reportdir = (await initReportFolder("test/report")) + "/";
 });
 
 // close browser and reset global variables
