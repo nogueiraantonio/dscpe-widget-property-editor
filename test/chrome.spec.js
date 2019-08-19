@@ -12,7 +12,8 @@ describe("Test With Chrome", function() {
         browser = await puppeteer.launch({
             headless: true,
             slowMo: 100,
-            timeout: 10000
+            timeout: 10000,
+            args: ["--no-sandbox"]
         });
         page = await browser.newPage();
         await page.setViewport({
@@ -46,6 +47,10 @@ describe("Test With Chrome", function() {
     // TEST CASES
 
     describe("#others TBD...", function() {
+        it("screenshot 'home.png'", async function() {
+            await page.screenshot({ path: testing.reportdir + "home.png" });
+        });
+
         it("TBD 1", async function() {
             assert.ok(true);
         });
