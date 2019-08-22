@@ -1,7 +1,0 @@
-node_modules
-dist
-test/report
-package-lock.json
-*.pem
-*.crt
-*.key 
