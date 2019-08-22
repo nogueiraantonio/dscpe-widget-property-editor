@@ -1,0 +1,115 @@
+# GitLab CI/CD configuration
+# P13@3DS.com
+# please read Gitlab-CI-Setup.md to enable CI/CD on the repository
+
+# default image : node 10.16 is LTS @ September-2019
+image: node:10.16-stretch
+
+stages:
+    - build
+    - test
+    - deploy
+
+cache:
+    # setup a cache for each projet:branch (since it is the same runner for all widget-lab projects)
+    key: ${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
+
+##########################
+# npm build
+# stage: build
+# build widget (npm run build)
+
+npm_build:
+    stage: build
+    tags:
+        - widgetlab
+    artifacts:
+        expire_in: 10min
+        paths:
+            - dist/
+    script:
+        - npm install
+        - npm run build
+
+##########################
+# readme_html (master only)
+# stage: build
+# Convert README.md to dist/README.html
+
+md2html:
+    stage: build
+    tags:
+        - widgetlab
+    only:
+        - master
+    artifacts:
+        expire_in: 10min
+        paths:
+            - dist/
+    allow_failure: true
+    script:
+        - npm install markdown-to-html -g
+        - mkdir -p dist
+        - markdown README.md > dist/README.html
+
+##########################
+# npm test
+# stage: test
+# run Mocha tests
+
+npm_test:
+    stage: test
+    tags:
+        - widgetlab
+    artifacts:
+        paths:
+            - test/report
+    # TODO: a dedicated image could be built in order to install missing libs (then apt commands below could be removed)
+    script:
+        - apt update
+        - apt install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4
+          libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1
+          libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3
+          lsb-release xdg-utils wget
+        - npm install
+        - npm test
+
+##########################
+# widget_zip (master only)
+# stage: deploy
+# keep dist/ available for download as Zip (in artifacts)
+
+widget_zip:
+    stage: deploy
+    tags:
+        - widgetlab
+    only:
+        - master
+    artifacts:
+        expire_in: 10yrs
+        paths:
+            - dist/
+    script:
+        - cd dist
+        # nothing to do :
+
+##########################
+# push_widget (master only)
+# stage: deploy
+# Push widget to AWS S3
+
+push_widget:
+    stage: deploy
+    image: python:3.7.4-stretch
+    tags:
+        - widgetlab
+    only:
+        - master
+    allow_failure: true
+    script:
+        - pip install awscli
+        - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
+        - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
+        - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"

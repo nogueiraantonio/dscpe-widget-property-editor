@@ -1,0 +1,102 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "amd": true,
+        "mocha": true
+    },
+    "extends": ["eslint:recommended", "plugin:vue/recommended", "plugin:mocha/recommended", "prettier", "vuetify"],
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "ecmaFeatures": {
+            "jsx": true,
+            "arrowFunctions": true,
+            "blockBindings": true,
+            "defaultParams": true,
+            "destructuring": true,
+            "forOf": true,
+            "generators": true,
+            "objectLiteralComputedProperties": true,
+            "objectLiteralShorthandMethods": true,
+            "objectLiteralShorthandProperties": true,
+            "restParams": true,
+            "spread": false,
+            "templateStrings": false,
+            "modules": true,
+            "classes": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-const-assign": "error",
+        "no-this-before-super": "warn",
+        "no-undef": "error",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn",
+        "no-console": [
+            "warn",
+            {
+                "allow": ["debug", "warn", "error", "trace", "table"]
+            }
+        ],
+        "eqeqeq": ["error", "always"],
+        "quotes": [2, "double"],
+        "semi": ["error", "always"],
+        "space-before-function-paren": "off",
+        "space-before-blocks": "warn",
+        "no-var": "warn",
+        "prefer-arrow-callback": "error",
+        "spaced-comment": "warn",
+        "camelcase": ["warn", { "allow": ["__webpack_public_path__"] }],
+        "vue/html-indent": [
+            "warn",
+            4,
+            {
+                "attribute": 1,
+                "baseIndent": 1,
+                "closeBracket": 0,
+                "alignAttributesVertically": true,
+                "ignores": []
+            }
+        ],
+        "vue/max-attributes-per-line": [
+            "warn",
+            {
+                "singleline": 10,
+                "multiline": {
+                    "max": 1,
+                    "allowFirstLine": false
+                }
+            }
+        ],
+        "vue/html-self-closing": [
+            "warn",
+            {
+                "html": {
+                    "void": "always",
+                    "normal": "never",
+                    "component": "always"
+                },
+                "svg": "never",
+                "math": "never"
+            }
+        ],
+        "vue/singleline-html-element-content-newline": "off",
+        "vue/script-indent": "off",
+        "vue/require-default-prop": "off",
+        "mocha/no-hooks-for-single-case": "off",
+        "mocha/no-top-level-hooks": "off"
+    },
+    "globals": {
+        "widget": false,
+        "Highcharts": false,
+        "requirejs": false,
+        "__webpack_public_path__": true,
+        "testing": true
+    },
+    "plugins": ["vue", "json", "mocha"]
+}
