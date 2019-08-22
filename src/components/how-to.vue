@@ -20,7 +20,7 @@
                                 <v-avatar color="grey" class="mr-4" />
                                 <strong class="title" v-html="section.title"></strong>
                             </v-layout>
-                            <div :style="{ maxHeight: maxHeight + 'px' }" class="readme" v-html="section.content"></div>
+                            <div class="readme" v-html="section.content"></div>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
@@ -33,6 +33,7 @@
 div.readme {
     line-height: 1.5rem !important;
     overflow: auto;
+    max-height: 70vh;
 }
 div.readme > pre > code {
     background-color: #1e1e1e;
@@ -62,15 +63,8 @@ export default {
     data: function() {
         return {
             currentSection: 0,
-            sections: sections,
-            windowHeight: window.innerHeight
+            sections: sections
         };
-    },
-
-    computed: {
-        maxHeight: function() {
-            return this.$store.state.windowHeight * 0.7;
-        }
     }
 };
 </script>
