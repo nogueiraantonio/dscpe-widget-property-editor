@@ -64,6 +64,8 @@ npm_test:
     tags:
         - widgetlab
     artifacts:
+        when: always
+        expire_in: 30min
         paths:
             - test/report
     # TODO: a dedicated image could be built in order to install missing libs (then apt commands below could be removed)

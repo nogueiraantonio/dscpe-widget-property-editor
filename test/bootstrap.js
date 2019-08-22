@@ -2,20 +2,18 @@ const express = require("express");
 const fs = require("fs");
 
 // testing scope object
-let testing = {
+const testing = {
     baseurl: undefined,
     server: undefined,
-    delay: function(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    delay: ms => new Promise(resolve => setTimeout(resolve, ms))
 };
 
 function runServer(port, dir) {
     return new Promise(resolve => {
         const app = express();
         app.use("/", express.static(dir));
-        let srv = app.listen(port, function() {
-            testing.baseurl = "http://localhost:" + port + "/";
+        let srv = app.listen(port, () => {
+            testing.baseurl = `http://localhost:${port}/`;
             console.debug("Web server running ", testing.baseurl);
             resolve(srv);
         });
@@ -38,7 +36,7 @@ function initReportFolder(path) {
 // open browser
 before(async function() {
     testing.server = await runServer(8666, "dist");
-    testing.reportdir = (await initReportFolder("test/report")) + "/";
+    testing.reportdir = await initReportFolder("test/report");
 });
 
 // close browser and reset global variables

@@ -1,31 +1,51 @@
 const assert = require("assert");
 const puppeteer = require("puppeteer");
+const fs = require("fs");
 
-describe("Test With Chrome", function() {
+const SHOW_TEST = process.env.SHOW_TEST === "true";
+
+describe("Test Browser", function() {
     let browser;
     let page;
+
+    const reportPage = function(name) {
+        return new Promise(async resolve => {
+            await page.screenshot({ path: `${testing.reportdir}/${name}.png` });
+            let dom = await page.content();
+            fs.writeFile(`${testing.reportdir}/${name}.dom.html`, dom, function(err) {
+                if (err) throw err;
+                resolve();
+            });
+        });
+    };
 
     // TEST BEGINING / ENDING
 
     before(async function() {
         // run puppeteer browser and open page to widget
         browser = await puppeteer.launch({
-            headless: true,
+            headless: !SHOW_TEST,
             slowMo: 100,
             timeout: 10000,
             args: ["--no-sandbox"]
         });
+        console.debug("    ==> Using " + (await browser.version()));
+
         page = await browser.newPage();
         await page.setViewport({
             width: 1024,
             height: 800,
             deviceScaleFactor: 1
         });
+
         await page.goto(testing.baseurl + "index.html");
     });
 
     after(async function() {
-        await testing.delay(2000);
+        if (SHOW_TEST) {
+            console.debug("Test finished, waiting 5sec before close...");
+            await testing.delay(5000);
+        }
         await page.close();
         await browser.close();
     });
@@ -46,17 +66,49 @@ describe("Test With Chrome", function() {
 
     // TEST CASES
 
-    describe("#others TBD...", function() {
-        it("screenshot 'home.png'", async function() {
-            await page.screenshot({ path: testing.reportdir + "home.png" });
+    describe("#UX checks", function() {
+        it("report home page", async function() {
+            await reportPage("home");
         });
 
-        it("TBD 1", async function() {
-            assert.ok(true);
-        });
+        // initialize list of chapters
+        const titles = ["Widget Template Vue", "Before starting", "Build by yourself", "Start developing", "Start sharing"];
+        /* we could use
+         * titles = await loadTitles();
+         * but it is not recommanded to use source to generate test !
+         */
 
-        it("TBD 2", async function() {
-            assert.ok(true);
-        });
+        let cnt = 1;
+        for (let title of titles) {
+            let n = cnt++;
+            it(`section #${n} : ${title}`, async function() {
+                const selClk = `div.v-item-group > div:nth-child(${n}) > button`;
+                const selDivTitle = "div.v-window-item--active div.layout";
+                await page.click(selClk);
+                // check if button become active
+                assert.ok(await page.waitForSelector(selClk + ".v-btn--active"));
+                // check title
+                let txt = await page.$eval(selDivTitle, el => el.innerText);
+                //                assert.strictEqual(txt.trim(), title);
+
+                await reportPage(`section${n}`);
+            });
+        }
     });
 });
+
+function loadTitles() /* eslint-disable-line no-unused-vars */ {
+    return new Promise(resolve => {
+        fs.readFile("README.md", (err, data) => {
+            if (err) throw err;
+            const ascii = data.toString("ascii");
+            const RE = /^#\s+(.+?)$\b\s+/gm;
+            let titles = [];
+            let grps;
+            while ((grps = RE.exec(ascii))) {
+                titles.push(grps[1]);
+            }
+            resolve(titles);
+        });
+    });
+}
