@@ -5,6 +5,8 @@
 
 This template is meant to ease the development of 3DDashboard Widgets.
 
+![ ](<[./images/screencast-small.gif](https://btcc.s3-eu-west-1.amazonaws.com/WidgetLab/ressources/WidgetTemplateDemoV1.gif)>)
+
 With this template we focused on having the best development experience possible compatible with the 3DDashboard infrastructure. Hence we provide not only a code sample but a full development environment based on widgets & web development best practices. Using this environment has many advantages :
 
 - Ability do develop _outside_ the 3DDashboard
