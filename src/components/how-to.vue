@@ -54,6 +54,9 @@ div.readme blockquote {
     border-left: 4px solid #ccc;
     padding-left: 8px;
 }
+img[alt="Screen Capture"] {
+    display: none;
+}
 </style>
 
 <script>
