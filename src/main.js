@@ -32,7 +32,4 @@ export default function() {
         // by default, lets reload the page
         window.location.reload();
     });
-    window.addEventListener("resize", e => {
-        store.commit("setHeight");
-    });
 }
