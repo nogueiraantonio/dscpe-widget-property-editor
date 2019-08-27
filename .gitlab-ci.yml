@@ -73,6 +73,31 @@ npm_test:
         - npm test
 
 ##########################
+# npm build and test with dep's latest versions
+# stage: test
+# patch package.json, install, build and run Mocha tests
+# (since versions are not reusable : do not use cache)
+
+npm_test_latest:
+    stage: test
+    tags:
+        - widgetlab
+    only:
+        - master
+    cache: {}
+    artifacts:
+        when: on_failure
+        paths:
+            - test/report
+            - package*.json
+    allow_failure: true
+    script:
+        - ncu --configFilePath ./test
+        - npm install
+        - npm run build
+        - npm test
+
+##########################
 # widget_zip (master only)
 # stage: deploy
 # keep dist/ available for download as Zip (in artifacts)

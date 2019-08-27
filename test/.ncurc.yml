@@ -1,0 +1,3 @@
+upgrade: true
+reject:
+    - no_module_to_reject
