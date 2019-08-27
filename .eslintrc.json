@@ -38,6 +38,7 @@
         "no-unused-vars": "warn",
         "constructor-super": "warn",
         "valid-typeof": "warn",
+        "comma-dangle": ["error", "never"],
         "no-console": [
             "warn",
             {
