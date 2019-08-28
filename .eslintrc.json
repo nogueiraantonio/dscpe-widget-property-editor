@@ -4,10 +4,9 @@
         "commonjs": true,
         "es6": true,
         "node": true,
-        "amd": true,
-        "mocha": true
+        "amd": true
     },
-    "extends": ["eslint:recommended", "plugin:vue/recommended", "plugin:mocha/recommended", "prettier", "vuetify"],
+    "extends": ["eslint:recommended", "plugin:vue/recommended", "prettier", "vuetify"],
     "parserOptions": {
         "parser": "babel-eslint",
         "ecmaFeatures": {
@@ -89,16 +88,13 @@
         ],
         "vue/singleline-html-element-content-newline": "off",
         "vue/script-indent": "off",
-        "vue/require-default-prop": "off",
-        "mocha/no-hooks-for-single-case": "off",
-        "mocha/no-top-level-hooks": "off"
+        "vue/require-default-prop": "off"
     },
     "globals": {
         "widget": false,
         "Highcharts": false,
         "requirejs": false,
-        "__webpack_public_path__": true,
-        "testing": true
+        "__webpack_public_path__": true
     },
-    "plugins": ["vue", "json", "mocha"]
+    "plugins": ["vue", "json"]
 }
