@@ -1,5 +1,5 @@
 <template>
-    <v-layout align-center class="mx-12 my-6">
+    <v-row align="center" class="mx-12 my-6">
         <v-item-group v-model="currentSection" class="shrink mr-6" mandatory tag="v-flex">
             <v-item v-for="i in sections.length" :key="i" v-slot:default="{ active, toggle }">
                 <div>
@@ -10,23 +10,23 @@
             </v-item>
         </v-item-group>
 
-        <v-flex>
+        <v-col>
             <v-window v-model="currentSection" class="elevation-1" vertical>
                 <v-window-item v-for="(section, i) in sections" :key="i">
                     <v-card flat>
                         <v-card-text>
                             <!-- <markdown-it-vue class="md-body" :content="content" :options="options" />-->
-                            <v-layout align-center mb-4>
+                            <v-row align="center" class="mb-4">
                                 <v-avatar color="grey" class="mr-4" />
                                 <strong class="title" v-html="section.title"></strong>
-                            </v-layout>
+                            </v-row>
                             <div class="readme" v-html="section.content"></div>
                         </v-card-text>
                     </v-card>
                 </v-window-item>
             </v-window>
-        </v-flex>
-    </v-layout>
+        </v-col>
+    </v-row>
 </template>
 
 <style>
