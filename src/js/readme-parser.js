@@ -7,7 +7,7 @@ import "highlight.js/styles/vs2015.css";
 
 export default (() => {
     const md = new Remarkable("commonmark", {
-        highlight: function(str, lang) {
+        highlight: function(str, lang = "bash") {
             return hljs.highlight(lang, str).value;
         },
         breaks: true
@@ -16,7 +16,7 @@ export default (() => {
     hljs.registerLanguage("bash", bash);
 
     const sections = [];
-    const regexH2 = new RegExp(/^(#\s.*)$\s{3}/gm);
+    const regexH2 = /^(#\s.*)([\r\n]{2}|\n)$/gm;
     let match = regexH2.exec(MDText);
     let previousSectionStartIndex = null;
     let previousSectionTitle = null;
