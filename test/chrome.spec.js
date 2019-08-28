@@ -83,7 +83,7 @@ describe("Test Browser", function() {
             let n = cnt++;
             it(`section #${n} : ${title}`, async function() {
                 const selClk = `div.v-item-group > div:nth-child(${n}) > button`;
-                const selDivTitle = "div.v-window-item--active div.layout";
+                const selDivTitle = "div.v-window-item--active div.row";
                 await page.click(selClk);
                 // check if button become active
                 assert.ok(await page.waitForSelector(selClk + ".v-btn--active"));
