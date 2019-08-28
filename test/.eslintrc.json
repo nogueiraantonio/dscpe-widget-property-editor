@@ -1,0 +1,15 @@
+{
+    "env": {
+        "mocha": true
+    },
+    "extends": ["plugin:mocha/recommended"],
+    "rules": {
+        "prefer-arrow-callback": "off",
+        "mocha/no-hooks-for-single-case": "off",
+        "mocha/no-top-level-hooks": "off"
+    },
+    "globals": {
+        "testing": true
+    },
+    "plugins": ["mocha"]
+}
