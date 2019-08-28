@@ -89,7 +89,7 @@ describe("Test Browser", function() {
                 assert.ok(await page.waitForSelector(selClk + ".v-btn--active"));
                 // check title
                 let txt = await page.$eval(selDivTitle, el => el.innerText);
-                //                assert.strictEqual(txt.trim(), title);
+                assert.strictEqual(txt.trim(), title);
 
                 await reportPage(`section${n}`);
             });
