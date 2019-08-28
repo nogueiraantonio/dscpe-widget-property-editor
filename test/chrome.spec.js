@@ -9,13 +9,16 @@ describe("Test Browser", function() {
     let page;
 
     const reportPage = function(name) {
-        return new Promise(async resolve => {
-            await page.screenshot({ path: `${testing.reportdir}/${name}.png` });
-            let dom = await page.content();
-            fs.writeFile(`${testing.reportdir}/${name}.dom.html`, dom, function(err) {
-                if (err) throw err;
-                resolve();
-            });
+        return new Promise((resolve, reject) => {
+            page.screenshot({ path: `${testing.reportdir}/${name}.png` })
+                .then(page.content())
+                .then(dom => {
+                    fs.writeFile(`${testing.reportdir}/${name}.dom.html`, dom, function(err) {
+                        if (err) reject(err);
+                        else resolve();
+                    });
+                })
+                .catch(err => reject(err));
         });
     };
 
