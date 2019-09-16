@@ -7,10 +7,10 @@ This template is meant to ease the development of 3DDashboard Widgets.
 
 ![Screen Capture](https://btcc.s3-eu-west-1.amazonaws.com/WidgetLab/ressources/WidgetTemplateDemoV3.gif)
 
-With this template we focused on having the best development experience possible compatible with the 3DDashboard infrastructure. Hence we provide not only a code sample but a full development environment based on widgets & web development best practices. Using this environment has many advantages :
+With this template we focused on having the best possible development experience compatible with the 3DDashboard infrastructure. Hence we provide not only a code sample but a full development environment based on widgets & web development best practices. Using this environment has many advantages :
 
-- Ability do develop _outside_ the 3DDashboard
-- Hot & Live Reload: as soon as you modify a file, the change is applied in your web browser without a single action (even if your 3DExperience Platform is on the cloud)
+- Ability do develop _outside_ of the 3DDashboard
+- Hot & Live Reload: as soon as you modify a file, the change is applied in your web browser without a single action (even if your 3DEXPERIENCE Platform is on the cloud)
 - Compliance with the latest front-end technologies (it's time to forget jQuery!)
 - Ability to use browsers debugger even in "modules"
 
@@ -38,13 +38,13 @@ Also, as we are lazy developers, we like to ease our lives using some good frame
 
 Now that we're good with front-end libraries, let's have a look at the tooling we use:
 
-- [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it.
+- [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it. Just make sure to accept extensions recommendations when opening the repo with VSCode (e.g. Vue syntax highlighting with Vetur).
 - [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install manually. We encountered issues with the last version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)** version.
 - [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. If you do, the configuration files are in the `build/` directory.
 
 # Build by yourself
 
-Now that you've carefully read the [Before starting](#before-starting) section, [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
+Now that you've carefully read the [Before starting](#before-starting) section, and that [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
 
 ## 1. Get the sources
 
@@ -86,7 +86,7 @@ When developing Widgets, most of the time you will want to test in a 3DDashboard
 
    Consider trying this option before going further. There is no special setup.
 
-2. Widget executed in a 3DDashboard located on the same network (such as a 3DExperience VM, private cloud, etc.)
+2. Widget executed in a 3DDashboard located on the same network (such as a 3DEXPERIENCE VM, private cloud, etc.)
 
    This setup is the most convenient when it is possible (limitations are detailed below) but it is the one that requires the most configuration.
 
@@ -118,9 +118,9 @@ You do need to have administrator privileges on the server running the 3DDashboa
 
 As in [Standalone Widget](#1-standalone-widget), the Widget will be served from a local HTTP server, but will be executed within a 3DDashboard. Therefore, due to the 3DDashboard infrastructure, your local HTTP server must be reachable by the server running the 3DDashboard.
 
-Moreover due to [mixed content policy](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content) and the fact that your 3DExperience Platform must run using HTTPS, your local server must serve HTTPS (and not simple HTTP).
+Moreover due to [mixed content policy](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content) and the fact that your 3DEXPERIENCE Platform must run using HTTPS, your local server must serve HTTPS (and not simple HTTP).
 
-Also, the 3DDashboard won't let you run a non trusted Widget. That imply that the 3DExperience server trusts your local server.
+Also, the 3DDashboard won't let you run a non trusted Widget. That implies that the 3DEXPERIENCE server trusts your local server.
 
 That brings some more configuration steps, but nothing is impossible.
 
@@ -130,11 +130,11 @@ You need a few things:
 - [Configure the local](#configure-webpack-dev-server) server to serve HTTPS,
 - [Configure the 3DDashboard Server](#configure-your-3DDashboard) to trust your local server.
 
-> The following description relies on SSL configuration for your local server. Another approach is to use the 3DExperience reverse proxy to redirect to your local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage, you can try, it works!
+> The following description relies on SSL configuration for your local server. Another approach is to use the 3DEXPERIENCE reverse proxy to redirect to your local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage, you can try, it works!
 
 ### Setup HTTPS
 
-We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing bellow but more detailed.
+We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing below but more detailed.
 
 The tool will assist you in creating the necessary files, store & keys, configure your OS and your browsers. Download the [binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS.
 
@@ -155,7 +155,7 @@ mkcert -install
 mkcert localhost $hostname 127.0.0.1 ::1
 ```
 
-> Be careful, by default mkcert will generate the CA file (`mkcert -install`) in your user directory (C:\Users\$USER\AppData\Local\mkcert\rootCA.pem on Windows) while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the current directory (from where you ran mkcert).
+> Be careful, by default mkcert will generate the CA file (`mkcert -install`) in your user directory (C:\Users\\$USER\AppData\Local\mkcert\rootCA.pem on Windows) while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the current directory (from where you ran mkcert).
 
 ### Configure Webpack-dev-server
 
@@ -176,7 +176,7 @@ devServer: {
 
 ### Configure your 3DDashboard
 
-Last required step is to be trusted by your 3DDashboard server. We have to add the previously created Certificate Authority to the java trusted store (as 3DDashboard HTTPS is served by TomEE, using java store mechanism).
+Last required step is to be trusted by your 3DDashboard server. We have to add the previously created Certificate Authority to the Java trusted store (as 3DDashboard HTTPS is served by TomEE, using Java store mechanism).
 
 Copy the `rootCA.pem` on the machine running the 3DDashboard. Stop the 3DDashboard. Open a terminal where the `rootCA.pem` file is located and run the following command (as administrator):
 
@@ -209,13 +209,13 @@ npm config set widget-template-vue:publicPath ""
 
 ### Prerequisites
 
-You need a HTTPS server on the same network as your 3DDashboard. If public cloud, then Internet is that network.
+You need an HTTPS server on the same network as your 3DDashboard. If on 3DS Public Cloud, then Internet is that network.
 
 ### Some context
 
-By design, the 3DDashboard must be able to access the widget source code. Therefore in a context where our local machine can't be reached by the server, we'll assume the 3DDashboard can access to Internet. Which is the case for 3DExperience public cloud.
+By design, the 3DDashboard must be able to access the widget source code. Therefore in a context where our local machine can't be reached by the server, we'll assume the 3DDashboard can access to Internet. Which is the case for 3DEXPERIENCE public cloud.
 
-That being said we need a HTTPS server available on Internet to do the job.
+That being said we need an HTTPS server available on Internet to do the job.
 
 We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose and we do encourage its usage.
 
@@ -223,7 +223,7 @@ We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose
 
 [`aws-cli`](https://aws.amazon.com/fr/cli/) needs to be installed and [configured](https://docs.aws.amazon.com/fr_fr/cli/latest/userguide/cli-chap-configure.html) before continuing.
 
-Last but not least, for hot reload webpack-dev-server will create a Web Socket connection between the running widget & the process watching file changes on your local file system. Therefore you still need to have a HTTPS server running locally.
+Last but not least, for hot reload webpack-dev-server will create a Web Socket connection between the running widget & the process watching file changes on your local file system. Therefore you still need to have an HTTPS server running locally.
 
 ### Setup HTTPS
 
