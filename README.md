@@ -39,12 +39,12 @@ Also, as we are lazy developers, we like to ease our lives using some good frame
 Now that we're good with front-end libraries, let's have a look at the tooling we use:
 
 - [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it. Just make sure to accept extensions recommendations when opening the repo with VSCode (e.g. Vue syntax highlighting with Vetur).
-- [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install manually. We encountered issues with the last version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)** version.
-- [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. If you do, the configuration files are in the `build/` directory.
+- [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install manually. We encountered issues with the most recent version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)** version.
+- [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. But if for some reason you need to change our proposed default configuration, the files are in the `build/` directory.
 
 # Build by yourself
 
-Now that you've carefully read the [Before starting](#before-starting) section, and that [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed ;
+Now that you've carefully read the [Before starting](#before-starting) section, and that [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed:
 
 ## 1. Get the sources
 
@@ -53,6 +53,8 @@ If you are familiar with GIT, clone our repo
 ```bash
 git clone https://itgit.dsone.3ds.com/widget-lab/widget-template-vue.git
 ```
+
+This is the recommended option because this allows you to directly propose changes back to us.
 
 OR
 
