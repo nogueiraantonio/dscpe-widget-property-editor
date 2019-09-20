@@ -215,11 +215,11 @@ You need an HTTPS server on the same network as your 3DDashboard. If on 3DS Publ
 
 ### Some context
 
-By design, the 3DDashboard must be able to access the widget source code. Therefore in a context where our local machine can't be reached by the server, we'll assume the 3DDashboard can access to Internet. Which is the case for 3DEXPERIENCE public cloud.
+By design, the 3DDashboard must be able to access the widget code. Therefore in a context where our local machine can't be reached by the server, we'll assume the 3DDashboard can access to Internet. Which is the case for 3DEXPERIENCE public cloud.
 
 That being said we need an HTTPS server available on Internet to do the job.
 
-We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose and we do encourage its usage.
+We do find [AWS S3](https://aws.amazon.com/s3/) (a bucket configured as a website) very convenient for this purpose and we do encourage its usage.
 
 > If you have any other repository, you'll have to adapt the webpack plugin we wrote (see below).
 
