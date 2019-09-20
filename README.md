@@ -244,12 +244,12 @@ Edit the parameters of the `DevServerUploadToS3Plugin` webpack plugin.
 ```javascript
 {
     options: {
-        region: "eu-west-1" // region of your bucket
+        region: "your_region" // region of your bucket
     },
     params: {
         Bucket: "your_bucket_name", // bucket name
         ACL: "public-read", // don't change if you don't know
-        Key: "dist" // remote folder in your bucket
+        Key: "path/to/your/remote/folder" // remote folder in your bucket
     }
 }
 ```
