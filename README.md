@@ -233,7 +233,13 @@ As for [the previous section](#3-widget-running-on-a-different-network), setup [
 
 ### Configure your S3 settings
 
-Open the file `build/webpack.config.dev.s3.js` and edit the parameters of the `DevServerUploadToS3Plugin` webpack plugin.
+Copy+paste the file `build/webpack.config.dev.s3.template.js` in the same location, and rename the copy as `build/webpack.config.dev.s3.js`.
+
+> Important: Make sure to **use this file name** so that
+> - the application works as expected
+> - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/) 
+
+Edit the parameters of the `DevServerUploadToS3Plugin` webpack plugin.
 
 ```javascript
 {
