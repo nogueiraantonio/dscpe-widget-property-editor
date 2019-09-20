@@ -15,12 +15,12 @@ module.exports = merge(commonDev, {
                 // aws sdk will use default profile if no accessKeyId & secretAccessKey are provided
                 // accessKeyId: "xxx",
                 // secretAccessKey: "xxx"
-                // region: "eu-west-1"
+                // region: "xxx"
             },
             // other options supported by putObject, except Body and ContentLength.
             // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
             params: {
-                Bucket: "btcc",
+                Bucket: "xxx",
                 ACL: "public-read",
                 // distant path ;file path & name will be concatenated to the Key parameter
                 Key: "dist"
