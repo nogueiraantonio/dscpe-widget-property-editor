@@ -70,7 +70,7 @@ npm_test:
     # TODO: a dedicated image could be built in order to install missing libs (then apt commands below could be removed)
     script:
         - npm install
-        # - npm test
+        - npm test
 
 ##########################
 # npm build and test with dep's latest versions
