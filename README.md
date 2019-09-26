@@ -40,7 +40,7 @@ Now that we're good with front-end libraries, let's have a look at the tooling w
 
 - [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it. Just make sure to accept extensions recommendations when opening the repo with VSCode (e.g. Vue syntax highlighting with Vetur).
 - [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install manually. We encountered issues with the most recent version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)** version.
-- [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. But if for some reason you need to change our proposed default configuration, the files are in the `build/` directory.
+- [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. But if for some reason you need to change our proposed default configuration, the files are in the `webpack/` directory.
 
 # Build by yourself
 
@@ -163,7 +163,7 @@ mkcert localhost $hostname 127.0.0.1 ::1
 
 [Webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible for creating the HTTPS server.
 
-Edit the configuration file `build/webpack.config.dev.js`, look for _https_ in the definition of the _devServer_ object. Replace the following entries with the files you've created with mkcert:
+Edit the configuration file `webpack/webpack.config.dev.js`, look for _https_ in the definition of the _devServer_ object. Replace the following entries with the files you've created with mkcert:
 
 ```javascript
 devServer: {
@@ -233,7 +233,7 @@ As for [the previous section](#3-widget-running-on-a-different-network), setup [
 
 ### Configure your S3 settings
 
-Copy+paste the file `build/webpack.config.dev.s3.template.js` in the same location, and rename the copy as `build/webpack.config.dev.s3.js`.
+Copy+paste the file `webpack/webpack.config.dev.s3.template.js` in the same location, and rename the copy as `webpack/webpack.config.dev.s3.js`.
 
 > Important: Make sure to **use this file name** so that
 > - the application works as expected
