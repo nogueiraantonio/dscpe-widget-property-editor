@@ -116,15 +116,19 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 
 1. [Download the binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS.
 
-1. Retrieve the hostname of your machine: from terminal:
+1. Open a terminal at the same location where you downloaded mkcert installer
+
+1. Create a new CA (Certificate Authority) (replace `hostname` with the result of the previous command), e.g.
+    ```bash 
+        > ./mkcert-v1.4.0-windows-amd64.exe -install
+    ```
+
+1. mkcert will update your OS, Java & Firefox stores in the process, accept the new certificate
+
+1. Retrieve the hostname of your machine
 
     ```bash
         $ hostname
-    ```
-
-1. Create a new CA (Certificate Authority) and update your OS, Java & Firefox stores (replace `hostname` with the result of the previous command)
-    ```bash 
-        $ mkcert -install
     ```
 
 1.  Create a new certificate
