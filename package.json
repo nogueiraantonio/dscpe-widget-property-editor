@@ -11,7 +11,7 @@
         "debugTest": "mocha --inspect-brk test/bootstrap.js --recursive test --timeout 10000",
         "build": "webpack --config ./webpack/webpack.config.prod.js",
         "start": "webpack-dev-server --config ./webpack/webpack.config.dev.js --open",
-        "startS3": "webpack-dev-server --config ./webpack/webpack.config.dev.s3.js --open",
+        "startS3": "webpack-dev-server --config ./webpack/webpack.config.dev.s3.js",
         "debugS3": "node --inspect node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/webpack.config.dev.s3.js"
     },
     "repository": {
