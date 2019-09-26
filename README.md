@@ -181,9 +181,9 @@ Assuming you have [downloaded the sources](#2.1.-get-the-sources) and [installed
 
 This setup will serve the Widget from a local HTTPS server.
 
-    ```bash
-        npm start
-    ```
+```bash
+    npm start
+```
 
 The command will compile the Widget, start an HTTPS server ([express](https://expressjs.com/)) and open your default web browser, loading the Widget entry point. Hot reload is enabled through a secured web socket, so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
