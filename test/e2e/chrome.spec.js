@@ -75,10 +75,16 @@ describe("Test Browser", function() {
         });
 
         // initialize list of chapters
-        const titles = ["Widget Template Vue", "Before starting", "Build by yourself", "Start developing", "Start sharing"];
+        const titles = [
+            "Widget Template with Vue",
+            "1. Before starting",
+            "2. Build it yourself",
+            "3. Start developing",
+            "4. Start sharing"
+        ];
         /* we could use
          * titles = await loadTitles();
-         * but it is not recommanded to use source to generate test !
+         * but it is not recommended to use source to generate test !
          */
 
         let cnt = 1;

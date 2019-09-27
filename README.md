@@ -94,7 +94,9 @@ npm run build
 
 When the build is finished, a new directory `dist/` is created. You'll find there the necessary files to run your widget. The entry point being `index.html`. Push this to your favorite HTTP server and try it right away using the _Run your App_ Widget.
 
-# 3. Establish trust
+# 3. Start developing
+
+## 3.1. Use HTTPS
 
 Due to [mixed content policy](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content), before having fun with development, we need to tackle the networking (trust) part. You basically have 2 options:
 1. Serve HTTPS content from webpack-dev-server (and not simple HTTP). The easiest option is then to create an auto-signed certificate (recommended if you're admin on your development machine) and share it with the certificate stores. **OR**
@@ -108,7 +110,7 @@ We need to:
 - Configure the local server to serve HTTPS
 
 
-## 3.1. Set up HTTPS
+### 3.1.1. Set up HTTPS
 
 We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing below but more detailed.
 
@@ -118,12 +120,12 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 
 1. Open a terminal at the same location where you downloaded mkcert installer
 
-1. Create a new CA (Certificate Authority) (replace `hostname` with the result of the previous command), e.g.
+1. Create a new CA (Certificate Authority). mkcert will create the CA and update your OS, Java & Firefox stores
     ```bash 
-        > ./mkcert-v1.4.0-windows-amd64.exe -install
+        $ ./mkcert -install
     ```
 
-1. mkcert will update your OS, Java & Firefox stores in the process, accept the new certificate
+1. Click to accept the new certificate
 
 1. Retrieve the hostname of your machine
 
@@ -142,7 +144,7 @@ The tool will assist you in creating the necessary files, stores & keys, configu
     >
     >    - while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the **current directory** (from where you ran mkcert).
 
-## 3.2. Configure webpack-dev-server
+### 3.1.2. Configure webpack-dev-server
 
 [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible for creating the HTTPS server.
 
@@ -159,21 +161,21 @@ devServer: {
 }
 ```
 
-# 4. Start developing
+## 3.2. Choose the optimal solution for your context
 
-## 4.1. Choose the optimal solution for your context
+When developing Widgets, most of the time you will want to test in a 3DDashboard context. But sometimes you may not need to rely on 3DDashboard APIs that much, so developing outside of the 3DDashboard may be more convenient. 
 
-When developing Widgets, most of the time you will want to test in a 3DDashboard context. And sometimes you may not need to rely on 3DDashboard APIs that much, so developing outside of the 3DDashboard may be more convenient. We identified 3 use cases which lead to different development environments setup:
+We identified 3 use cases which lead to different development environments setup:
 
 1. Standalone Widget (developed outside 3DDashboard, but that can be built to be executed inside)
 
    Consider trying this option before going further. There is no special setup.
 
-2. Widget executed in a 3DDashboard located on the same network (such as a 3DEXPERIENCE VM, private cloud, etc.)
+2. On-premises: the Widget executed in a 3DDashboard located on the same network (such as a 3DEXPERIENCE VM, private cloud, etc.)
 
    This setup is the most convenient when it is possible (limitations are detailed below) but it is the one that requires the most configuration.
 
-3. Widget executed in a 3DDashboard located anywhere (such as public cloud)
+3. 3DS Public Cloud: the Widget executed in a 3DDashboard located anywhere (such as public cloud)
 
    This setup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).
 
@@ -181,7 +183,7 @@ When developing Widgets, most of the time you will want to test in a 3DDashboard
 
 Assuming you have [downloaded the sources](#2.1.-get-the-sources) and [installed the development dependencies](#2.2.-install-the-development-dependencies), open the source code directory in VS Code.
 
-## 4.2. Standalone Widget
+## 3.3. Standalone Widget
 
 This setup will serve the Widget from a local HTTPS server.
 
@@ -191,13 +193,19 @@ This setup will serve the Widget from a local HTTPS server.
 
 The command will compile the Widget, start an HTTPS server ([express](https://expressjs.com/)) and open your default web browser, loading the Widget entry point. Hot reload is enabled through a secured web socket, so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
-## 4.3. Widget running on the same network
+> We did not mock everything provided by the 3DEXPERIENCE Platform. If you identify something missing, you can either:
+> - add it and open a Merge Request
+> - open an Issue
 
-### 4.3.1. Prerequisites
+## 3.4. On-premises
+
+This method is typically used when your widget is served from a server on the same network as the 3DDashboard, and you can access the 3DDashboard.
+
+### 3.4.1. Prerequisites
 
 You do need to have administrator privileges on the server running the 3DDashboard.
 
-### 4.3.2. Some context
+### 3.4.2. Some context
 
 As in [Standalone Widget](#4.2.-standalone-widget), the Widget will be served from a local HTTPS server, but will be executed within a 3DDashboard. Therefore, due to the 3DDashboard infrastructure, your local HTTPS server must be reachable by the server running the 3DDashboard.
 
@@ -207,7 +215,7 @@ That brings one more configuration step: configuring your 3DDashboard Server to 
 
 > The following description relies on SSL configuration for your local server. Another approach is to use the 3DEXPERIENCE reverse proxy to redirect to your local environment. We won't detail the steps to configure it but if you are familiar with apache & reverse proxy usage, you can try, it works!
 
-### 4.3.3. Configure your 3DDashboard
+### 3.4.3. Configure your 3DDashboard
 
 We have to add the previously created Certificate Authority to the Java trusted store (as 3DDashboard HTTPS is served by TomEE, using Java store mechanism).
 
@@ -231,7 +239,7 @@ We have to add the previously created Certificate Authority to the Java trusted 
 
 1. You can restart the 3DDashboard.
 
-### 4.3.4. Start debugging
+### 3.4.4. Start debugging
 
 We're almost done ! 
 
@@ -250,19 +258,21 @@ You will notice the same behavior than in [Standalone mode](#4.2.-standalone-wid
         npm config set widget-template-vue:publicPath ""
     ```
 
-## 4.4. Widget running on a different network
+## 3.5. 3DS Public Cloud
 
-### 4.4.1. Prerequisites
+The typical use case is when your Widget is running on a different network and you don't have access to the 3DDashboard.
+
+### 3.5.1. Prerequisites
 
 You need an HTTPS server on the same network as your 3DDashboard. If on 3DS Public Cloud, then Internet is that network.
 
-### 4.4.2. Some context
+### 3.5.2. Some context
 
 By design, the 3DDashboard must be able to access the widget code. Therefore in a context where our local machine can't be reached by the server, we'll assume the 3DDashboard can access to Internet. Which is the case for, e.g., the 3DEXPERIENCE public cloud.
 
 That being said we need an internet-facing HTTPS server to do the job.
 
-We do find [AWS S3](https://aws.amazon.com/s3/) (a bucket configured as a website) very convenient for this purpose and we do encourage its usage.
+We do find [AWS S3](https://aws.amazon.com/s3/) very convenient for this purpose and we do encourage its usage.
 
 > If you have any other repository, you'll have to adapt the webpack plugin we wrote (see below).
 
@@ -270,7 +280,7 @@ We do find [AWS S3](https://aws.amazon.com/s3/) (a bucket configured as a websit
 
 Last but not least, for Hot Reload, webpack-dev-server will create a Web Socket connection between the running widget & the process watching file changes on your local file system. Therefore you still need to have an HTTPS server running locally.
 
-### 4.4.3. Configure your S3 settings
+### 3.5.3. Configure your S3 settings
 
 Copy+paste the file `webpack/webpack.config.dev.s3.template.js` in the same location, and rename the copy as `webpack/webpack.config.dev.s3.js`.
 
@@ -293,7 +303,7 @@ Edit the parameters of the `webpack/plugin-dev-server-upload-to-s3.js` webpack p
     }
 ```
 
-### 4.4.4. Start debugging
+### 3.5.4. Start debugging
 
 > If you did set the ``publicPath`` variable during step [4.3.4. Start debugging](#4.3.4.-start-debugging), it's very important to reset it now:
 >    ```bash
@@ -308,6 +318,6 @@ You can now start serving your widget through AWS S3:
 
 You are ready to debug your widget executed on the cloud, with Hot Reload!
 
-# 5. Start sharing
+# 4. Start sharing
 
 You've enhanced our template? Please open a merge request and we'll evaluate the opportunity to include your code in our template.
