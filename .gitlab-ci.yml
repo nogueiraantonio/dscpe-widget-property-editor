@@ -123,14 +123,13 @@ widget_zip:
 
 push_widget:
     stage: deploy
-    image: python:3.7.4-stretch
+    image: dswidgetlab/awscli
     tags:
         - widgetlab
     only:
         - master
     allow_failure: true
     script:
-        - pip install awscli
         - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
         - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
         - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"
