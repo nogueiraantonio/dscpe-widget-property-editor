@@ -122,7 +122,7 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 
 1. Create a new CA (Certificate Authority). mkcert will create the CA and update your OS, Java & Firefox stores
     ```bash 
-        $ ./mkcert -install
+        $ mkcert -install
     ```
 
 1. Click to accept the new certificate
@@ -175,7 +175,7 @@ We identified 3 use cases which lead to different development environments setup
 
    This setup is the most convenient when it is possible (limitations are detailed below) but it is the one that requires the most configuration.
 
-3. 3DS Public Cloud: the Widget executed in a 3DDashboard located anywhere (such as public cloud)
+3. Public Cloud: the Widget executed in a 3DDashboard located anywhere (such as public cloud)
 
    This setup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).
 
@@ -258,13 +258,13 @@ You will notice the same behavior than in [Standalone mode](#4.2.-standalone-wid
         npm config set widget-template-vue:publicPath ""
     ```
 
-## 3.5. 3DS Public Cloud
+## 3.5. Public Cloud
 
 The typical use case is when your Widget is running on a different network and you don't have access to the 3DDashboard.
 
 ### 3.5.1. Prerequisites
 
-You need an HTTPS server on the same network as your 3DDashboard. If on 3DS Public Cloud, then Internet is that network.
+You need an HTTPS server on the same network as your 3DDashboard. If on Public Cloud, then Internet is that network.
 
 ### 3.5.2. Some context
 
