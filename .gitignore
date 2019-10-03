@@ -5,3 +5,5 @@ package-lock.json
 *.pem
 *.crt
 *.key 
+webpack.config.dev.s3.js
+webpack.config.dev.js

@@ -7,12 +7,12 @@
         "publicPath": null
     },
     "scripts": {
-        "test": "mocha test/bootstrap.js --recursive test --timeout 10000",
+        "test": "mocha test/e2e/bootstrap.js --recursive test --timeout 10000",
         "debugTest": "mocha --inspect-brk test/bootstrap.js --recursive test --timeout 10000",
-        "build": "webpack --config ./build/webpack.config.prod.js",
-        "start": "webpack-dev-server --config ./build/webpack.config.dev.js --open",
-        "startS3": "webpack-dev-server --config ./build/webpack.config.dev.s3.js --open",
-        "debugS3": "node --inspect node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./build/webpack.config.dev.s3.js",
+        "build": "webpack --config ./webpack/webpack.config.prod.js",
+        "start": "webpack-dev-server --config ./webpack/webpack.config.dev.js --open",
+        "startS3": "webpack-dev-server --config ./webpack/webpack.config.dev.s3.js",
+        "debugS3": "node --inspect node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/webpack.config.dev.s3.js",
         "lint": "eslint src/**/*.js",
         "lintFix": "eslint src/**/*.js --fix"
     },
