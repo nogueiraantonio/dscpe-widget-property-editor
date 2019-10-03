@@ -1,3 +1,4 @@
 upgrade: true
 reject:
-    - no_module_to_reject
+    - sass-loader # until 7.3.1 passed but 8.0.0 failed
+    - no_other_module_to_reject
