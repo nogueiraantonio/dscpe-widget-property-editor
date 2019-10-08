@@ -148,6 +148,12 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 
 [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible for creating the HTTPS server.
 
+Copy+paste the file `webpack/webpack.config.dev.template.js` in the same location, and rename the copy as `webpack/webpack.config.dev.js`.
+
+> Important: Make sure to **use this file name** so that
+> - the application works as expected
+> - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/) 
+
 Edit the `webpack/webpack.config.dev.js` configuration file, look for _https_ in the definition of the _devServer_ object. Replace the following entries with the files you've created with mkcert:
 
 ```javascript
