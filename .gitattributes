@@ -1,0 +1,14 @@
+# There is no identified way to prevent check-out to CRLF based on .gitattributes
+# The best we can do is to ensure line endings are checked in as LF
+# Make Git detect and normalize text files in LF
+*   text=auto    eol=lf
+# Force bash scripts to always use lf line endings so that if a repo is accessed
+# in Unix via a file share from Windows, the scripts will work.
+*.sh text eol=lf 
+# Make sure binary files are detected as such by Git
+*.jpg   binary
+*.png   binary
+
+# most synthetic articles found
+# https://help.github.com/en/articles/configuring-git-to-handle-line-endings
+# https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/

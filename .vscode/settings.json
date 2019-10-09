@@ -1,4 +1,6 @@
 {
+    "files.eol": "\n",
+
     "javascript.validate.enable": true,
     "json.format.enable": true,
 
