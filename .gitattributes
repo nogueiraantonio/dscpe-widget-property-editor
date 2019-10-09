@@ -1,0 +1,10 @@
+# override the Git installation settings for CRLF
+core.autocrlf=input
+# make Git detect and normalize text files in LF
+*   text=auto    eol=lf
+# Force bash scripts to always use lf line endings so that if a repo is accessed
+# in Unix via a file share from Windows, the scripts will work.
+*.sh text eol=lf
+# Make sure binary files are detected as such by Git
+*.jpg   binary
+*.png   binary
