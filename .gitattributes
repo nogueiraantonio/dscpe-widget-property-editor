@@ -4,10 +4,11 @@ core.autocrlf=input
 *   text=auto    eol=lf
 # Force bash scripts to always use lf line endings so that if a repo is accessed
 # in Unix via a file share from Windows, the scripts will work.
-*.sh text eol=lf
+*.sh text eol=lf 
 # Make sure binary files are detected as such by Git
 *.jpg   binary
 *.png   binary
 
-# most synthetic article found
+# most synthetic articles found
 # https://help.github.com/en/articles/configuring-git-to-handle-line-endings
+# https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
