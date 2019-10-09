@@ -29,7 +29,6 @@
         "sourceType": "module"
     },
     "rules": {
-        "linebreak-style": ["warn", "unix"],
         "no-const-assign": "error",
         "no-this-before-super": "warn",
         "no-undef": "error",
