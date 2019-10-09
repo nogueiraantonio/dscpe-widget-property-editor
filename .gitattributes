@@ -8,3 +8,6 @@ core.autocrlf=input
 # Make sure binary files are detected as such by Git
 *.jpg   binary
 *.png   binary
+
+# most synthetic article found
+# https://help.github.com/en/articles/configuring-git-to-handle-line-endings
