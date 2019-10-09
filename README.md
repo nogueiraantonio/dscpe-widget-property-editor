@@ -24,6 +24,13 @@ Basically, you will be able to develop a widget like any other web application!
 
 But that comes with a small price: some setup is required...
 
+> ⚠️ Disclaimer ⚠️
+>
+> This template is provided ​“AS IS”. We make no warranties, express or implied, and hereby disclaim all implied warranties, including any warranty of merchantability and warranty of fitness for a particular purpose.
+> Besides, this template has not been reviewed or validated by the Dassault Systèmes' Research and Development organization.
+>
+> ⚠️ Disclaimer ⚠️
+
 # 1. Before starting
 
 ## 1.1. Web development
