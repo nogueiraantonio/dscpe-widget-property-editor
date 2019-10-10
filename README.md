@@ -189,11 +189,11 @@ When developing Widgets, most of the time you will want to test in a 3DDashboard
 
 We identified 3 use cases which lead to different development environments setup:
 
-| Use case          | Description                                                                                                       | Recommendation                                                                                                                                 |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Standalone Widget | developed outside 3DDashboard, but that can be built to be executed inside                                        | Consider trying this option before going further. There is no special setup.                                                                   |
-| On-premises       | the Widget executed in a 3DDashboard located on the same network (such as a 3DEXPERIENCE VM, private cloud, etc.) | This setup is the most convenient when it is possible (limitations are detailed below) but it is the one that requires the most configuration. |
-| Public Cloud      | the Widget executed in a 3DDashboard located anywhere (such as public cloud)                                      | This setup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).         |
+| Use case     | Description                                                                                   | Recommendation                                                                        |
+| ------------ | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Standalone   | Widget developed outside 3DDashboard (can then be embedded)                                   | Consider trying this option before going further. There is no special setup.          |
+| On-premises  | Widget executed in a 3DDashboard on the same network (e.g. 3DEXPERIENCE VM, private cloud...) | Most convenient when possible (see details below) but requires the most configuration |
+| Public Cloud | Widget executed in a 3DDashboard located anywhere (e.g. public cloud)                         | Easier than On-premises, but hot reloading is slightly slower (internet file upload). |
 
 > _"same network"_ must be understood as: the server hosting the 3DDashboard can reach your development environment through HTTPS AND you can configure this server. If it is not the case please consider option 1 or 3.
 
