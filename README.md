@@ -8,6 +8,7 @@ This template is meant to ease the development of 3DDashboard Widgets.
 ![Screen Capture](https://btcc.s3-eu-west-1.amazonaws.com/WidgetLab/ressources/WidgetTemplateDemoV3.gif)
 
 With this template we focused on having the best possible development experience compatible with the 3DDashboard infrastructure. Hence we provide not only a code sample but a full development environment based on widgets & web development best practices:
+
 - Continuous Integration (GitLab CI)
 - Build with bundling (webpack)
 - Linting (eslint) and formatting (Prettier)
@@ -26,8 +27,7 @@ But that comes with a small price: some setup is required...
 
 > ⚠️ Disclaimer ⚠️
 >
-> This template is provided ​“AS IS”. We make no warranties, express or implied, and hereby disclaim all implied warranties, including any warranty of merchantability and warranty of fitness for a particular purpose.
-> Besides, this template has not been reviewed or validated by the Dassault Systèmes' Research and Development organization.
+> This template is provided ​“AS IS”. We make no warranties, express or implied, and hereby disclaim all implied warranties, including any warranty of merchantability and warranty of fitness for a particular purpose. Besides, this template has not been reviewed or validated by the Dassault Systèmes' Research and Development organization.
 >
 > ⚠️ Disclaimer ⚠️
 
@@ -59,7 +59,8 @@ Now that we're good with front-end libraries, let's have a look at the tooling w
 
 - [Visual Studio Code](https://code.visualstudio.com/) - You can use your favorite code editor. We do use VSCode and recommend it. Just make sure to accept extensions recommendations when opening the repo with VSCode (e.g. Vue syntax highlighting with Vetur).
 - [NodeJS](https://nodejs.org/en/) - It won't be possible to build the widget without NodeJS. It's also the only **mandatory** tool you need to install manually. We encountered issues with the most recent version so until this is fixed, please use the **[LTS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi)** version.
-- [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. But if for some reason you need to change our proposed default configuration, the files are in the `webpack/` directory.
+- [Webpack](https://webpack.js.org/) - We use webpack to build our source code into a single bundle (_and yes - we also do use requirejs as it's mandatory for 3DDashboard integration_). It comes with many plugins to transpile the source, copy assets, allows hot reload in developing phases, etc. If you stick with our framework stack, you won't need to change & understand the configuration. But if for some reason you need to change our proposed default configuration, the files are in the
+  `webpack/` directory.
 
 # 2. Build it yourself
 
@@ -106,6 +107,7 @@ When the build is finished, a new directory `dist/` is created. You'll find ther
 ## 3.1. Use HTTPS
 
 Due to [mixed content policy](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content), before having fun with development, we need to tackle the networking (trust) part. You basically have 2 options:
+
 1. Serve HTTPS content from webpack-dev-server (and not simple HTTP). The easiest option is then to create an auto-signed certificate (recommended if you're admin on your development machine) and share it with the certificate stores. **OR**
 1. Ignore your browser's mixed content warnings (fall-back if you're not local admin)
 
@@ -116,40 +118,41 @@ We need to:
 - Configure your browser(s) and your machine to trust your own webpack (express) server
 - Configure the local server to serve HTTPS
 
-
 ### 3.1.1. Set up HTTPS
 
 We recommend using [mkcert](https://github.com/FiloSottile/mkcert) - do read that documentation, it's strictly what we are doing below but more detailed.
 
-The tool will assist you in creating the necessary files, stores & keys, configure your OS and your browser(s). 
+The tool will assist you in creating the necessary files, stores & keys, configure your OS and your browser(s).
 
 1. [Download the binaries](https://github.com/FiloSottile/mkcert/releases) corresponding to your OS.
 
 1. Open a terminal at the same location where you downloaded mkcert installer
 
 1. Create a new CA (Certificate Authority). mkcert will create the CA and update your OS, Java & Firefox stores
-    ```bash 
-        $ mkcert -install
-    ```
+
+   ```bash
+       $ mkcert -install
+   ```
 
 1. Click to accept the new certificate
 
 1. Retrieve the hostname of your machine
 
-    ```bash
-        $ hostname
-    ```
+   ```bash
+       $ hostname
+   ```
 
-1.  Create a new certificate
-    ```bash
-        $ mkcert localhost $hostname 127.0.0.1 ::1
-    ```
+1. Create a new certificate
 
-    > Be careful:
-    >
-    >    - by default mkcert will generate the CA file (`mkcert -install`) in your **user directory** (C:\Users\\$USER\AppData\Local\mkcert\rootCA.pem on Windows),
-    >
-    >    - while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the **current directory** (from where you ran mkcert).
+   ```bash
+       $ mkcert localhost $hostname 127.0.0.1 ::1
+   ```
+
+   > Be careful:
+   >
+   > - by default mkcert will generate the CA file (`mkcert -install`) in your **user directory** (C:\Users\\\$USER\AppData\Local\mkcert\rootCA.pem on Windows),
+   >
+   > - while the KEY and CERT files (`mkcert localhost $hostname 127.0.0.1 ::1`) will be placed in the **current directory** (from where you ran mkcert).
 
 ### 3.1.2. Configure webpack-dev-server
 
@@ -158,8 +161,9 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 Copy+paste the file `webpack/webpack.config.dev.template.js` in the same location, and rename the copy as `webpack/webpack.config.dev.js`.
 
 > Important: Make sure to **use this file name** so that
+>
 > - the application works as expected
-> - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/) 
+> - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
 Edit the `webpack/webpack.config.dev.js` configuration file, look for _https_ in the definition of the _devServer_ object. Replace the following entries with the files you've created with mkcert:
 
@@ -176,15 +180,15 @@ devServer: {
 
 ## 3.2. Choose the optimal solution for your context
 
-When developing Widgets, most of the time you will want to test in a 3DDashboard context. But sometimes you may not need to rely on 3DDashboard APIs that much, so developing outside of the 3DDashboard may be more convenient. 
+When developing Widgets, most of the time you will want to test in a 3DDashboard context. But sometimes you may not need to rely on 3DDashboard APIs that much, so developing outside of the 3DDashboard may be more convenient.
 
 We identified 3 use cases which lead to different development environments setup:
 
-|Use case|Description|Recommendation|
-|-|-|-|
-|Standalone Widget|developed outside 3DDashboard, but that can be built to be executed inside|Consider trying this option before going further. There is no special setup.|
-|On-premises|the Widget executed in a 3DDashboard located on the same network (such as a 3DEXPERIENCE VM, private cloud, etc.)|This setup is the most convenient when it is possible (limitations are detailed below) but it is the one that requires the most configuration.|
-|Public Cloud|the Widget executed in a 3DDashboard located anywhere (such as public cloud)|This setup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).|
+| Use case          | Description                                                                                                       | Recommendation                                                                                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Standalone Widget | developed outside 3DDashboard, but that can be built to be executed inside                                        | Consider trying this option before going further. There is no special setup.                                                                   |
+| On-premises       | the Widget executed in a 3DDashboard located on the same network (such as a 3DEXPERIENCE VM, private cloud, etc.) | This setup is the most convenient when it is possible (limitations are detailed below) but it is the one that requires the most configuration. |
+| Public Cloud      | the Widget executed in a 3DDashboard located anywhere (such as public cloud)                                      | This setup is easier to put in place than the previous one but hot reloading will be slightly slower (due to file upload on internet).         |
 
 > _"same network"_ must be understood as: the server hosting the 3DDashboard can reach your development environment through HTTPS AND you can configure this server. If it is not the case please consider option 1 or 3.
 
@@ -201,6 +205,7 @@ This setup will serve the Widget from a local HTTPS server.
 The command will compile the Widget, start an HTTPS server ([express](https://expressjs.com/)) and open your default web browser, loading the Widget entry point. Hot reload is enabled through a secured web socket, so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
 > We did not mock everything provided by the 3DEXPERIENCE Platform. If you identify something missing, you can either:
+>
 > - add it and open a Merge Request
 > - open an Issue
 
@@ -228,42 +233,42 @@ We have to add the previously created Certificate Authority to the Java trusted 
 
 1. Ensure your 3DDashboard is able to reach your host: from your 3DDashboard server:
 
-    ```bash
-        $ ping `$hostname`
-    ```
+   ```bash
+       $ ping `$hostname`
+   ```
 
-1. Copy the `rootCA.pem` on the machine running the 3DDashboard. 
+1. Copy the `rootCA.pem` on the machine running the 3DDashboard.
 
-1. Stop the 3DDashboard. 
+1. Stop the 3DDashboard.
 
 1. Open a terminal where the `rootCA.pem` file is located and run the following command (as administrator/root):
 
-    > Make sure the JAVA_HOME is properly set! Else you will face an error like `keytool error: java.io.FileNotFoundException: /jre/lib/security/cacerts (No such file or directory)`
+   > Make sure the JAVA_HOME is properly set! Else you will face an error like `keytool error: java.io.FileNotFoundException: /jre/lib/security/cacerts (No such file or directory)`
 
-    ```bash
-        $ keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -alias Root -import -file rootCA.pem
-    ```
+   ```bash
+       $ keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -alias Root -import -file rootCA.pem
+   ```
 
 1. You can restart the 3DDashboard.
 
 ### 3.4.4. Start debugging
 
-We're almost done ! 
+We're almost done !
 
 1. In VS Code terminal, update the configuration & start the development server:
 
-    ```bash
-        npm config set widget-template-vue:publicPath "https://$hostname:8081/"
-        npm start
-    ```
+   ```bash
+       npm config set widget-template-vue:publicPath "https://$hostname:8081/"
+       npm start
+   ```
 
 You will notice the same behavior than in [Standalone mode](#4.2.-standalone-widget).
 
 1. **If you want** to revert the configuration, simply reset the `publicPath` variable:
 
-    ```bash
-        npm config set widget-template-vue:publicPath ""
-    ```
+   ```bash
+       npm config set widget-template-vue:publicPath ""
+   ```
 
 ## 3.5. Public Cloud
 
@@ -292,30 +297,34 @@ Last but not least, for Hot Reload, webpack-dev-server will create a Web Socket 
 Copy+paste the file `webpack/webpack.config.dev.s3.template.js` in the same location, and rename the copy as `webpack/webpack.config.dev.s3.js`.
 
 > Important: Make sure to **use this file name** so that
+>
 > - the application works as expected
-> - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/) 
+> - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the parameters of the `webpack/plugin-dev-server-upload-to-s3.js` webpack plugin:
+Edit the `webpack/webpack.config.dev.s3.js` configuration file:
 
 ```javascript
     {
         options: {
-            region: "your_region" // region of your bucket
+            accessKeyId: "your_AWS_AccessKeyId",
+            secretAccessKey: "your_AWS_SecretAccessKey"
+            region: "your_AWS_S3_bucket_region"
         },
         params: {
-            Bucket: "your_bucket_name", // bucket name
+            Bucket: "your_bucket_name",
             ACL: "public-read", // don't change if you don't know
-            Key: "path/to/your/remote/folder" // remote folder in your bucket
+            Key: "path/to/your/bucket/folder"
         }
     }
 ```
 
 ### 3.5.4. Start debugging
 
-> If you did set the ``publicPath`` variable during step [4.3.4. Start debugging](#4.3.4.-start-debugging), it's very important to reset it now:
->    ```bash
->        $ npm config set widget-template-vue:publicPath ""
->    ```
+> If you did set the `publicPath` variable during step [4.3.4. Start debugging](#4.3.4.-start-debugging), it's very important to reset it now:
+>
+> ```bash
+>     $ npm config set widget-template-vue:publicPath ""
+> ```
 
 You can now start serving your widget through AWS S3:
 
