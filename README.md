@@ -209,7 +209,9 @@ This setup will serve the Widget from a local HTTPS server.
 
 The command will compile the Widget, start an HTTPS server ([express](https://expressjs.com/)) and open your default web browser, loading the Widget entry point. Hot reload is enabled through a secured web socket, so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
-> We did not mock everything provided by the 3DEXPERIENCE Platform. If you identify something missing, you can either:
+> Known limitations 🖐
+>
+> We did not mock everything provided by the 3DEXPERIENCE Platform. You can find all the details in the [widgets.js](src/lib/widget.js) file. If you identify something missing, you can either:
 >
 > - add it and open a Merge Request
 > - open an Issue
