@@ -64,7 +64,12 @@ Now that we're good with front-end libraries, let's have a look at the tooling w
 
 # 2. Build it yourself
 
-Now that you've carefully read the [Before starting](#1.-before-starting) section, and that [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed:
+> All changes described below, and your widget development, are intended to take place on your local machine. However there are a couple exceptions:
+>
+> - if you choose the [3.4. On-premises](#3.4.-on-premises) method below, you'll have a bit of configuration to perform on your on-premises 3DEXPERIENCE 3DDashboard.
+> - if you choose to use [VSCode Remote Development](https://code.visualstudio.com/docs/remote/remote-overview), or another comparable technology, then changes will of course happen on a remote machine. But the 3DEXPERIENCE Platform itself will not be modified.
+
+Now that you've carefully read the [Before starting](#1.-before-starting) section, and that [NodeJS](https://nodejs.org/dist/v10.16.2/node-v10.16.2-x64.msi) is installed on your local machine:
 
 ## 2.1. Get the sources
 
