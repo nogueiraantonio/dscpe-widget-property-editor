@@ -209,7 +209,7 @@ This setup will serve the Widget from a local HTTPS server.
 
 The command will compile the Widget, start an HTTPS server ([express](https://expressjs.com/)) and open your default web browser, loading the Widget entry point. Hot reload is enabled through a secured web socket, so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
 
-Read (from VSCode or GitLab/GitHub, not from browser) [Appendix A: Hot Reload](AppendixAHotReload.md) for more details.
+Read [Appendix A: Hot Reload](#appendix-a:-hot-reload) for more details.
 
 > Known limitations 🖐
 >
@@ -346,3 +346,19 @@ You are ready to debug your widget executed on the cloud, with Hot Reload!
 # 4. Start sharing
 
 You've enhanced our template? Please open a merge request and we'll evaluate the opportunity to include your code in our template.
+
+# Appendix A: Hot Reload
+
+Here's how the hot reload sequence unfolds:
+
+```mermaid
+sequenceDiagram
+    Code Editor (VSCode)->>webpack dev server: modified source files
+    webpack dev server->>AWS S3: modified bundle files
+    AWS S3->>webpack dev server: new files received
+    webpack dev server->>browser: new files available
+    browser->>AWS S3: new files please
+    AWS S3->>browser: new files
+```
+
+[Back to 3.3. Standalone Widget](#3.3.-standalone-widget)
