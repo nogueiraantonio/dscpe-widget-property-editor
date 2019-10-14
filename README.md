@@ -260,7 +260,17 @@ We have to add the previously created Certificate Authority to the Java trusted 
 
 1. You can restart the 3DDashboard.
 
-### 3.4.4. Start debugging
+### 3.4.4. Register your web server
+
+You can use either "Add third-party app" or "Run your app" to register your web server on the 3DDashboard.
+
+In both cases, the accepted format is `https://fully.qualified.domain.name/uri`:
+
+- the scheme is `https`, unless you're using the 3DEXPERIENCE reverse proxy as discussed above, in which can you can use `http`
+- a fully qualified domain name is required (a hostname will not be accepted). If you need help setting up an FQDN for your web server, contact your company network administration team
+- the URI depends on your web server setup
+
+### 3.4.5. Start debugging
 
 We're almost done !
 
