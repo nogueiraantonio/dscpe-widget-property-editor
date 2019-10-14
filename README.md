@@ -262,7 +262,7 @@ We have to add the previously created Certificate Authority to the Java trusted 
 
 ### 3.4.4. Register your web server
 
-You can use either "Add third-party app" or "Run your app" to register your web server on the 3DDashboard.
+You can use either "Add third-party app" or "Run your app" to register your web server on the 3DDashboard. If you need you widget to talk to other widgets, it needs to be trusted, hence use "Add third-party app".
 
 In both cases, the accepted format is `https://fully.qualified.domain.name/uri`:
 
@@ -337,7 +337,17 @@ Edit the `webpack/webpack.config.dev.s3.js` configuration file:
     }
 ```
 
-### 3.5.4. Start debugging
+### 3.5.4. Register your web server
+
+You can use either "Add third-party app" or "Run your app" to register your web server on the 3DDashboard. If you need you widget to talk to other widgets, it needs to be trusted, hence use "Add third-party app".
+
+In both cases, the accepted format is `https://fully.qualified.domain.name/uri`:
+
+- the scheme must be `https`, because on Public Cloud you cannot use the 3DEXPERIENCE reverse proxy
+- a fully qualified domain name is required (a hostname will not be accepted). If you need help setting up an FQDN for your web server, contact your company network administration team
+- the URI depends on your web server setup
+
+### 3.5.5. Start debugging
 
 > If you did set the `publicPath` variable during step [4.3.4. Start debugging](#4.3.4.-start-debugging), it's very important to reset it now:
 >
