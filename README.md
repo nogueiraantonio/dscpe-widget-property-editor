@@ -373,12 +373,12 @@ Here's how the hot reload sequence unfolds:
 
 ```mermaid
 sequenceDiagram
-    Code Editor (VSCode)->>webpack dev server: modified source files
-    webpack dev server->>AWS S3: modified bundle files
-    AWS S3->>webpack dev server: new files received
-    webpack dev server->>browser: new files available
-    browser->>AWS S3: new files please
-    AWS S3->>browser: new files
+    Code Editor (VSCode)->>webpack dev server: Bundle modified source files
+    webpack dev server->>AWS S3: Upload modifications
+    AWS S3->>webpack dev server: Upload finished
+    webpack dev server->>browser: Apply this update
+    browser->>AWS S3: Serve new files
+    AWS S3->>browser: Apply new files
 ```
 
 [Back to 3.3. Standalone Widget](#3.3.-standalone-widget)
