@@ -17,14 +17,14 @@ module.exports = {
             // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
             options: {
                 // aws sdk will use default profile if no accessKeyId & secretAccessKey are provided
-                accessKeyId: "xxxxxxxxxxxxxxxxx",
-                secretAccessKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                region: "yourRegion"
+                accessKeyId: "your_AWS_AccessKeyId",
+                secretAccessKey: "your_AWS_SecretAccessKey",
+                region: "your_AWS_S3_bucket_region"
             },
             // other options supported by putObject, except Body and ContentLength.
             // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
             params: {
-                Bucket: "bucketName",
+                Bucket: "your_bucket_name",
                 ACL: "public-read",
                 // distant path ;file path & name will be concatenated to the Key parameter
                 Key: "path/inside/bucket"

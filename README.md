@@ -163,14 +163,14 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 
 [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible for creating the HTTPS server.
 
-Copy+paste the file `webpack/webpack.config.dev.template.js` in the same location, and rename the copy as `webpack/webpack.config.dev.js`.
+Copy+paste the file `localConfig.template.js` in the same location, and rename the copy as `localConfig.js`.
 
 > Important: Make sure to **use this file name** so that
 >
 > - the application works as expected
 > - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the `webpack/webpack.config.dev.js` configuration file, look for _https_ in the definition of the _devServer_ object. Replace the following entries with the files you've created with mkcert:
+Edit the `localConfig.js` _https_ object. Replace the following entries with the files you've created with mkcert:
 
 ```javascript
 devServer: {
@@ -313,26 +313,27 @@ Last but not least, for Hot Reload, webpack-dev-server will create a Web Socket 
 
 ### 3.5.3. Configure your S3 settings
 
-Copy+paste the file `webpack/webpack.config.dev.s3.template.js` in the same location, and rename the copy as `webpack/webpack.config.dev.s3.js`.
+_If not already done_, copy+paste the file `localConfig.template.js` in the same location, and rename the copy as `localConfig.js`.
 
 > Important: Make sure to **use this file name** so that
 >
 > - the application works as expected
 > - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the `webpack/webpack.config.dev.s3.js` configuration file:
+Edit the `localConfig.js` _plugins.options_ and _plugins.params_ objects:
 
 ```javascript
     {
         options: {
             accessKeyId: "your_AWS_AccessKeyId",
-            secretAccessKey: "your_AWS_SecretAccessKey"
+            secretAccessKey: "your_AWS_SecretAccessKey",
             region: "your_AWS_S3_bucket_region"
         },
         params: {
             Bucket: "your_bucket_name",
-            ACL: "public-read", // don't change if you don't know
-            Key: "path/to/your/bucket/folder"
+            ACL: "public-read",
+            // distant path ;file path & name will be concatenated to the Key parameter
+            Key: "path/inside/bucket"
         }
     }
 ```
