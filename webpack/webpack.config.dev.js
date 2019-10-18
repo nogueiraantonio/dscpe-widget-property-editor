@@ -1,6 +1,6 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.config.common.js");
-const localConfig = require("../localConfig.js");
+const localConfigDevServer = require("../localConfig.js").devServer;
 
 // set using
 // npm config set widget-template-vue:publicPath "https://3dexp.19xfd03.ds/WidgetLab/"
@@ -40,5 +40,7 @@ module.exports = merge(
             rules: []
         }
     },
-    localConfig
+    {
+        devServer: localConfigDevServer
+    }
 );
