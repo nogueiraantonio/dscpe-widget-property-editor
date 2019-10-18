@@ -76,7 +76,7 @@ Now that you've carefully read the [Before starting](#1.-before-starting) sectio
 If you are familiar with Git, clone our repo
 
 ```bash
-$ git clone https://itgit.dsone.3ds.com/widget-lab/widget-template-vue.git
+git clone https://itgit.dsone.3ds.com/widget-lab/widget-template-vue.git
 ```
 
 This is the recommended option because this allows you to directly propose changes back to us.
@@ -90,7 +90,7 @@ You can simply download the [source code](https://itgit.dsone.3ds.com/widget-lab
 Open a terminal in the location you've put the downloaded / cloned sources, then:
 
 ```bash
-$ npm install
+npm install
 ```
 
 Wait until it finishes.
@@ -102,7 +102,7 @@ Wait until it finishes.
 In the same terminal:
 
 ```bash
-$ npm run build
+npm run build
 ```
 
 When the build is finished, a new directory `dist/` is created. You'll find there the necessary files to run your widget. The entry point being `index.html`. Push this to your favorite HTTP server and try it right away using the _Run your App_ Widget.
@@ -136,7 +136,7 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 1. Create a new CA (Certificate Authority). mkcert will create the CA and update your OS, Java & Firefox stores
 
    ```bash
-       $ mkcert -install
+       mkcert -install
    ```
 
 1. Click to accept the new certificate
@@ -144,13 +144,13 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 1. Retrieve the hostname of your machine
 
    ```bash
-       $ hostname
+       hostname
    ```
 
 1. Create a new certificate
 
    ```bash
-       $ mkcert localhost $hostname 127.0.0.1 ::1
+       mkcert localhost $hostname 127.0.0.1 ::1
    ```
 
    > Be careful:
@@ -204,7 +204,7 @@ Assuming you have [downloaded the sources](#2.1.-get-the-sources) and [installed
 This setup will serve the Widget from a local HTTPS server.
 
 ```bash
-    $ npm start
+    npm start
 ```
 
 The command will compile the Widget, start an HTTPS server ([express](https://expressjs.com/)) and open your default web browser, loading the Widget entry point. Hot reload is enabled through a secured web socket, so if you modify and save a file (try with `components/how-to.vue`), the browser will automatically refresh the Widget.
@@ -243,7 +243,7 @@ We have to add the previously created Certificate Authority to the Java trusted 
 1. Ensure your 3DDashboard is able to reach your host: from your 3DDashboard server:
 
    ```bash
-       $ ping `$hostname`
+       ping `$hostname`
    ```
 
 1. Copy the `rootCA.pem` on the machine running the 3DDashboard.
@@ -255,7 +255,7 @@ We have to add the previously created Certificate Authority to the Java trusted 
    > Make sure the JAVA_HOME is properly set! Else you will face an error like `keytool error: java.io.FileNotFoundException: /jre/lib/security/cacerts (No such file or directory)`
 
    ```bash
-       $ keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -alias Root -import -file rootCA.pem
+       keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -alias Root -import -file rootCA.pem
    ```
 
 1. You can restart the 3DDashboard.
@@ -277,8 +277,8 @@ We're almost done !
 1. In VS Code terminal, update the configuration & start the development server:
 
    ```bash
-       $ npm config set widget-template-vue:publicPath "https://$hostname:8081/"
-       $ npm start
+       npm config set widget-template-vue:publicPath "https://$hostname:8081/"
+       npm start
    ```
 
 You will notice the same behavior than in [Standalone mode](#4.2.-standalone-widget).
@@ -286,7 +286,7 @@ You will notice the same behavior than in [Standalone mode](#4.2.-standalone-wid
 1. **If you want** to revert the configuration, simply reset the `publicPath` variable:
 
    ```bash
-       $ npm config set widget-template-vue:publicPath ""
+       npm config set widget-template-vue:publicPath ""
    ```
 
 ## 3.5. Public Cloud
@@ -352,13 +352,13 @@ In both cases, the accepted format is `https://fully.qualified.domain.name/uri`:
 > If you did set the `publicPath` variable during step [4.3.4. Start debugging](#4.3.4.-start-debugging), it's very important to reset it now:
 >
 > ```bash
->     $ npm config set widget-template-vue:publicPath ""
+>     npm config set widget-template-vue:publicPath ""
 > ```
 
 You can now start serving your widget through AWS S3:
 
 ```bash
-    $ npm run startS3
+    npm run startS3
 ```
 
 You are ready to debug your widget executed on the cloud, with Hot Reload!
