@@ -6,4 +6,4 @@ package-lock.json
 *.crt
 *.key 
 webpack.config.dev.s3.js
-webpack.config.dev.js
+localConfig.js
