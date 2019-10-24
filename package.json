@@ -7,7 +7,7 @@
         "publicPath": null
     },
     "scripts": {
-        "postinstall": "node scripts/configureLocalInstall.js",
+        "postinstall": "node webpack/configureLocalInstall.js",
         "test": "mocha test/e2e/bootstrap.js --recursive test --timeout 10000",
         "debugTest": "mocha --inspect-brk test/bootstrap.js --recursive test --timeout 10000",
         "build": "webpack --config ./webpack/webpack.config.prod.js",
