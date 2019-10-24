@@ -36,7 +36,7 @@ function initReportFolder(path) {
 // open browser
 before(async function() {
     testing.server = await runServer(8666, "dist");
-    testing.reportdir = await initReportFolder("test/report");
+    testing.reportdir = await initReportFolder("test/e2e/report");
 });
 
 // close browser and reset global variables

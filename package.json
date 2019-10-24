@@ -7,6 +7,7 @@
         "publicPath": null
     },
     "scripts": {
+        "postinstall": "node webpack/configureLocalInstall.js",
         "test": "mocha test/e2e/bootstrap.js --recursive test --timeout 10000",
         "debugTest": "mocha --inspect-brk test/bootstrap.js --recursive test --timeout 10000",
         "build": "webpack --config ./webpack/webpack.config.prod.js",
@@ -14,7 +15,9 @@
         "startS3": "webpack-dev-server --config ./webpack/webpack.config.dev.s3.js",
         "debugS3": "node --inspect node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/webpack.config.dev.s3.js",
         "lint": "eslint src/**/*.js",
-        "lintFix": "eslint src/**/*.js --fix"
+        "lintFix": "eslint src/**/*.js --fix",
+        "lintMark": "markdownlint --config .markdownlint.json --ignore ./node_modules/** ./**/*.md",
+        "lintMarkFix": "markdownlint --fix --config .markdownlint.json --ignore ./node_modules/** ./**/*.md"
     },
     "repository": {
         "type": "git",
@@ -44,7 +47,10 @@
         "fibers": "4.0.1",
         "file-loader": "4.1.0",
         "highlight.js": "9.15.9",
+        "markdownlint": "0.17.0",
+        "markdownlint-cli": "0.18.0",
         "material-design-icons-iconfont": "5.0.1",
+        "mermaid": "8.3.1",
         "mocha": "6.2.0",
         "puppeteer": "1.19.0",
         "raw-loader": "3.1.0",

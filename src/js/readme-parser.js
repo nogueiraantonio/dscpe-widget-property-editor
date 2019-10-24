@@ -4,9 +4,21 @@ import hljs from "highlight.js/lib/highlight";
 import javascript from "highlight.js/lib/languages/javascript";
 import bash from "highlight.js/lib/languages/bash";
 import "highlight.js/styles/vs2015.css";
+import mermaid from "mermaid";
+
+const mermaidPlugin = (md, options) => {
+    md.renderer.rules.fence_custom["mermaid"] = function(tokens, index) {
+        let token = tokens[index];
+        let result;
+        mermaid.render("id1", token.content, cbResult => {
+            result = cbResult;
+        });
+        return result;
+    };
+};
 
 export default (() => {
-    const md = new Remarkable("commonmark", {
+    const md = new Remarkable("full", {
         highlight: function(str, lang = "bash") {
             return hljs.highlight(lang, str).value;
         },
@@ -14,6 +26,7 @@ export default (() => {
     });
     hljs.registerLanguage("javascript", javascript);
     hljs.registerLanguage("bash", bash);
+    md.use(mermaidPlugin);
 
     const sections = [];
     const regexH2 = /^(#\s.*)([\r\n]{2}|\n)$/gm;

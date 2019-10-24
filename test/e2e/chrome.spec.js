@@ -80,7 +80,8 @@ describe("Test Browser", function() {
             "1. Before starting",
             "2. Build it yourself",
             "3. Start developing",
-            "4. Start sharing"
+            "4. Start sharing",
+            "Appendix A: Hot Reload"
         ];
         /* we could use
          * titles = await loadTitles();

@@ -1,9 +1,8 @@
 node_modules
 dist
-test/report
+test/e2e/report/
 package-lock.json
 *.pem
 *.crt
 *.key 
-webpack.config.dev.s3.js
-webpack.config.dev.js
+localConfig.js
