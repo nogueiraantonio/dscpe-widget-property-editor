@@ -350,7 +350,7 @@ In both cases, the accepted format is `https://fully.qualified.domain.name/uri`:
 
 ### 3.5.5. Start debugging
 
-> If you did set the `publicPath` variable during step [4.3.4. Start debugging](#4.3.4.-start-debugging), it's very important to reset it now:
+> If you did set the `publicPath` variable during step [3.4.5. Start debugging](#3.4.5.-start-debugging), it's very important to reset it now:
 >
 > ```bash
 >     npm config set widget-template-vue:publicPath ""
