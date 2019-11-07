@@ -174,12 +174,8 @@ Edit the `localConfig.js` _https_ object. Replace the following entries with the
 
 ```javascript
 devServer: {
-    ...
-    https: {
-        key: fs.readFileSync("PATH_TO_YOUR_KEY/localhost+3-key.pem"),
-        cert: fs.readFileSync("PATH_TO_YOUR_CRT/localhost+3.pem"),
-        ca: fs.readFileSync("PATH_TO_YOUR_CA/rootCA.pem")
-    }
+    sslKey: "path/to/mkcert/files/localhost+3-key.pem",
+    sslCrt: "path/to/mkcert/files/localhost+3.pem"
 }
 ```
 
@@ -323,8 +319,9 @@ _If not already done_, copy+paste the file `localConfig.template.js` in the same
 Edit the `localConfig.js` _plugins.options_ and _plugins.params_ objects:
 
 ```javascript
-    {
+    s3: {
         options: {
+            // aws sdk will use default profile if no accessKeyId & secretAccessKey are provided
             accessKeyId: "your_AWS_AccessKeyId",
             secretAccessKey: "your_AWS_SecretAccessKey",
             region: "your_AWS_S3_bucket_region"
