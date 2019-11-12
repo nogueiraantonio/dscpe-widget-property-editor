@@ -1,8 +1,6 @@
-const fs = require("fs");
 const merge = require("webpack-merge");
 const common = require("./webpack.config.common.js");
-const sslKey = require("../localConfig.js").devServer.sslKey;
-const sslCrt = require("../localConfig.js").devServer.sslCrt;
+const localConfigDev = require("../localConfig.js").dev;
 
 // set using
 // npm config set widget-template-vue:publicPath "https://3dexp.19xfd03.ds/WidgetLab/"
@@ -35,8 +33,6 @@ module.exports = merge(
             headers: { "Access-Control-Allow-Origin": "*" },
             writeToDisk: false,
             https: {
-                key: fs.readFileSync(sslKey),
-                cert: fs.readFileSync(sslCrt)
             }
         },
         output: {
@@ -45,5 +41,6 @@ module.exports = merge(
         module: {
             rules: []
         }
-    }
+    },
+    localConfigDev
 );
