@@ -31,9 +31,9 @@ module.exports = merge(
             public: publicUrl,
             // to prevent CORS issues
             headers: { "Access-Control-Allow-Origin": "*" },
-            writeToDisk: false,
-            https: {
-            }
+            writeToDisk: false // ,
+            // https: {
+            // }
         },
         output: {
             publicPath

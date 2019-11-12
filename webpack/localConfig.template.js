@@ -17,11 +17,11 @@ module.exports = {
             // public: publicUrl,
             // to prevent CORS issues
             headers: { "Access-Control-Allow-Origin": "*" },
-            writeToDisk: false,
-            https: {
-                key: fs.readFileSync("path/to/mkcert/files/localhost+3-key.pem"),
-                cert: fs.readFileSync("path/to/mkcert/files/localhost+3.pem")
-            }
+            writeToDisk: false // ,
+            // https: {
+            //     key: fs.readFileSync("path/to/mkcert/files/localhost+3-key.pem"),
+            //     cert: fs.readFileSync("path/to/mkcert/files/localhost+3.pem")
+            // }
         },
         // output: {
         //     publicPath
