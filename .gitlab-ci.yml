@@ -98,25 +98,6 @@ npm_test_latest:
         - npm test
 
 ##########################
-# widget_zip (master only)
-# stage: deploy
-# keep dist/ available for download as Zip (in artifacts)
-
-widget_zip:
-    stage: deploy
-    tags:
-        - widgetlab
-    only:
-        - master
-    artifacts:
-        expire_in: 10yrs
-        paths:
-            - dist/
-    script:
-        - cd dist
-        # nothing to do :
-
-##########################
 # push_widget (master only)
 # stage: deploy
 # Push widget to AWS S3
@@ -133,3 +114,22 @@ push_widget:
         - export S3_DST=s3://btcc/widget-lab/$CI_PROJECT_NAME/
         - aws s3 sync ./dist/ $S3_DST --acl public-read --delete
         - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST *****"
+
+##########################
+# zip_to_s3 (master only)
+# stage: deploy
+# Push widget package to AWS S3
+
+zip_to_s3:
+    stage: deploy
+    image: dswidgetlab/awscli
+    tags:
+        - widgetlab
+    only:
+        - master
+    script:
+        - zip -r /home/s3/$CI_PROJECT_NAME.zip . -x@.zipignore
+        - export S3_DST=s3://btcc/widget-lab/templates/
+        - aws s3 sync /home/s3/ $S3_DST --acl public-read
+        - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST$CI_PROJECT_NAME.zip *****"
+
