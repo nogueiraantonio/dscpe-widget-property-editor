@@ -1,8 +1,9 @@
 # GitLab CI/CD configuration
 # P13@3DS.com
 # please read Gitlab-CI-Setup.md to enable CI/CD on the repository
+# https://itgit.dsone.3ds.com/widget-lab/documentation/blob/master/build_Gitlab-CI-Setup.md
 
-# default image : node 10.16 is LTS @ September-2019
+# default image: dswidgetlab/node:latest
 image: dswidgetlab/node
 
 stages:
@@ -34,26 +35,6 @@ npm_build:
         - npm run build
 
 ##########################
-# readme_html (master only)
-# stage: build
-# Convert README.md to dist/README.html
-
-md2html:
-    stage: build
-    tags:
-        - widgetlab
-    only:
-        - master
-    artifacts:
-        expire_in: 10min
-        paths:
-            - dist/
-    allow_failure: true
-    script:
-        - mkdir -p dist
-        - markdown README.md > dist/README.html
-
-##########################
 # npm test
 # stage: test
 # run Mocha tests
@@ -67,7 +48,6 @@ npm_test:
         expire_in: 30min
         paths:
             - test/report
-    # TODO: a dedicated image could be built in order to install missing libs (then apt commands below could be removed)
     script:
         - npm install
         - npm test
@@ -84,6 +64,7 @@ npm_test_latest:
         - widgetlab
     only:
         - master
+        - /.*-ci$/
     cache: {}
     artifacts:
         when: on_failure
