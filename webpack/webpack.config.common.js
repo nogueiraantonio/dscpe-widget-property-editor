@@ -49,8 +49,10 @@ module.exports = {
                         loader: "sass-loader",
                         options: {
                             implementation: require("sass"),
-                            fiber: require("fibers"),
-                            indentedSyntax: true // optional
+                            sassOptions: {
+                                fiber: require("fibers"),
+                                indentedSyntax: true // optional
+                            }
                         }
                     }
                 ]
@@ -63,7 +65,10 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new CopyPlugin([{ from: "./src/index.html", to: "./index.html" }, { from: "./src/static", to: "static", ignore: ["*.md"] }]),
+        new CopyPlugin([
+            { from: "./src/index.html", to: "./index.html" },
+            { from: "./src/static", to: "static", ignore: ["*.md"] }
+        ]),
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin()
     ]
