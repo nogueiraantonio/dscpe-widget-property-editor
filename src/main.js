@@ -28,8 +28,8 @@ export default function() {
         start();
     });
     widget.addEvent("onRefresh", () => {
-        // what do you want to do on refresh ?
-        // by default, lets reload the page
-        window.location.reload();
+        //TODO an application data refresh
+        // meaning only refresh dynamic content based on remote data, or after preference changed.
+        // we could reload the frame [ window.location.reload() ], but this is not a good practice, since it reset preferences
     });
 }

@@ -1,0 +1,7 @@
+.zipignore
+dist/*
+node_modules/*
+.git*
+test/report/*
+package-lock.json
+localConfig.js
