@@ -1,6 +1,6 @@
 node_modules
 dist
-test/report
+test/**/report/*
 package-lock.json
 *.pem
 *.crt
