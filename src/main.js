@@ -28,7 +28,7 @@ export default function() {
         start();
     });
     widget.addEvent("onRefresh", () => {
-        //TODO an application data refresh
+        // TODO an application data refresh
         // meaning only refresh dynamic content based on remote data, or after preference changed.
         // we could reload the frame [ window.location.reload() ], but this is not a good practice, since it reset preferences
     });
