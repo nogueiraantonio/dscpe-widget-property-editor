@@ -170,7 +170,7 @@ A new configuration file was created during the initial installation made above:
 > - the application works as expected
 > - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the `localConfig.js` _https_ object. Uncomment the _dev_ object (and the require for fs module on first line) and replace the following entries with the files you've created with mkcert:
+Edit the `localConfig.js` _https_ object. Uncomment the _dev_ and _devServer_ objects (and the require for fs module on first line) and replace the following entries with the files you've created with mkcert:
 
 ```javascript
 https: {
