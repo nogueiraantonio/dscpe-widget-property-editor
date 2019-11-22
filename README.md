@@ -83,7 +83,7 @@ This is the recommended option because this allows you to directly propose chang
 
 OR
 
-You can simply download the [source code](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue/-/archive/master/widget-template-vue-master.zip) and unzip it wherever you prefer.
+You can simply download the [template zip](https://btcc.s3-eu-west-1.amazonaws.com/widget-lab/templates/widget-template-vue.zip) and unzip it wherever you prefer. You should see a new file at the root of your project: `localConfig.js`. We'll reuse it later to customize the widget to your environment.
 
 ## 2.2. Install the development dependencies
 
@@ -114,7 +114,7 @@ When the build is finished, a new directory `dist/` is created. You'll find ther
 Due to [mixed content policy](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content), before having fun with development, we need to tackle the networking (trust) part. You basically have 2 options:
 
 1. Serve HTTPS content from webpack-dev-server (and not simple HTTP). The easiest option is then to create an auto-signed certificate (recommended if you're admin on your development machine) and share it with the certificate stores. **OR**
-1. Ignore your browser's mixed content warnings (fall-back if you're not local admin)
+1. Ignore your browser's mixed content warnings (fall-back if you're not local admin). In this case there is nothing specific about the template: just create an exception in your browser.
 
 You'll find below the details to implement the first method.
 
@@ -163,21 +163,28 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 
 [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible for creating the HTTPS server.
 
-Copy+paste the file `localConfig.template.js` in the same location, and rename the copy as `localConfig.js`.
+A new configuration file was created during the initial installation made above: `localConfig.js`. We'll now customize the values to your environment.
 
-> Important: Make sure to **use this file name** so that
+> Important: **leave the file name unchanged** so that
 >
 > - the application works as expected
 > - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the `localConfig.js` _https_ object. Replace the following entries with the files you've created with mkcert:
+Edit the `localConfig.js` _https_ object. Uncomment the _dev_ and _devServer_ objects (and the require for fs module on first line) and replace the following entries with the files you've created with mkcert:
 
 ```javascript
-devServer: {
-    sslKey: "path/to/mkcert/files/localhost+3-key.pem",
-    sslCrt: "path/to/mkcert/files/localhost+3.pem"
+https: {
+    key: fs.readFileSync("path/to/mkcert/files/localhost+3-key.pem"),
+    cert: fs.readFileSync("path/to/mkcert/files/localhost+3.pem")
 }
 ```
+
+Please note that:
+
+- `webpack.config.dev.js` is the default configuration
+- `localConfig.js` is the file where your customized configuration is expected to take place, as it overrides `webpack.config.dev.js`
+
+Thus, if you would like to customize any other configuration object, please do so inside `localConfig.js`.
 
 ## 3.2. Choose the optimal solution for your context
 
@@ -309,14 +316,14 @@ Last but not least, for Hot Reload, webpack-dev-server will create a Web Socket 
 
 ### 3.5.3. Configure your S3 settings
 
-_If not already done_, copy+paste the file `localConfig.template.js` in the same location, and rename the copy as `localConfig.js`.
+A new configuration file was created during the initial installation made above: `localConfig.js`. We'll now customize the values to your environment.
 
-> Important: Make sure to **use this file name** so that
+> Important: **leave the file name unchanged** so that ù
 >
 > - the application works as expected
 > - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the `localConfig.js` _plugins.options_ and _plugins.params_ objects:
+Edit the `localConfig.js` _s3_ object:
 
 ```javascript
     s3: {
@@ -334,6 +341,18 @@ Edit the `localConfig.js` _plugins.options_ and _plugins.params_ objects:
         }
     }
 ```
+
+Please note that:
+
+- `webpack.config.dev.js` is the default configuration
+- `localConfig.js` is the file where your customized configuration is expected to take place, as it overrides `webpack.config.dev.js`
+
+Thus, if you would like to customize any other configuration object, please do so inside `localConfig.js`.
+
+> Important: Make sure to **use this file name** so that
+>
+> - the application works as expected
+> - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
 ### 3.5.4. Register your web server
 

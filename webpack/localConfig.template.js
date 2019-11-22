@@ -1,7 +1,14 @@
+// const fs = require("fs");
+
 module.exports = {
-    devServer: {
-        sslKey: "path/to/mkcert/files/localhost+3-key.pem",
-        sslCrt: "path/to/mkcert/files/localhost+3.pem"
+    dev: {
+        // in this section you can override option defined in webpack.config.dev.js
+        devServer: {
+    //         https: {
+    //             key: fs.readFileSync("path/to/mkcert/files/localhost+3-key.pem"),
+    //             cert: fs.readFileSync("path/to/mkcert/files/localhost+3.pem")
+    //         }
+         }
     },
     s3: {
         options: {
