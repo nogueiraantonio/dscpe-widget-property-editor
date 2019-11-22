@@ -3,7 +3,8 @@ const path = require("path");
 const mkdirp = require("mkdirp");
 const fs = require("fs");
 
-const pluginName = "DevServerUploadToS3Plugin";
+const PLUGIN_NAME = "DevServerUploadToS3Plugin";
+const NUMBER_OF_HOT_RELOAD_FILES_TO_KEEP = 3;
 
 class DevServerUploadToS3Plugin {
     constructor({ options = {}, params = {} }) {
@@ -12,6 +13,7 @@ class DevServerUploadToS3Plugin {
         delete this.params.Key;
         this.webpackDevServerHook = { fn: () => {} };
         this.client = s3.createClient({ s3Options: options });
+        this.lastUploadedHotReloadFiles = [];
     }
 
     /**
@@ -22,15 +24,73 @@ class DevServerUploadToS3Plugin {
          * webpack-dev-server hook is plugged on done
          * we remove this hook before done is processed
          */
-        compiler.hooks.afterEmit.tap(pluginName, params => {
+        compiler.hooks.afterEmit.tap(PLUGIN_NAME, params => {
             this.removeWebpackDevServerHook(compiler);
         });
-        compiler.hooks.done.tap(pluginName, stats => {
+        compiler.hooks.done.tap(PLUGIN_NAME, stats => {
             const { targetPathArr, targetFileArr } = this.toDisk(stats, compiler);
+
+            const hotReloadFiles = targetFileArr.filter(fileName => /.*\.hot-update\.(js|json)$/.test(fileName));
+            if (hotReloadFiles.length > 0) {
+                this.lastUploadedHotReloadFiles.push({ ...hotReloadFiles });
+            }
 
             this.uploadToS3(targetPathArr, targetFileArr, () => {
                 this.webpackDevServerHook.fn(stats);
                 console.debug("sending message for reloading...");
+            });
+
+            this.deletePreviousHotReloadFiles();
+        });
+    }
+
+    deletePreviousHotReloadFiles() {
+        if (this.lastUploadedHotReloadFiles.length > NUMBER_OF_HOT_RELOAD_FILES_TO_KEEP) { 
+            this.lastUploadedHotReloadFiles.shift(); // Remove the oldest group of files from the array
+        }
+
+        return new Promise((resolve, reject) => {
+            const listObjectsRequest = this.client.listObjects({
+                s3Params: {
+                    Bucket: this.params.Bucket,
+                    Prefix: this.distPath
+                },
+                recursive: false
+            });
+
+            let filesToDelete = [];
+            listObjectsRequest.on("data", (data) => {
+                // Populate filesToDelete with the hot reload files returned by S3 (excepted our last uploaded files).
+                filesToDelete = filesToDelete.concat(
+                    data.Contents
+                        .map(file => file.Key)
+                        .filter(fileName => /.*\.hot-update\.(js|json)$/.test(fileName))
+                        .filter(fileName => this.lastUploadedHotReloadFiles
+                            .map(o => Object.values(o))
+                            .flat()
+                            .every(uploadedFileName => fileName.indexOf(uploadedFileName) === -1)
+                        )
+                );
+            });
+            listObjectsRequest.on("end", () => {
+                resolve(filesToDelete);
+            });
+        }).then(filesToDelete => {
+            if (filesToDelete.length === 0) {
+                return;
+            }
+            return new Promise((resolve, reject) => {
+                const deleteObjectsRequest = this.client.deleteObjects({
+                    Bucket: this.params.Bucket,
+                    Delete: {
+                        Objects: filesToDelete.map(fileName => { return { Key: fileName }; }),
+                        Quiet: false
+                    }
+                });
+
+                deleteObjectsRequest.on("end", () => {
+                    resolve();
+                });
             });
         });
     }
