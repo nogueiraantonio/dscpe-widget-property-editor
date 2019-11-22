@@ -83,7 +83,7 @@ This is the recommended option because this allows you to directly propose chang
 
 OR
 
-You can simply download the [source code](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue/-/archive/master/widget-template-vue-master.zip) and unzip it wherever you prefer. You should see a new file at the root of your project: `localConfig.js`. We'll reuse it later to customize the widget to your environment.
+You can simply download the [template zip](https://btcc.s3-eu-west-1.amazonaws.com/widget-lab/templates/widget-template-vue.zip) and unzip it wherever you prefer. You should see a new file at the root of your project: `localConfig.js`. We'll reuse it later to customize the widget to your environment.
 
 ## 2.2. Install the development dependencies
 
