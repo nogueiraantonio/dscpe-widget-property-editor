@@ -7,6 +7,9 @@ import { store } from "./store";
 function start() {
     x3DDashboardUtils.disableCSS(true);
 
+    window.title = "Widget Template Vue";
+    widget.setTitle(window.title);
+
     const mainComponent = new Vue({
         store,
         vuetify,

@@ -1,17 +1,14 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.config.common.js");
-const localConfigDev = require("../localConfig.js").dev;
+const { dev, urls } = require("../widget-config.js");
 
-// set using
-// npm config set widget-template-vue:publicPath "https://3dexp.19xfd03.ds/WidgetLab/"
-let publicPath = process.env.npm_package_config_publicPath;
-let publicUrl = publicPath;
-let host = "0.0.0.0";
-if (publicPath === undefined || publicPath === null || publicPath === "null" || publicPath.trim() === "") {
-    publicPath = "";
-    host = "localhost";
-    publicUrl = undefined;
-}
+// use default public value ?
+if (!urls.public) urls.public = urls.local;
+
+let locUrl = new URL(urls.local);
+let pubUrl = new URL(urls.public);
+let port = locUrl.port;
+if (!port) port = locUrl.protocol === "https:" ? 443 : 80;
 
 module.exports = merge(
     common,
@@ -21,24 +18,26 @@ module.exports = merge(
         devServer: {
             contentBase: "./dist",
             hot: true,
-            port: 8081,
             compress: true,
             // allow to be called from any host
             disableHostCheck: true,
-            // host must be 0.0.0.0 if we want to be reachable from LAN
-            host,
-            // if publicPath, open the browser on the right url
-            public: publicUrl,
             // to prevent CORS issues
             headers: { "Access-Control-Allow-Origin": "*" },
-            writeToDisk: false
+            writeToDisk: false,
+
+            // these options are computed from localUrl and publicUrl global parameters
+            port: port,
+            host: locUrl.hostname,
+            public: pubUrl.href,
+            sockPath: locUrl.pathname + "sockjs-node"
         },
         output: {
-            publicPath
+            // these options are computed from localUrl and publicUrl global parameters
+            publicPath: locUrl.pathname
         },
         module: {
             rules: []
         }
     },
-    localConfigDev
+    dev
 );
