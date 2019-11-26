@@ -32,7 +32,7 @@ class DevServerUploadToS3Plugin {
 
             const hotReloadFiles = targetFileArr.filter(fileName => /.*\.hot-update\.(js|json)$/.test(fileName));
             if (hotReloadFiles.length > 0) {
-                this.lastUploadedHotReloadFiles.push({ ...hotReloadFiles });
+                this.lastUploadedHotReloadFiles.push([...hotReloadFiles]);
             }
 
             this.uploadToS3(targetPathArr, targetFileArr, () => {
@@ -45,7 +45,7 @@ class DevServerUploadToS3Plugin {
     }
 
     deletePreviousHotReloadFiles() {
-        if (this.lastUploadedHotReloadFiles.length > NUMBER_OF_HOT_RELOAD_FILES_TO_KEEP) { 
+        while (this.lastUploadedHotReloadFiles.length > NUMBER_OF_HOT_RELOAD_FILES_TO_KEEP) {
             this.lastUploadedHotReloadFiles.shift(); // Remove the oldest group of files from the array
         }
 
@@ -59,19 +59,16 @@ class DevServerUploadToS3Plugin {
             });
 
             let filesToDelete = [];
-            listObjectsRequest.on("data", (data) => {
+            let lastUploaded = this.lastUploadedHotReloadFiles.flat();
+            listObjectsRequest.on("data", data => {
                 // Populate filesToDelete with the hot reload files returned by S3 (excepted our last uploaded files).
                 filesToDelete = filesToDelete.concat(
-                    data.Contents
-                        .map(file => file.Key)
+                    data.Contents.map(file => file.Key)
                         .filter(fileName => /.*\.hot-update\.(js|json)$/.test(fileName))
-                        .filter(fileName => this.lastUploadedHotReloadFiles
-                            .map(o => Object.values(o))
-                            .flat()
-                            .every(uploadedFileName => fileName.indexOf(uploadedFileName) === -1)
-                        )
+                        .filter(fileName => !lastUploaded.includes(fileName))
                 );
             });
+
             listObjectsRequest.on("end", () => {
                 resolve(filesToDelete);
             });
@@ -83,7 +80,9 @@ class DevServerUploadToS3Plugin {
                 const deleteObjectsRequest = this.client.deleteObjects({
                     Bucket: this.params.Bucket,
                     Delete: {
-                        Objects: filesToDelete.map(fileName => { return { Key: fileName }; }),
+                        Objects: filesToDelete.map(fileName => {
+                            return { Key: fileName };
+                        }),
                         Quiet: false
                     }
                 });
