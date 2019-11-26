@@ -8,6 +8,7 @@ const NUMBER_OF_HOT_RELOAD_FILES_TO_KEEP = 3;
 
 class DevServerUploadToS3Plugin {
     constructor({ options = {}, params = {} }) {
+        this.publicUrl = `https://${params.Bucket}.s3-${options.region}.amazonaws.com/${params.Key}/index.html`;
         this.params = params;
         this.distPath = params.Key;
         delete this.params.Key;
@@ -38,6 +39,7 @@ class DevServerUploadToS3Plugin {
             this.uploadToS3(targetPathArr, targetFileArr, () => {
                 this.webpackDevServerHook.fn(stats);
                 console.debug("sending message for reloading...");
+                console.debug("--> " + this.publicUrl);
             });
 
             this.deletePreviousHotReloadFiles();
