@@ -4,4 +4,4 @@ node_modules/*
 .git*
 test/report/*
 package-lock.json
-localConfig.js
+widget-config.js

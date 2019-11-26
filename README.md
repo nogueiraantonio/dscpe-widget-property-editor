@@ -83,7 +83,7 @@ This is the recommended option because this allows you to directly propose chang
 
 OR
 
-You can simply download the [template zip](https://btcc.s3-eu-west-1.amazonaws.com/widget-lab/templates/widget-template-vue.zip) and unzip it wherever you prefer. You should see a new file at the root of your project: `localConfig.js`. We'll reuse it later to customize the widget to your environment.
+You can simply download the [template zip](https://btcc.s3-eu-west-1.amazonaws.com/widget-lab/templates/widget-template-vue.zip) and unzip it wherever you prefer. You should see a new file at the root of your project: `widget-config.js`. We'll reuse it later to customize the widget to your environment.
 
 ## 2.2. Install the development dependencies
 
@@ -163,14 +163,14 @@ The tool will assist you in creating the necessary files, stores & keys, configu
 
 [webpack-dev-server](https://webpack.js.org/configuration/dev-server/) is the Webpack module that allows Hot Reload when developing. This module is responsible for creating the HTTPS server.
 
-A new configuration file was created during the initial installation made above: `localConfig.js`. We'll now customize the values to your environment.
+A new configuration file was created during the initial installation made above: `widget-config.js`. We'll now customize the values to your environment.
 
 > Important: **leave the file name unchanged** so that
 >
 > - the application works as expected
 > - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the `localConfig.js` _https_ object. Uncomment the _dev_ and _devServer_ objects (and the require for fs module on first line) and replace the following entries with the files you've created with mkcert:
+Edit the `widget-config.js` _https_ object. Uncomment the _dev_ and _devServer_ objects (and the require for fs module on first line) and replace the following entries with the files you've created with mkcert:
 
 ```javascript
 https: {
@@ -182,9 +182,9 @@ https: {
 Please note that:
 
 - `webpack.config.dev.js` is the default configuration
-- `localConfig.js` is the file where your customized configuration is expected to take place, as it overrides `webpack.config.dev.js`
+- `widget-config.js` is the file where your customized configuration is expected to take place, as it overrides `webpack.config.dev.js`
 
-Thus, if you would like to customize any other configuration object, please do so inside `localConfig.js`.
+Thus, if you would like to customize any other configuration object, please do so inside `widget-config.js`.
 
 ## 3.2. Choose the optimal solution for your context
 
@@ -277,20 +277,20 @@ In both cases, the accepted format is `https://fully.qualified.domain.name/uri`:
 
 We're almost done !
 
-1. In VS Code terminal, update the configuration & start the development server:
+1. In `widget-config.js` there is an `urls` section. Update local URL:
 
-   ```bash
-       npm config set widget-template-vue:publicPath "https://$hostname:8081/"
-       npm start
+   ```js
+    urls: {
+        // URL to serve from webpack (local)
+        local: "http://localhost:8081/widget/"
+        // URL to access this server (public), default is same as local
+        // public: "https://public.host:443/widget/"
+    },
    ```
 
-You will notice the same behavior than in [Standalone mode](#4.2.-standalone-widget).
+   > public URL is used in case of reverse proxy: the public URL differs from the served (local) URL. Due to webpack limitation, the public path and local path must be the same
 
-1. **If you want** to revert the configuration, simply reset the `publicPath` variable:
-
-   ```bash
-       npm config set widget-template-vue:publicPath ""
-   ```
+You will notice the same behavior than in [Standalone mode](#3.3.-standalone-widget).
 
 ## 3.5. Public Cloud
 
@@ -316,14 +316,14 @@ Last but not least, for Hot Reload, webpack-dev-server will create a Web Socket 
 
 ### 3.5.3. Configure your S3 settings
 
-A new configuration file was created during the initial installation made above: `localConfig.js`. We'll now customize the values to your environment.
+A new configuration file was created during the initial installation made above: `widget-config.js`. We'll now customize the values to your environment.
 
 > Important: **leave the file name unchanged** so that ù
 >
 > - the application works as expected
 > - this file is never committed to a repository [(Why?)](https://datree.io/secrets-management-aws/)
 
-Edit the `localConfig.js` _s3_ object:
+Edit the `widget-config.js` _s3_ object:
 
 ```javascript
     s3: {
@@ -345,9 +345,9 @@ Edit the `localConfig.js` _s3_ object:
 Please note that:
 
 - `webpack.config.dev.js` is the default configuration
-- `localConfig.js` is the file where your customized configuration is expected to take place, as it overrides `webpack.config.dev.js`
+- `widget-config.js` is the file where your customized configuration is expected to take place, as it overrides `webpack.config.dev.js`
 
-Thus, if you would like to customize any other configuration object, please do so inside `localConfig.js`.
+Thus, if you would like to customize any other configuration object, please do so inside `widget-config.js`.
 
 > Important: Make sure to **use this file name** so that
 >
@@ -366,11 +366,10 @@ In both cases, the accepted format is `https://fully.qualified.domain.name/uri`:
 
 ### 3.5.5. Start debugging
 
-> If you did set the `publicPath` variable during step [3.4.5. Start debugging](#3.4.5.-start-debugging), it's very important to reset it now:
->
-> ```bash
->     npm config set widget-template-vue:publicPath ""
-> ```
+In `widget-config.js` verify that:
+
+- `https` is enabled with appropriate certificates
+- public URL is undefined (comment out)
 
 You can now start serving your widget through AWS S3:
 

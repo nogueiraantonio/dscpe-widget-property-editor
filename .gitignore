@@ -6,3 +6,4 @@ package-lock.json
 *.crt
 *.key 
 localConfig.js
+widget-config.js
