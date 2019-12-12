@@ -12,8 +12,8 @@ stages:
     - deploy
 
 cache:
-    # setup a cache for each projet:branch (since it is the same runner for all widget-lab projects)
-    key: ${CI_PROJECT_PATH_SLUG}-${CI_COMMIT_REF_SLUG}
+    # setup a cache for each branch
+    key: "$CI_COMMIT_REF_SLUG"
     paths:
         - node_modules/
 
@@ -45,9 +45,9 @@ npm_test:
         - widgetlab
     artifacts:
         when: always
-        expire_in: 30min
+        expire_in: 120min
         paths:
-            - test/report
+            - test/e2e/report
     script:
         - npm install
         - npm test
@@ -69,7 +69,7 @@ npm_test_latest:
     artifacts:
         when: on_failure
         paths:
-            - test/report
+            - test/e2e/report
             - package*.json
     allow_failure: true
     script:

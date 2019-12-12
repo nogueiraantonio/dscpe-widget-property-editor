@@ -1,4 +1,4 @@
-import MDText from "../../README.md";
+import MDText from "./README.md";
 import { Remarkable } from "remarkable";
 import hljs from "highlight.js/lib/highlight";
 import javascript from "highlight.js/lib/languages/javascript";
