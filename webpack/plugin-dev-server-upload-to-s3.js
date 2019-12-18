@@ -67,7 +67,7 @@ class DevServerUploadToS3Plugin {
                 filesToDelete = filesToDelete.concat(
                     data.Contents.map(file => file.Key)
                         .filter(fileName => /.*\.hot-update\.(js|json)$/.test(fileName))
-                        .filter(fileName => !lastUploaded.includes(fileName))
+                        .filter(fileName => lastUploaded.every(lastUploadedFile => fileName.indexOf(lastUploadedFile) === -1))
                 );
             });
 
