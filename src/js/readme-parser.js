@@ -7,8 +7,8 @@ import "highlight.js/styles/vs2015.css";
 import mermaid from "mermaid";
 
 const mermaidPlugin = (md, options) => {
-    md.renderer.rules.fence_custom["mermaid"] = function(tokens, index) {
-        let token = tokens[index];
+    md.renderer.rules.fence_custom.mermaid = function(tokens, index) {
+        const token = tokens[index];
         let result;
         mermaid.render("id1", token.content, cbResult => {
             result = cbResult;

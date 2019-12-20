@@ -13,7 +13,9 @@ stages:
 
 cache:
     # setup a cache for each branch
-    key: "$CI_COMMIT_REF_SLUG"
+    key:
+        files:
+            - package.json
     paths:
         - node_modules/
 
@@ -113,4 +115,3 @@ zip_to_s3:
         - export S3_DST=s3://btcc/widget-lab/templates/
         - aws s3 sync /home/s3/ $S3_DST --acl public-read
         - echo "***** $GITLAB_USER_NAME pushed $CI_PROJECT_NAME (commit $CI_COMMIT_SHORT_SHA) to $S3_DST$CI_PROJECT_NAME.zip *****"
-
