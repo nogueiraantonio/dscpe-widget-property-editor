@@ -2,7 +2,7 @@
  * Mock the Widget Object normally provided by 3DDashboard
  */
 const Widget = function() {
-    let events = {};
+    const events = {};
     let title = "";
 
     const prefs = (() => {
@@ -207,7 +207,7 @@ function Utils() {
         if (typeof bDeactivate === "boolean" && bDeactivate === false) {
             disableOptions = false;
         }
-        let styleSheets = document.styleSheets;
+        const styleSheets = document.styleSheets;
         for (let i = 0; i < styleSheets.length; i++) {
             const sheet = styleSheets.item(i);
             for (const partialUrlToTest of widgetDefaultStyleSheets) {
