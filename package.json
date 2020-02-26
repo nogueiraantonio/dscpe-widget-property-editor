@@ -14,8 +14,8 @@
         "start": "webpack-dev-server --config ./webpack/webpack.config.dev.js --open",
         "startS3": "webpack-dev-server --config ./webpack/webpack.config.dev.s3.js",
         "debugS3": "node --inspect node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/webpack.config.dev.s3.js",
-        "lint": "eslint src/**/*.js",
-        "lintFix": "eslint src/**/*.js --fix",
+        "lint": "eslint src/**/*.{js,vue}",
+        "lintFix": "eslint src/**/*.{js,vue} --fix",
         "lintMark": "markdownlint --config .markdownlint.json --ignore ./node_modules/** ./**/*.md",
         "lintMarkFix": "markdownlint --fix --config .markdownlint.json --ignore ./node_modules/** ./**/*.md"
     },
