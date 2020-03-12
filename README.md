@@ -24,23 +24,35 @@ Basically, you will be able to develop a widget like any other web application!
 
 But that comes with a small price: some setup is required...
 
-## Template Description and links
+## Installation
 
 This widget is an extension of [Widget Template Vue.js light](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light).
 
+### Get the sources
+
 You can download the [template zip](https://btcc.s3-eu-west-1.amazonaws.com/widget-lab/templates/widget-template-vue.zip) and unzip it wherever you prefer.
 
-> if you want to report some bugs or enhancements, feel free to create issue in https://itgit.dsone.3ds.com/widget-lab/widget-template-vue/issues
->
-> or if you are familiar with Git, you can clone our repo:
->
-> ```bash
-> git clone https://itgit.dsone.3ds.com/widget-lab/widget-template-vue.git
-> ```
->
-> and propose some changes back to us
+### Install the development dependencies
 
-For further documentation, installation, configuration, please refer to the [Widget Template Vue.js light documentation](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light/blob/master/README.md)
+Open a terminal in the location you've put the downloaded / cloned sources, then:
+
+```bash
+npm install
+```
+
+### Build the Widget
+
+```bash
+npm run build
+```
+
+### Start the Widget
+
+```bash
+npm start
+```
+
+For further documentation, installation, configuration, please refer to the [Widget Template Vue.js light documentation](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light/blob/master/Configuration.md)
 
 ## Added features (from light version)
 
