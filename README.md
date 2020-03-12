@@ -2,6 +2,8 @@
 
 # Widget Template with Vue, VueX & Vuetify
 
+This widget is an extension of [Widget Template Vue.js light](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light).
+
 This template is meant to ease the development of 3DDashboard Widgets.
 
 ![Screen Capture](https://btcc.s3-eu-west-1.amazonaws.com/WidgetLab/ressources/WidgetTemplateDemoV3.gif)
@@ -25,8 +27,6 @@ Basically, you will be able to develop a widget like any other web application!
 But that comes with a small price: some setup is required...
 
 ## Installation
-
-This widget is an extension of [Widget Template Vue.js light](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light).
 
 ### Get the sources
 
