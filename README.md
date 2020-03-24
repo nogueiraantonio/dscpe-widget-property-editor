@@ -2,6 +2,30 @@
 
 # Widget Template with Vue, VueX & Vuetify
 
+## Installation
+
+### Get the sources
+
+You can download the [template zip](https://btcc.s3-eu-west-1.amazonaws.com/widget-lab/templates/widget-template-vue.zip) and unzip it wherever you prefer.
+
+### Install the development dependencies
+
+Open a terminal in the location you've put the downloaded / cloned sources, then:
+
+```bash
+npm install
+```
+
+### Start the Widget
+
+```bash
+npm start
+```
+
+For further documentation, installation, configuration, please refer to the [Widget Template Vue.js light documentation](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light/blob/master/Configuration.md)
+
+## Introduction
+
 This widget is an extension of [Widget Template Vue.js light](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light).
 
 This template is meant to ease the development of 3DDashboard Widgets.
@@ -26,34 +50,6 @@ Basically, you will be able to develop a widget like any other web application!
 
 But that comes with a small price: some setup is required...
 
-## Installation
-
-### Get the sources
-
-You can download the [template zip](https://btcc.s3-eu-west-1.amazonaws.com/widget-lab/templates/widget-template-vue.zip) and unzip it wherever you prefer.
-
-### Install the development dependencies
-
-Open a terminal in the location you've put the downloaded / cloned sources, then:
-
-```bash
-npm install
-```
-
-### Build the Widget
-
-```bash
-npm run build
-```
-
-### Start the Widget
-
-```bash
-npm start
-```
-
-For further documentation, installation, configuration, please refer to the [Widget Template Vue.js light documentation](https://itgit.dsone.3ds.com/widget-lab/widget-template-vue-light/blob/master/Configuration.md)
-
 ## Added features (from light version)
 
 We added these development best practices:
@@ -65,3 +61,14 @@ Also, we added some good frameworks:
 
 - [Vuetify](https://vuetifyjs.com) - This UI Framework will drastically save your time. Nevertheless, it's optional so feel free to remove the dependency and use your favorite.
 - [Vuex](https://vuex.vuejs.org/) - This is the "store" object you will find in the template. If you are new to Vue.js, 
+
+##  All commands
+
+Command | Description
+--- | ---
+`npm run start` | Build app continuously and serve @ `http://localhost:8081/widget`
+`npm run startS3` | Build app continuously to `/dist/` and serve through AWS S3
+`npm run build` | Build app to `/dist/`
+`npm run test` | Run functional test with mocha
+`npm run lint` | Run ESLint 
+`npm run lintFix` | Run ESLint and fix issues
