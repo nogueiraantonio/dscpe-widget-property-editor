@@ -70,5 +70,6 @@ Command | Description
 `npm run startS3` | Build app continuously to `/dist/` and serve through AWS S3
 `npm run build` | Build app to `/dist/`
 `npm run test` | Run functional test with mocha
+`npm run devtools` | Open the devtools
 `npm run lint` | Run ESLint 
 `npm run lintFix` | Run ESLint and fix issues
