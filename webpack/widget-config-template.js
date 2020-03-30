@@ -39,6 +39,11 @@ const cfg = {
             // distant path ;file path & name will be concatenated to the Key parameter
             Key: "path/inside/bucket"
         }
+    },
+    env: {
+        vue: {
+            useExternalDebugger: false
+        }
     }
 };
 

@@ -1,7 +1,7 @@
 import { initWidget } from "./widget";
 import devtools from "@vue/devtools";
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.USE_EXTERNAL_DEBUGGER && process.env.NODE_ENV === "development") {
     // Ping devtools before trying to connect in order to avoid error message loop...
     fetch("http://localhost:8098/socket.io/")
         .then(() => devtools.connect())
