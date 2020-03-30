@@ -3,8 +3,6 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpack = require("webpack");
-const USE_EXTERNAL_DEBUGGER = require("../widget-config").env.vue.useExternalDebugger;
 
 module.exports = {
     entry: ["./src/lib/widget-starter.js"],
@@ -72,11 +70,6 @@ module.exports = {
             { from: "./src/static", to: "static", ignore: ["*.md"] }
         ]),
         new VueLoaderPlugin(),
-        new VuetifyLoaderPlugin(),
-        new webpack.DefinePlugin({
-            "process.env": {
-                USE_EXTERNAL_DEBUGGER
-            }
-        })
+        new VuetifyLoaderPlugin()
     ]
 };

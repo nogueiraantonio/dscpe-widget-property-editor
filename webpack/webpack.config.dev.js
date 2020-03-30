@@ -1,6 +1,8 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.config.common.js");
-const { dev, urls } = require("../widget-config.js");
+const { webpackDevOptions, urls } = require("../widget-config.js");
+const webpack = require("webpack");
+const USE_EXTERNAL_DEBUGGER = require("../widget-config").devVariables.vue.useExternalDebugger;
 
 // use default public value ?
 if (!urls.public) urls.public = urls.local;
@@ -37,7 +39,14 @@ module.exports = merge(
         },
         module: {
             rules: []
-        }
+        },
+        plugins: [
+            new webpack.DefinePlugin({
+                "process.env.devVariables": {
+                    USE_EXTERNAL_DEBUGGER
+                }
+            })
+        ]
     },
-    dev
+    webpackDevOptions
 );
