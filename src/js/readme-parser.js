@@ -1,6 +1,6 @@
 import MDText from "./README.md";
 import { Remarkable } from "remarkable";
-import hljs from "highlight.js/lib/highlight";
+import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import bash from "highlight.js/lib/languages/bash";
 import "highlight.js/styles/vs2015.css";

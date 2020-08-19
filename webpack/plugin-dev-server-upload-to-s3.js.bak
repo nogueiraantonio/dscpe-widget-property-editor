@@ -61,7 +61,7 @@ class DevServerUploadToS3Plugin {
             });
 
             let filesToDelete = [];
-            const lastUploaded = this.lastUploadedHotReloadFiles.flat();
+            let lastUploaded = this.lastUploadedHotReloadFiles.flat();
             listObjectsRequest.on("data", data => {
                 // Populate filesToDelete with the hot reload files returned by S3 (excepted our last uploaded files).
                 filesToDelete = filesToDelete.concat(

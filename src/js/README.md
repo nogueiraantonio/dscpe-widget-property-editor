@@ -12,7 +12,6 @@ With this template we focused on having the best possible development experience
 - Continuous Integration (GitLab CI)
 - Build with bundling (webpack)
 - Linting (eslint) and formatting (Prettier)
-- Tests (Mocha)
 
 Using this environment has many advantages :
 
@@ -41,7 +40,8 @@ Minim nostrud exercitation laborum consectetur velit occaecat Lorem do culpa min
 
 Exercitation ullamco cillum tempor exercitation irure proident nostrud voluptate laboris Lorem aliquip. Mollit exercitation dolore dolor non mollit et. Et velit ipsum tempor deserunt voluptate consequat et commodo in enim.
 
-Duis id irure pariatur mollit. Non aute occaecat proident nulla amet anim ad cillum consectetur proident cupidatat exercitation excepteur. Consequat tempor proident laborum laboris officia nostrud cillAliqua et magna voluptate aliquip labore. Velit fugiat aliqua cillum aliquip aliqua dolore commodo esse. Velit magna deserunt ut reprehenderit esse minim in. Deserunt cillum enim ad enim ad amet fugiat ipsum do adipisicing esse non adipisicing eiusmod. Aliquip esse id commodo fugiat occaecat mollit in dolore do consectetur ex.
+Duis id irure pariatur mollit. Non aute occaecat proident nulla amet anim ad cillum consectetur proident cupidatat exercitation excepteur. Consequat tempor proident laborum laboris officia nostrud cillAliqua et magna voluptate aliquip labore. Velit fugiat aliqua cillum aliquip aliqua dolore commodo esse. Velit magna deserunt ut reprehenderit esse minim in. Deserunt cillum enim ad enim ad amet fugiat ipsum do adipisicing esse non adipisicing eiusmod. Aliquip esse id commodo fugiat occaecat mollit
+in dolore do consectetur ex.
 
 Velit eiusmod deserunt aliqua ut ullamco nisi qui aliquip. Irure nostrud occaecat nostrud cillum est sit reprehenderit ipsum cupidatat ex Lorem. Velit duis ullamco voluptate nulla nulla sunt commodo ad. Culpa minim pariatur ut Lorem cupidatat laborum. Nisi amet deserunt consectetur dolor non fugiat occaecat. Dolore pariatur deserunt ex do veniam sit magna labore exercitation. Consectetur sit commodo velit pariatur sit irure eiusmod sunt sit nulla quis.um anim excepteur.
 

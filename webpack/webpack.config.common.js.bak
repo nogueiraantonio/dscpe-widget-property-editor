@@ -65,12 +65,10 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new CopyPlugin({
-            patterns: [
-                { from: "./src/index.html", to: "./index.html" },
-                { from: "./src/static", to: "static", globOptions: { ignore: ["*.md"] } }
-            ]
-        }),
+        new CopyPlugin([
+            { from: "./src/index.html", to: "./index.html" },
+            { from: "./src/static", to: "static", ignore: ["*.md"] }
+        ]),
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin()
     ]
