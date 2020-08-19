@@ -1,3 +1,5 @@
+const DELAY_BEFORE_RETRY = 200;
+const MAX_NUMBER_OF_RETRY = 10;
 /**
  * Mock the Widget Object normally provided by 3DDashboard
  */
@@ -26,6 +28,8 @@ const Widget = function() {
     };
 
     this.uwaUrl = "./";
+
+    this.id = "standalone";
 
     this.addEvent = (event, callback) => {
         events[event] = callback;
@@ -112,13 +116,14 @@ const initRequireModules = function() {
                 };
             };
             this.subscribe = (topic, callback) => {
-                return { topic: topic, callback: callback };
+                return { topic, callback };
             };
         };
         return new PlatformAPI();
     });
 };
 
+const isWidget = !!window.UWA;
 /**
  * Initialize the widget object
  * In Standalone mode :
@@ -137,7 +142,7 @@ export function initWidget(cbOk, cbError) {
             document.body.innerHTML = "Error while trying to load widget. See console for details";
             throw new Error(whatToWait + " didn't load");
         } else {
-            setTimeout(waitFor, 200, whatToWait, --maxTry, then);
+            setTimeout(waitFor, DELAY_BEFORE_RETRY, whatToWait, --maxTry, then);
         }
     };
     const loadRequire = () => {
@@ -171,7 +176,7 @@ export function initWidget(cbOk, cbError) {
         loadRequire().then(() => {
             initRequireModules();
         });
-        waitFor("requirejs", 10, () => {
+        waitFor("requirejs", MAX_NUMBER_OF_RETRY, () => {
             cbOk(window.widget);
         });
     } else {
@@ -180,7 +185,7 @@ export function initWidget(cbOk, cbError) {
             // sometime (actually, often), dashboard takes time to inject widget object
             waitFor(
                 "widget",
-                10,
+                MAX_NUMBER_OF_RETRY,
                 // finally, ...starts
                 () => {
                     updatePublicPath();
@@ -217,6 +222,7 @@ function Utils() {
             }
         }
     };
+    this.isWidget = () => isWidget;
 }
 
 export const x3DDashboardUtils = new Utils();

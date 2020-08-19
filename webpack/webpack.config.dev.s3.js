@@ -1,4 +1,4 @@
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const commonDev = require("./webpack.config.dev.js");
 const DevServerUploadToS3Plugin = require("./plugin-dev-server-upload-to-s3");
 const s3cfg = require("../widget-config.js").s3;

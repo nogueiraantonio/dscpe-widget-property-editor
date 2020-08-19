@@ -4,7 +4,31 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script type="text/javascript" src="bundle.js"></script>
+        <script type="text/javascript">
+            var uwaPath;
+            try {
+                uwaPath = widget.uwaUrl.substring(0, widget.uwaUrl.lastIndexOf("/") + 1);
+            } catch (error) {
+                uwaPath = "./";
+            }
+            try {
+                // retrieve the version to load with a timestanp to prevent caching
+                fetch(uwaPath + "static/version.json?ts=" + Date.now())
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    // load the bundle.js?v=x.x.x and append the script in the header
+                    .then(function(version) {
+                        var scriptElement = document.createElement("script");
+                        scriptElement.src = uwaPath + "bundle.js?v=" + version.stable;
+                        document.head.appendChild(scriptElement);
+                    });
+            } catch (error) {
+                var pElement = document.createElement("p");
+                pElement.innerText = "An error occured while loading the widget. Please retry later.";
+                document.body.appendChild(pElement);
+            }
+        </script>
     </head>
     <body>
         <app></app>
