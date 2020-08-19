@@ -26,6 +26,7 @@
     "devDependencies": {
         "@auth0/s3": "1.0.0",
         "@babel/core": "7.11.1",
+        "@babel/polyfill": "^7.10.4",
         "@babel/preset-env": "7.11.0",
         "@mdi/font": "5.5.55",
         "babel-loader": "8.1.0",
