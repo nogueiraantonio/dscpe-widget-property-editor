@@ -1,4 +1,4 @@
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const common = require("./webpack.config.common.js");
 const { webpackDevOptions, urls } = require("../widget-config.js");
 const webpack = require("webpack");
@@ -7,8 +7,8 @@ const USE_EXTERNAL_DEBUGGER = require("../widget-config").devVariables.vue.useEx
 // use default public value ?
 if (!urls.public) urls.public = urls.local;
 
-let locUrl = new URL(urls.local);
-let pubUrl = new URL(urls.public);
+const locUrl = new URL(urls.local);
+const pubUrl = new URL(urls.public);
 let port = locUrl.port;
 if (!port) port = locUrl.protocol === "https:" ? 443 : 80;
 
@@ -28,7 +28,7 @@ module.exports = merge(
             writeToDisk: false,
 
             // these options are computed from localUrl and publicUrl global parameters
-            port: port,
+            port,
             host: locUrl.hostname,
             public: pubUrl.href,
             sockPath: locUrl.pathname + "sockjs-node"

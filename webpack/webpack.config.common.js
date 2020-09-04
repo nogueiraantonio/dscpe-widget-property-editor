@@ -5,9 +5,10 @@ const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-    entry: ["./src/lib/widget-starter.js"],
+    entry: ["@babel/polyfill", "./src/lib/widget-starter.js"],
     output: {
         filename: "bundle.js",
+        chunkFilename: "[id].[hash].bundle.js",
         path: path.resolve(__dirname, "../dist")
     },
     module: {
@@ -63,12 +64,20 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        extensions: [".js", ".vue", ".json"],
+        alias: {
+            "@": path.resolve("src")
+        }
+    },
     plugins: [
         new CleanWebpackPlugin(),
-        new CopyPlugin([
-            { from: "./src/index.html", to: "./index.html" },
-            { from: "./src/static", to: "static", ignore: ["*.md"] }
-        ]),
+        new CopyPlugin({
+            patterns: [
+                { from: "./src/index.html", to: "./index.html" },
+                { from: "./src/static", to: "static", globOptions: { ignore: ["*.md"] } }
+            ]
+        }),
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin()
     ]

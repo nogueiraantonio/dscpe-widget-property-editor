@@ -8,7 +8,6 @@ image: dswidgetlab/node
 
 stages:
     - build
-    - test
     - deploy
 
 cache:
@@ -35,50 +34,6 @@ npm_build:
     script:
         - npm install
         - npm run build
-
-##########################
-# npm test
-# stage: test
-# run Mocha tests
-
-npm_test:
-    stage: test
-    tags:
-        - widgetlab
-    artifacts:
-        when: always
-        expire_in: 120min
-        paths:
-            - test/e2e/report
-    script:
-        - npm install
-        - npm test
-
-##########################
-# npm build and test with dep's latest versions
-# stage: test
-# patch package.json, install, build and run Mocha tests
-# (since versions are not reusable : do not use cache)
-
-npm_test_latest:
-    stage: test
-    tags:
-        - widgetlab
-    only:
-        - master
-        - /.*-ci$/
-    cache: {}
-    artifacts:
-        when: on_failure
-        paths:
-            - test/e2e/report
-            - package*.json
-    allow_failure: true
-    script:
-        - ncu --configFilePath ./test
-        - npm install
-        - npm run build
-        - npm test
 
 ##########################
 # push_widget (master only)
