@@ -11,7 +11,7 @@ const cfg = {
         //   in case of S3: public URL must be undef
         // public: "https://public.host:443/widget/"
     },
-    dev: {
+    webpackDevOptions: {
         // in this section you can override webpack dev options (base configuration from webpack.config.dev.js)
         // please refer to https://webpack.js.org/configuration/ for global webpack configuration
         // please refer to https://webpack.js.org/configuration/dev-server/ for devServer
@@ -38,6 +38,11 @@ const cfg = {
             ACL: "public-read",
             // distant path ;file path & name will be concatenated to the Key parameter
             Key: "path/inside/bucket"
+        }
+    },
+    devVariables: {
+        vue: {
+            useExternalDebugger: false
         }
     }
 };

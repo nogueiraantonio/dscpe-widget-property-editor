@@ -58,14 +58,15 @@ We added these development best practices:
 Also, we added some good frameworks:
 
 - [Vuetify](https://vuetifyjs.com) - This UI Framework will drastically save your time. Nevertheless, it's optional so feel free to remove the dependency and use your favorite.
-- [Vuex](https://vuex.vuejs.org/) - This is the "store" object you will find in the template. If you are new to Vue.js,
+- [Vuex](https://vuex.vuejs.org/) - The state management library for Vue.js.
 
-## All commandss
+## All commands
 
-| Command           | Description                                                       |
-| ----------------- | ----------------------------------------------------------------- |
-| `npm run start`   | Build app continuously and serve @ `http://localhost:8081/widget` |
-| `npm run startS3` | Build app continuously to `/dist/` and serve through AWS S3       |
-| `npm run build`   | Build app to `/dist/`                                             |
-| `npm run lint`    | Run ESLint                                                        |
-| `npm run lintFix` | Run ESLint and fix issues                                         |
+| Command            | Description                                                       |
+| ------------------ | ----------------------------------------------------------------- |
+| `npm run start`    | Build app continuously and serve @ `http://localhost:8081/widget` |
+| `npm run startS3`  | Build app continuously to `/dist/` and serve through AWS S3       |
+| `npm run build`    | Build app to `/dist/`                                             |
+| `npm run devtools` | Open the devtools                                                 |
+| `npm run lint`     | Run ESLint                                                        |
+| `npm run lintFix`  | Run ESLint and fix issues                                         |
