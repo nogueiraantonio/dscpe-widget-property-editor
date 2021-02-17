@@ -7,7 +7,7 @@ import { store } from "./store";
 function start() {
     x3DDashboardUtils.disableCSS(true);
 
-    window.title = "Widget Template Vue";
+    window.title = "DS CPE Document Editor";
     widget.setTitle(window.title);
 
     const mainComponent = new Vue({
