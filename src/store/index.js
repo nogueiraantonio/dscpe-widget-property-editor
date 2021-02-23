@@ -6,17 +6,21 @@ Vue.use(Vuex);
 // init store
 export const store = new Vuex.Store({
     state: {
-        messages: ["Hello 3DExperience Platform", "Made with Vue & Vuetify"],
-        messageNumber: 0
+        isDocumentLoaded: false,
+        isDocumentLoading: false
     },
     mutations: {
-        swapMessage(state) {
-            state.messageNumber = (state.messageNumber + 1) % state.messages.length;
-        }
-    },
-    getters: {
-        currentMessage({ messages, messageNumber }) {
-            return messages[messageNumber];
+        documentLoading(state) {
+            state.isDocumentLoading = true;
+            state.isDocumentLoaded = false;
+        },
+        documentLoaded(state) {
+            state.isDocumentLoading = false;
+            state.isDocumentLoaded = true;
+        },
+        documentUnloaded(state) {
+            state.isDocumentLoading = false;
+            state.isDocumentLoaded = false;
         }
     }
 });
