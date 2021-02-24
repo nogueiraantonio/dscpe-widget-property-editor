@@ -25,15 +25,31 @@
                 dense
             />
         </v-row>
-        <v-row v-show="hasModifyAccess" justify="end">
-            <v-btn id="submitButton" :disabled="!isDirty" style="width:90px; color: #fff; border-color: #368ec4; background-color: #42a2da;margin-left:16px; margin-top:16px;" outlined @click="save">Save</v-btn>
-            <v-btn
-                id="cancelButton"
-                :disabled="!isDirty"
-                style="width:90px; color: #3d3d3d; background-color: #f1f1f1; border-color: #b4b6ba; margin-left:16px; margin-top:16px;"
-                outlined
-                @click="cancel"
-            >Cancel</v-btn>
+        <v-row v-show="hasModifyAccess" justify="center">
+            <v-col cols="auto">
+                <v-btn
+                    id="submitButton"
+                    :disabled="!isDirty"
+                    depressed="true"
+                    color="#42a2da"
+                    width="90px"
+                    @click="save"
+                >
+                    Save
+                </v-btn>
+            </v-col>
+            <v-col cols="auto">
+                <v-btn
+                    id="cancelButton"
+                    :disabled="!isDirty"
+                    depressed="true"
+                    color="#f1f1f1"
+                    width="90px"
+                    @click="cancel"
+                >
+                    Cancel
+                </v-btn>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -288,7 +304,7 @@ export default {
         save: function () {
             console.debug("WCAE: save form");
 
-            this.$store.commit("documentLoading");
+            this.$store.commit("documentSaving");
 
             const documentId = this.docId;
 

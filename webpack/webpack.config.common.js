@@ -53,7 +53,9 @@ module.exports = {
                             sassOptions: {
                                 fiber: require("fibers"),
                                 indentedSyntax: true // optional
-                            }
+                            },
+                            // This is the path to your variables
+                            additionalData: "@import '@/styles/variables.scss'"
                         }
                     }
                 ]

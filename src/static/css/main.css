@@ -11,36 +11,23 @@
     display: block;
     padding: 54px 54px;
     min-height: 150px;
-  }; 
-  .dscpe-btn-primary
+  };
+  /* overrides to Vuetify styles */
+  #cancel-v-btn 
   {
-    color: #fff;
-    border-color: #368ec4;
-    background-color: #42a2da;
+    color: #3d3d3d !important;
+    border: 1px solid #b4b6ba !important;
+    background-color: #f1f1f1 !important;
   }
-  .dscpe-btn-default
+  #submitButton 
   {
-      color: #3d3d3d;
-      background-color: #f1f1f1;
-      border-color: #b4b6ba;
+    color: #fff !important;
+    border: 1px solid #368ec4 !important;
+    background-color: #42a2da !important;
   }
-  .dscpe-btn
+  #submitButton.theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn-outlined)
   {
-    display: inline-block;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    padding: 9px 14px 8px 14px;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    min-width: 72px;
-    line-height: 1.42857;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: white !important;
+    background-color: #afd1e9 !important;
+    border: 1px solid #aac9e0 !important;
   }
