@@ -1,0 +1,124 @@
+{
+    "items": [
+      {
+        "docType": "CPEPopulationDocument",
+        "props": [
+          {
+            "key": "name",
+            "id": "prop_name",
+            "type": "text",
+            "displayName": "Name",
+            "isReadOnly": true,
+            "placeholder": ""
+          },
+          {
+            "key": "revision",
+            "id": "prop_revision",
+            "type": "text",
+            "displayName": "Revision",
+            "isReadOnly": true,
+            "placeholder": ""
+          },
+          {
+            "key": "stateNLS",
+            "id": "prop_state",
+            "type": "text",
+            "displayName": "State",
+            "isReadOnly": true,
+            "placeholder": ""
+          },
+          {
+            "key": "CPEContinent",
+            "id": "prop_continent",
+            "type": "select",
+            "authorizedValues": [
+              "Asia",
+              "Europe",
+              "America"
+            ],
+            "displayName": "Continent",
+            "placeholder": ""
+          },
+          {
+            "key": "CPECountry",
+            "id": "prop_country",
+            "type": "select",
+            "parentKey": "CPEContinent",
+            "authorizedValues": {
+              "Asia": [
+                "Bangladesh",
+                "China",
+                "India",
+                "Indonesia",
+                "Pakistan"
+              ],
+              "Europe": [
+                "France",
+                "Germany",
+                "Russia",
+                "Turkey",
+                "United Kingdom"
+              ],
+              "America": [
+                "Argentina",
+                "Brazil",
+                "Colombia",
+                "Mexico",
+                "United States"
+              ]
+            },
+            "displayName": "Country",
+            "placeholder": ""
+          },
+          {
+            "key": "CPECity",
+            "id": "prop_city",
+            "type": "select",
+            "displayName": "City",
+            "placeholder": "",
+            "parentKey": "CPECountry",
+            "authorizedValues": {
+            
+              "China": [
+                "Shangai - 上海市",
+                "Beijing - 北京市",
+                "Chongqing - 重庆市",
+                "Tianjin - 天津市",
+                "Guangzhou - 广州市"
+              ],
+              "France": [
+                "Paris",
+                "Marseille",
+                "Lyon",
+                "Toulouse",
+                "Nice",
+                "Nantes",
+                "Montpellier",
+                "Strasbourg",
+                "Bordeaux",
+                "Lille"
+              ],
+              
+              "Russia": [
+                "Moscow - Москва",
+                "Saint Petersburg - Санкт-Петербург",
+                "Novosibirsk - Новосибирск"
+              ],
+              "United States": [
+                "Los Angeles",
+                "New York",
+                "Chicago",
+                "Houston",
+                "Phoenix",
+                "Philadelphia",
+                "San Antonio",
+                "San Diego",
+                "Dallas",
+                "San Jose"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
