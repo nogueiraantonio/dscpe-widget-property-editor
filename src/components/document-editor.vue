@@ -1,30 +1,67 @@
 /* eslint-disable vue/component-tags-order */
-<template class="fill-height">
+<template>
     <v-container>
-        <v-row v-for="prop in properties" :key="prop.definition.key">
-            <v-select
-                v-if="prop.definition.type == 'select'"
-                :id="prop.definition.id"
-                v-model="prop.curValue"
-                :items="prop.authorizedValues"
-                :label="prop.definition.displayName"
-                :readonly="prop.definition.isReadOnly || !hasModifyAccess"
-                return-object
-                dense
-                @input="onInput"
-                @change="onChange"
-            />
-            <v-text-field
-                v-if="prop.definition.type == 'text'"
-                :id="prop.definition.id"
-                v-model.lazy="prop.curValue"
-                :type="prop.definition.type"
-                :readonly="prop.definition.isReadOnly || !hasModifyAccess"
-                :placeholder="prop.definition.placeholder"
-                :label="prop.definition.displayName"
-                dense
-            />
-        </v-row>
+        <div v-if="tabs !== null">
+            <v-tabs v-model="tab">
+                <v-tab v-for="tb in tabs" :key="tb.key">{{ tb.label }}</v-tab>
+            </v-tabs>
+            <v-tabs-items v-model="tab">
+                <v-tab-item v-for="tb in tabs" :key="tb.key">
+                    <v-container>
+                        <v-row v-for="prop in tb.props" :key="prop.definition.key">
+                            <v-select
+                                v-if="prop.definition.type == 'select'"
+                                :id="prop.definition.id"
+                                v-model="prop.curValue"
+                                :items="prop.authorizedValues"
+                                :label="prop.definition.displayName"
+                                :readonly="prop.definition.isReadOnly || !hasModifyAccess"
+                                return-object
+                                dense
+                                @input="onInput"
+                                @change="onChange"
+                            />
+                            <v-text-field
+                                v-if="prop.definition.type == 'text'"
+                                :id="prop.definition.id"
+                                v-model.lazy="prop.curValue"
+                                :type="prop.definition.type"
+                                :readonly="prop.definition.isReadOnly || !hasModifyAccess"
+                                :placeholder="prop.definition.placeholder"
+                                :label="prop.definition.displayName"
+                                dense
+                            />
+                        </v-row>
+                    </v-container>
+                </v-tab-item>
+            </v-tabs-items>
+        </div>
+        <div v-if="tabs === null">
+            <v-row v-for="prop in properties" :key="prop.definition.key">
+                <v-select
+                    v-if="prop.definition.type == 'select'"
+                    :id="prop.definition.id"
+                    v-model="prop.curValue"
+                    :items="prop.authorizedValues"
+                    :label="prop.definition.displayName"
+                    :readonly="prop.definition.isReadOnly || !hasModifyAccess"
+                    return-object
+                    dense
+                    @input="onInput"
+                    @change="onChange"
+                />
+                <v-text-field
+                    v-if="prop.definition.type == 'text'"
+                    :id="prop.definition.id"
+                    v-model.lazy="prop.curValue"
+                    :type="prop.definition.type"
+                    :readonly="prop.definition.isReadOnly || !hasModifyAccess"
+                    :placeholder="prop.definition.placeholder"
+                    :label="prop.definition.displayName"
+                    dense
+                />
+            </v-row>
+        </div>
         <v-row v-show="hasModifyAccess" justify="center">
             <v-col cols="auto">
                 <v-btn
@@ -78,6 +115,8 @@ export default {
         return {
             docType: null,
             docId: String,
+            tab: null,
+            tabs: null,
             properties: [],
             editMode: false,
             activeDocument: {
@@ -297,7 +336,14 @@ export default {
                 return;
             }
 
+            // if not null tabs will contain cloned instances of the tabs definition
+            this.tabs = this.getDocTypeTabs(documentPropertiesMap, this.docType);
+
             this.properties = this.preprocessProperties(docTypeProps);
+
+            if (this.tabs !== null) {
+                this.splitPropertiesByTab(this.properties, this.tabs);
+            }
 
             this.loadDocument(this.docId);
         },
@@ -341,7 +387,14 @@ export default {
                         return;
                     }
 
+                    // if not null tabs will contain cloned instances of the tabs definition
+                    _self.tabs = _self.getDocTypeTabs(documentPropertiesMap, _self.docType);
+
                     _self.properties = _self.preprocessProperties(docTypeProps);
+
+                     if (_self.tabs !== null) {
+                        _self.splitPropertiesByTab(_self.properties, _self.tabs);
+                    }
 
                     // reload properties
                     _self.updateActiveDocumentForm(dataResp);
@@ -422,12 +475,35 @@ export default {
 
             return ret;
         },
-        // Recreates the this.properties by copying the property definitions for the document type
+        // Recreates the this.properties by cloning the property definitions for the document type
         getDocTypeProperties: function (_docTypesProperties, _docType) {
             try {
                 for (let i = 0; i < _docTypesProperties.length; i++) {
                     if (_docTypesProperties[i].docType.toUpperCase() === _docType.toUpperCase()) {
                         return _docTypesProperties[i].props;
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+            return null;
+        },
+        // If exist, returns a new cloned tab definition from the tab definitions of the given document type.
+        // Otherwise returns null.
+        getDocTypeTabs: function (_docTypesProperties, _docType) {
+            try {
+                for (let i = 0; i < _docTypesProperties.length; i++) {
+                    if (_docTypesProperties[i].docType.toUpperCase() === _docType.toUpperCase()) {
+                        // Tabs
+                        if (!Object.prototype.hasOwnProperty.call(_docTypesProperties[i], "tabs")) {
+                            return null;
+                        }
+                        // Clone new instances from the definition
+                        const __tabsObject = {};
+                        _docTypesProperties[i].tabs.forEach(tab => {
+                           __tabsObject[tab.key] = { key: tab.key, label: tab.label, props: {} };
+                        });
+                        return __tabsObject;
                     }
                 }
             } catch (err) {
@@ -463,6 +539,20 @@ export default {
             }
 
             return newProperties;
+        },
+        splitPropertiesByTab: function (properties, tabs) {
+            const keys = Object.keys(properties);
+            keys.forEach(key => {
+                const property = properties[key];
+                if (property === null) return;
+                // TODO: Log issue
+                if (!Object.prototype.hasOwnProperty.call(property, "definition")) return;
+                // TODO: Log issue
+                if (!Object.prototype.hasOwnProperty.call(property.definition, "tabKey")) return;
+                const propTabKey = property.definition.tabKey;
+                if (!Object.prototype.hasOwnProperty.call(tabs, propTabKey)) return;
+                tabs[propTabKey].props[property.definition.key] = property;
+            });
         },
         // update properties table
         updateForm: function (props, attributes) {
